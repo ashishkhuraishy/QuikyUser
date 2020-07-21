@@ -108,6 +108,7 @@ class SetAddressFloatingButton extends StatelessWidget {
           32.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
       leftPosition: 16.0,
       rightPosition: 16.0,
+      elevation: 16.0,
       //width: 500,
       borderRadius: BorderRadius.circular(12.0),
       child: state == SearchingState.Searching
@@ -118,6 +119,7 @@ class SetAddressFloatingButton extends StatelessWidget {
                 children: [
                   Text(
                     selectedPlace.formattedAddress ?? '',
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   RaisedButton(
                     colorBrightness: Brightness.dark,
@@ -128,13 +130,19 @@ class SetAddressFloatingButton extends StatelessWidget {
                     ),
                     onPressed: () {
                       AddressModel addressModel = AddressModel(
-                          formatedAddress: selectedPlace.formattedAddress,
-                          shortAddress:
-                              selectedPlace.addressComponents[0].shortName);
+                        formatedAddress: selectedPlace.formattedAddress,
+                        shortAddress:
+                            selectedPlace.addressComponents[0].shortName,
+                        latLng: LatLng(
+                          selectedPlace.geometry.location.lat,
+                          selectedPlace.geometry.location.lat,
+                        ),
+                      );
                       box.add(addressModel);
                       Navigator.pop(context);
                       print(
-                          "do something with ${selectedPlace.addressComponents[0].types} data");
+                        "do something with ${selectedPlace.addressComponents[0].types} data",
+                      );
                       //Navigator.of(context).pop();
                     },
                   ),

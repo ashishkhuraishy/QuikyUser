@@ -16,19 +16,19 @@ class AddressModelAdapter extends TypeAdapter<AddressModel> {
     return AddressModel(
       formatedAddress: fields[0] as String,
       shortAddress: fields[1] as String,
+      latLng: fields[2] as LatLng,
     );
   }
 
   @override
   void write(BinaryWriter writer, AddressModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.formatedAddress)
       ..writeByte(1)
-      ..write(obj.shortAddress);
+      ..write(obj.shortAddress)
+      ..writeByte(2)
+      ..write(obj.latLng);
   }
-
-  @override
-  int get typeId => 0;
 }
