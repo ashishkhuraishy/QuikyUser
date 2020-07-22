@@ -31,7 +31,7 @@ main() {
   test('should perform a get request on gMap api', () {
     when(mockHttpClient.get(any)).thenAnswer(
       (realInvocation) async =>
-          Response(fixture('geo_coding_response.json'), 200),
+          Response(await fixture('geo_coding_response.json'), 200),
     );
     remoteDataSourceImpl.getAddress(tLocation);
     verify(
@@ -42,7 +42,7 @@ main() {
   test('should return AddressModel if statusCode 200', () async {
     when(mockHttpClient.get(any)).thenAnswer(
       (realInvocation) async =>
-          Response(fixture('geo_coding_response.json'), 200),
+          Response(await fixture('geo_coding_response.json'), 200),
     );
 
     final result = await remoteDataSourceImpl.getAddress(tLocation);
@@ -56,7 +56,7 @@ main() {
   test('should throw Serverexception if statusCode is not 200', () async {
     when(mockHttpClient.get(any)).thenAnswer(
       (realInvocation) async =>
-          Response(fixture('geo_coding_response.json'), 404),
+          Response(await fixture('geo_coding_response.json'), 404),
     );
 
     final call = remoteDataSourceImpl.getAddress;
