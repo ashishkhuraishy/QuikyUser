@@ -60,8 +60,13 @@ LF:20
 LH:0
 end_of_record
 SF:lib\features\location_service\data\model\address_model.dart
+<<<<<<< HEAD
 DA:18,4
 DA:23,4
+=======
+DA:18,5
+DA:23,5
+>>>>>>> master
 DA:30,0
 DA:31,0
 DA:32,0
@@ -72,7 +77,11 @@ LF:8
 LH:2
 end_of_record
 SF:lib\features\location_service\domain\entity\address.dart
+<<<<<<< HEAD
 DA:10,5
+=======
+DA:10,6
+>>>>>>> master
 DA:17,0
 DA:18,0
 LF:3
