@@ -34,7 +34,7 @@ class _SelectLocationState extends State<SelectLocation> {
                   MaterialPageRoute(
                     builder: (context) {
                       return PlacePicker(
-                        apiKey: ApiKeys.mapApiKey,
+                        apiKey: MapApiKey,
                         initialPosition: SelectLocation.kInitialPosition,
                         useCurrentLocation: true,
                         //usePlaceDetailSearch: true,

@@ -26,18 +26,15 @@ class AddressRepositoryImpl extends AddressRepository {
   Future<Either<Failure, Address>> getAddress() async {
     bool hasPermission = await locationInfo.locationPermission;
     bool isConnected = await networkInfo.isConnected;
-    if (hasPermission && isConnected) {
-      final currentLocation = await locationInfo.currentLocation;
-      try {
-        final result = await remoteDataSource.getAddress(currentLocation);
-        return Right(result);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else if (!isConnected) {
-      return Left(ConnectionFailure());
-    } else if (!hasPermission) {
-      return Left(LocationFailure());
+    if (!isConnected) return Left(ConnectionFailure());
+    if (!hasPermission) return Left(LocationFailure());
+
+    final currentLocation = await locationInfo.currentLocation;
+    try {
+      final result = await remoteDataSource.getAddress(currentLocation);
+      return Right(result);
+    } on ServerException {
+      return Left(ServerFailure());
     }
   }
 

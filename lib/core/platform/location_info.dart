@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -6,38 +7,33 @@ abstract class LocationInfo {
   Future<bool> get locationPermission;
 }
 
-class LocationData extends LocationInfo {
+class LocationInfoImpl extends LocationInfo {
   final Location location;
-  LocationData(this.location);
-
-  /*bool _serviceEnabled;
-PermissionStatus _permissionGranted;
-LocationData _locationData;
-
-_serviceEnabled = await location.serviceEnabled();
-
-if (!_serviceEnabled) {
-  _serviceEnabled = await location.requestService();
-  if (!_serviceEnabled) {
-    return;
-  }
-}
-
-_permissionGranted = await location.hasPermission();
-if (_permissionGranted == PermissionStatus.denied) {
-  _permissionGranted = await location.requestPermission();
-  if (_permissionGranted != PermissionStatus.granted) {
-    return;
-  }
-}
-
-_locationData = await location.getLocation(); */
+  LocationInfoImpl({@required this.location});
 
   @override
-  // TODO: implement currentLocation
-  Future<LatLng> get currentLocation => throw UnimplementedError();
+  Future<LatLng> get currentLocation async {
+    LocationData locationData = await location.getLocation();
+
+    return LatLng(locationData.latitude, locationData.longitude);
+  }
 
   @override
-  // TODO: implement locationPermission
-  Future<bool> get locationPermission => throw UnimplementedError();
+  Future<bool> get locationPermission async {
+    PermissionStatus _permissionStatus = await location.hasPermission();
+    bool _serviceStatus = await location.serviceEnabled();
+
+    if (!_serviceStatus) {
+      _serviceStatus = await location.requestService();
+    }
+
+    if (_permissionStatus == PermissionStatus.denied) {
+      _permissionStatus = await location.requestPermission();
+    }
+
+    if (_permissionStatus == PermissionStatus.granted && _serviceStatus) {
+      return true;
+    }
+    return false;
+  }
 }
