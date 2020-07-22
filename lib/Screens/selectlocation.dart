@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
-import 'package:hive/hive.dart';
-import 'package:quiky_user/Constants/Apikeys.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
+
+import '../Widgets/LocationPicker/location_picker.dart';
 
 class SelectLocation extends StatefulWidget {
   static final kInitialPosition = LatLng(-33.8567844, 151.213108);
@@ -13,134 +11,45 @@ class SelectLocation extends StatefulWidget {
 }
 
 class _SelectLocationState extends State<SelectLocation> {
-  PickResult selectedPlace;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Google Map Place Picer Demo"),
+        title: Text("Quiky Select Location"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              child: Text("Load Google Map"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PlacePicker(
-                        apiKey: MapApiKey,
-                        initialPosition: SelectLocation.kInitialPosition,
-                        useCurrentLocation: true,
-                        //usePlaceDetailSearch: true,
-                        onPlacePicked: (result) {
-                          selectedPlace = result;
-                          print(selectedPlace.addressComponents);
-                          //Navigator.of(context).pop();
-                          setState(() {});
-                        },
-                        //forceSearchOnZoomChanged: true,
-                        //automaticallyImplyAppBarLeading: false,
-                        //autocompleteLanguage: "ko",
-                        //region: 'au',
-                        selectInitialPosition: true,
-                        selectedPlaceWidgetBuilder:
-                            (_, selectedPlace, state, isSearchBarFocused) {
-                          print(
-                              "state: $state, isSearchBarFocused: $isSearchBarFocused");
-
-                          /*  print(
-                              '${selectedPlace.addressComponents[0].shortName}'); */
-                          return isSearchBarFocused
-                              ? Container()
-                              : SetAddressFloatingButton(
-                                  selectedPlace: selectedPlace,
-                                  state: state,
-                                  isSearchBarFocused: isSearchBarFocused,
-                                );
-                        },
-                        // pinBuilder: (context, state) {
-                        //   if (state == PinState.Idle) {
-                        //     return Icon(Icons.favorite_border);
-                        //   } else {
-                        //     return Icon(Icons.favorite);
-                        //   }
-                        // },
-                      );
-                    },
-                  ),
-                );
-              },
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            child: Container(
+              child: Placeholder(),
             ),
-            /* selectedPlace == null
-                ? Container()
-                : Text(selectedPlace.formattedAddress ?? ""), */
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SetAddressFloatingButton extends StatelessWidget {
-  final PickResult selectedPlace;
-  final SearchingState state;
-  final bool isSearchBarFocused;
-
-  Box box = Hive.box('Address');
-
-  SetAddressFloatingButton({
-    this.isSearchBarFocused,
-    this.selectedPlace,
-    this.state,
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingCard(
-      bottomPosition:
-          32.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
-      leftPosition: 16.0,
-      rightPosition: 16.0,
-      //width: 500,
-      borderRadius: BorderRadius.circular(12.0),
-      child: state == SearchingState.Searching
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    selectedPlace.formattedAddress ?? '',
-                  ),
-                  RaisedButton(
-                    colorBrightness: Brightness.dark,
-                    color: Colors.black,
-                    child: Text(
-                      "SELECT LOCATION",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      AddressModel addressModel = AddressModel(
-                          formattedAddress: selectedPlace.formattedAddress,
-                          shortAddress:
-                              selectedPlace.addressComponents[0].shortName);
-                      box.add(addressModel);
-                      Navigator.pop(context);
-                      print(
-                          "do something with ${selectedPlace.addressComponents[0].types} data");
-                      //Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+          ),
+          Flexible(
+            flex: 1,
+            child: Container(
+              child: Center(
+                child: RaisedButton(
+                  child: Text("Select Location"),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return LoctionPicker();
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
+          ),
+          /* selectedPlace == null
+              ? Container()
+              : Text(selectedPlace.formattedAddress ?? ""), */
+        ],
+      ),
     );
   }
 }

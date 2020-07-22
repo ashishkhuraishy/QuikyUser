@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
+import 'package:provider/provider.dart';
+
+import '../core/Providers/AddressProvider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,23 +9,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Box box = Hive.box('Address');
-
-  AddressModel address;
-
-  @override
-  void initState() {
-    address = box.getAt(0) as AddressModel;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final currentAddress = Provider.of<AddressProvider>(context).currentAddress;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          address.shortAddress,
+          currentAddress.shortAddress ?? '',
           style: TextStyle(
             color: Colors.black,
           ),

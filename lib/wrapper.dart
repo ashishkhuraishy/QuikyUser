@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:quiky_user/Screens/home.dart';
-import 'package:quiky_user/Screens/selectlocation.dart';
+import 'package:provider/provider.dart';
+
+import 'Screens/home.dart';
+import 'Screens/selectlocation.dart';
+import 'core/Providers/AddressProvider.dart';
+import 'features/location_service/data/data_source/address_local_data_sourc.dart';
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WatchBoxBuilder(
-      box: Hive.box('Address'),
-      builder: (context, box) {
-        print(box.toString());
-        if (box.isNotEmpty) {
-          return Home();
-        } else {
-          return SelectLocation();
-        }
-      },
-    );
+    Box addressBox = Hive.box(ADDRESS_BOX);
+    if (addressBox.isEmpty)
+      return SelectLocation();
+    else {
+      Provider.of<AddressProvider>(context).getCurrentAddress();
+      return Home();
+    }
   }
 }
