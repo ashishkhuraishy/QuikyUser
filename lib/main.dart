@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
+import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/wrapper.dart';
 
 void main() async {

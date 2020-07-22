@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
+import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 
 class Home extends StatefulWidget {
   @override

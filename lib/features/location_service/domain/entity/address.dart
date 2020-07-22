@@ -1,13 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/cupertino.dart';
 
 class Address extends Equatable {
-  final String formatedAddress;
+  final String formattedAddress;
   final String shortAddress;
-  final LatLng latLng;
+  final double lat;
+  final double long;
 
-  Address({this.latLng, this.formatedAddress, this.shortAddress});
+  Address({
+    @required this.lat,
+    @required this.long,
+    @required this.formattedAddress,
+    @required this.shortAddress,
+  });
 
   @override
-  List<Object> get props => [formatedAddress, shortAddress, latLng];
+  List<Object> get props => [formattedAddress, shortAddress, lat, long];
 }

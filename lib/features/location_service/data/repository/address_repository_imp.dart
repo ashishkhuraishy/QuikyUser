@@ -1,13 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:quiky_user/core/error/exception.dart';
-import 'package:quiky_user/core/error/failure.dart';
-import 'package:quiky_user/core/platform/location_info.dart';
-import 'package:quiky_user/core/platform/network_info.dart';
-import 'package:quiky_user/features/location_service/data/data_source/address_local_data_sourc.dart';
-import 'package:quiky_user/features/location_service/data/data_source/address_remote_data_source.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
-import 'package:quiky_user/features/location_service/domain/repository/address_repo.dart';
+
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/platform/location_info.dart';
+import '../../../../core/platform/network_info.dart';
+import '../../domain/entity/address.dart';
+import '../../domain/repository/address_repo.dart';
+import '../data_source/address_local_data_sourc.dart';
+import '../data_source/address_remote_data_source.dart';
+import '../model/address_model.dart';
 
 class AddressRepositoryImpl extends AddressRepository {
   final NetworkInfo networkInfo;
@@ -26,8 +27,15 @@ class AddressRepositoryImpl extends AddressRepository {
   Future<Either<Failure, Address>> getAddress() async {
     bool hasPermission = await locationInfo.locationPermission;
     bool isConnected = await networkInfo.isConnected;
-    if (!isConnected) return Left(ConnectionFailure());
-    if (!hasPermission) return Left(LocationFailure());
+
+    if (!isConnected || !hasPermission) {
+      try {
+        return Right(await localDataSource.getAnyAddress());
+      } on CacheException {
+        if (!isConnected) return Left(ConnectionFailure());
+        if (!hasPermission) return Left(LocationFailure());
+      }
+    }
 
     final currentLocation = await locationInfo.currentLocation;
     try {
@@ -39,8 +47,11 @@ class AddressRepositoryImpl extends AddressRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> cacheAddress(AddressModel address) {
-    // TODO: implement cacheAddress
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> cacheAddress(AddressModel address) async {
+    final response = await localDataSource.cacheAddress(address);
+    if (response) {
+      return Right(true);
+    }
+    return Left(CacheFailure());
   }
 }

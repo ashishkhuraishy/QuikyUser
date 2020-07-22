@@ -3,7 +3,7 @@ import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:hive/hive.dart';
 import 'package:quiky_user/Constants/Apikeys.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
+import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 
 class SelectLocation extends StatefulWidget {
   static final kInitialPosition = LatLng(-33.8567844, 151.213108);
@@ -128,7 +128,7 @@ class SetAddressFloatingButton extends StatelessWidget {
                     ),
                     onPressed: () {
                       AddressModel addressModel = AddressModel(
-                          formatedAddress: selectedPlace.formattedAddress,
+                          formattedAddress: selectedPlace.formattedAddress,
                           shortAddress:
                               selectedPlace.addressComponents[0].shortName);
                       box.add(addressModel);

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
@@ -26,10 +24,8 @@ main() {
     formattedAddress:
         'Aroor - Thoppumpady Rd, Valummel, Kochi, Kerala 682005, India',
     shortAddress: 'Aroor - Thoppumpady Rd',
-    latLng: LatLng(
-      9.9311521,
-      76.2673925,
-    ),
+    lat: 9.9311521,
+    long: 76.2673925,
   );
 
   test('should perform a get request on gMap api', () {

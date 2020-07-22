@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 import 'package:quiky_user/features/location_service/domain/repository/address_repo.dart';
@@ -17,8 +16,12 @@ void main() {
     getAddress = GetAddress(mockAddressRepo);
   });
 
-  final tAddress =
-      Address(formatedAddress: '', shortAddress: '', latLng: LatLng(0.0, 0.0));
+  final tAddress = Address(
+    formattedAddress: '',
+    shortAddress: '',
+    lat: 9.9311521,
+    long: 76.2673925,
+  );
 
   test('should return a Address obj when called', () async {
     when(mockAddressRepo.getAddress())

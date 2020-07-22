@@ -48,10 +48,8 @@ main() async {
     formattedAddress:
         'Aroor - Thoppumpady Rd, Valummel, Kochi, Kerala 682005, India',
     shortAddress: 'Aroor - Thoppumpady Rd',
-    latLng: LatLng(
-      9.9311521,
-      76.2673925,
-    ),
+    lat: 9.9311521,
+    long: 76.2673925,
   );
 
   group('getAddress', () {
@@ -93,8 +91,7 @@ main() async {
         expect(result, Right(tAddressModel));
       });
 
-      test('should return [ServerFailure] if remote call unsucessful',
-          () async {
+      test('should throw [ServerFailure] if remote call unsucessful', () async {
         when(mockRemoteDataSource.getAddress(any)).thenThrow(ServerException());
 
         final result = await repositoryImpl.getAddress();
@@ -105,8 +102,39 @@ main() async {
       });
     });
 
-    test('return Network Failure if no Internet Connection available',
+    test(
+        'should return data from the localStorage if no Internet Connection available or no service available',
         () async {
+      when(mockLocationInfo.locationPermission)
+          .thenAnswer((realInvocation) async => false);
+      when(mockNetworkInfo.isConnected)
+          .thenAnswer((realInvocation) async => false);
+      when(mockLocalDataSource.getAnyAddress())
+          .thenAnswer((realInvocation) async => tAddressModel);
+
+      final result = await repositoryImpl.getAddress();
+      verify(mockLocalDataSource.getAnyAddress());
+      verifyZeroInteractions(mockRemoteDataSource);
+      expect(result, Right(tAddressModel));
+    });
+
+    test(
+        'return Location Failure if LocationPermission denied and localStorage gives [CacheException]',
+        () async {
+      when(mockLocalDataSource.getAnyAddress()).thenThrow(CacheException());
+      when(mockLocationInfo.locationPermission)
+          .thenAnswer((realInvocation) async => false);
+      when(mockNetworkInfo.isConnected)
+          .thenAnswer((realInvocation) async => true);
+
+      final result = await repositoryImpl.getAddress();
+      verifyZeroInteractions(mockRemoteDataSource);
+      expect(result, Left(LocationFailure()));
+    });
+    test(
+        'return Connection Failure if device not connected and localStorage gives [CacheException]',
+        () async {
+      when(mockLocalDataSource.getAnyAddress()).thenThrow(CacheException());
       when(mockLocationInfo.locationPermission)
           .thenAnswer((realInvocation) async => true);
       when(mockNetworkInfo.isConnected)
@@ -116,16 +144,33 @@ main() async {
       verifyZeroInteractions(mockRemoteDataSource);
       expect(result, Left(ConnectionFailure()));
     });
+  });
 
-    test('return Location Failure if LocationPermission denied', () async {
-      when(mockLocationInfo.locationPermission)
-          .thenAnswer((realInvocation) async => false);
-      when(mockNetworkInfo.isConnected)
+  group('cache address', () {
+    test('should forward to localService cache method', () async {
+      when(mockLocalDataSource.cacheAddress(any))
+          .thenAnswer((realInvocation) async => true);
+      await repositoryImpl.cacheAddress(tAddressModel);
+      verify(mockLocalDataSource.cacheAddress(tAddressModel));
+    });
+
+    test('should return true if the caching is sucess', () async {
+      when(mockLocalDataSource.cacheAddress(any))
           .thenAnswer((realInvocation) async => true);
 
-      final result = await repositoryImpl.getAddress();
-      verifyZeroInteractions(mockRemoteDataSource);
-      expect(result, Left(LocationFailure()));
+      final result = await repositoryImpl.cacheAddress(tAddressModel);
+      verify(mockLocalDataSource.cacheAddress(tAddressModel));
+      expect(result, Right(true));
+    });
+
+    test('should return [CacheFailure] if the caching is unsucessful',
+        () async {
+      when(mockLocalDataSource.cacheAddress(any))
+          .thenAnswer((realInvocation) async => false);
+
+      final result = await repositoryImpl.cacheAddress(tAddressModel);
+      verify(mockLocalDataSource.cacheAddress(tAddressModel));
+      expect(result, Left(CacheFailure()));
     });
   });
 }
