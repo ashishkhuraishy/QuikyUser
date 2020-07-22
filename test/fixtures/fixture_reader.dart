@@ -1,3 +1,7 @@
 import 'dart:io';
 
-String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
+import 'package:path/path.dart';
+
+String fixture(String name) => File(join(
+        dirname(Platform.script.toFilePath()), 'test', 'fixtures', '$name'))
+    .readAsStringSync();
