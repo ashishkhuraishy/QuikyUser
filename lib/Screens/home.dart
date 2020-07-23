@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
 import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/HomeMegaButton.dart';
 import 'package:quiky_user/widgets/DividerLight.dart';
 import 'package:quiky_user/widgets/OptionCard.dart';
 import 'package:quiky_user/widgets/StoreCard.dart';
+import 'package:provider/provider.dart';
+
+import '../core/Providers/AddressProvider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,18 +14,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Box box = Hive.box('Address');
-
-  AddressModel address;
-
-  @override
-  void initState() {
-    address = box.getAt(0) as AddressModel;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final currentAddress = Provider.of<AddressProvider>(context).currentAddress;
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +27,7 @@ class _HomeState extends State<Home> {
               child: Image.asset('assets/img/map-pointer.png'),
             ),
             Text(
-              address.shortAddress,
+              currentAddress.shortAddress ?? '',
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.black,
@@ -44,8 +36,6 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -225,7 +215,7 @@ class _HomeState extends State<Home> {
             ),
             DividerLight(scWidth: scWidth),
             Container(
-              padding: EdgeInsets.only(top:10,left:10,right:10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
               width: scWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,30 +233,30 @@ class _HomeState extends State<Home> {
             ),
             ListView(
               physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(left:10),
+              padding: EdgeInsets.only(left: 10),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
                 StoreCard(
-                  scWidth: scWidth+20,
+                  scWidth: scWidth + 20,
                 ),
               ],
             ),
