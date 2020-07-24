@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/FoodSafetyDot.dart';
+
+import '../theme/themedata.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -14,19 +13,19 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left:15.0,bottom:15.0,right:15.0),
+      padding: const EdgeInsets.only(left: 15.0, bottom: 15.0, right: 15.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            child: Image.asset(
-                    "assets/img/Burger.jpeg",
-                    width: 90,
-                    height: 110,
-                    fit: BoxFit.fill,
-                  )//FoodSafetyDot(),
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              child: Image.asset(
+                "assets/img/Burger.jpeg",
+                width: 90,
+                height: 110,
+                fit: BoxFit.fill,
+              ) //FoodSafetyDot(),
+              ),
           Container(
             constraints: BoxConstraints(
               maxWidth: scWidth - 120,
@@ -61,7 +60,7 @@ class ProductCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text("Add"),
-                          Icon(Icons.add,color:primary)
+                          Icon(Icons.add, color: primary)
                         ],
                       ),
                     ))

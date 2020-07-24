@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
-import 'package:quiky_user/Screens/CartTab.dart';
-import 'package:quiky_user/Screens/ProfileTab.dart';
-import 'package:quiky_user/Screens/SearchTab.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/HomeMegaButton.dart';
-import 'package:quiky_user/widgets/DividerLight.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
-import 'package:quiky_user/widgets/StoreCard.dart';
 import 'package:provider/provider.dart';
 
 import '../core/Providers/AddressProvider.dart';
-
+import '../theme/themedata.dart';
+import 'CartTab.dart';
 import 'HomeTab.dart';
+import 'ProfileTab.dart';
+import 'SearchTab.dart';
 
 class Home extends StatefulWidget {
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
 
 class OptionCard extends StatelessWidget {
   const OptionCard({
@@ -25,8 +24,16 @@ class OptionCard extends StatelessWidget {
                 image,
                 width: 70,
               )),
-          Text(title,style: Theme.of(context).textTheme.bodyText1,),
-          secondTitle != null ? Text(secondTitle,style: Theme.of(context).textTheme.subtitle1,): Container()
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          secondTitle != null
+              ? Text(
+                  secondTitle,
+                  style: Theme.of(context).textTheme.subtitle1,
+                )
+              : Container()
         ],
       ),
     );

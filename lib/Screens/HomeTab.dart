@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/DividerLight.dart';
-import 'package:quiky_user/widgets/HomeMegaButton.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
-import 'package:quiky_user/widgets/StoreCard.dart';
+
+import '../core/Providers/AddressProvider.dart';
+import '../theme/themedata.dart';
+import '../widgets/HomeMegaButton.dart';
+import '../widgets/OptionCard.dart';
+import '../widgets/StoreCard.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({
@@ -186,10 +184,8 @@ class HomeTab extends StatelessWidget {
                     "Popular Brands",
                     style: Theme.of(context).textTheme.headline5,
                   ),
-                  Text(
-                    "Most ordered from around your locality",
-                    style: Theme.of(context).textTheme.subtitle1
-                  ),
+                  Text("Most ordered from around your locality",
+                      style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
