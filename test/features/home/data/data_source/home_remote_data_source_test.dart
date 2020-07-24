@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:quiky_user/core/error/exception.dart';
 import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/home/data/model/recipie_model.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 import '../../../location_service/data/data_source/address_remote_data_source_test.dart';
@@ -34,6 +35,8 @@ main() {
     ),
   ];
 
+  final lat = 0.0, long = 0.0;
+
   group('Get Recipies', () {
     final url = 'http://3.7.65.63/api/recipe/';
 
@@ -63,6 +66,151 @@ main() {
       final result = dataSourceImpl.getRecipies;
       expect(() => result(), throwsA(isA<ServerException>()));
       verify(mockClient.get(url));
+    });
+  });
+
+  group('Get Featured', () {
+    final url = BASE_URL + '/store_list/';
+
+    setUp(() {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 200),
+      );
+    });
+
+    test('should perform a get() on the url', () {
+      dataSourceImpl.getFeatured(lat: lat, long: long);
+      verify(mockClient.get(any));
+    });
+
+    test('should return List<RestaurentModel> when status 200', () async {
+      final result = await dataSourceImpl.getFeatured(lat: lat, long: long);
+      verify(mockClient.get(
+          url + '?lat=$lat&lon=$long&featured_brand=true&store_type=food'));
+
+      expect(result, isA<List<Restaurant>>());
+    });
+
+    test('should throw ServerException when status not 200', () async {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 404),
+      );
+
+      final result = dataSourceImpl.getFeatured;
+      expect(
+          () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
+      verify(mockClient.get(
+        url + '?lat=$lat&lon=$long&featured_brand=true&store_type=food',
+      ));
+    });
+  });
+
+  group('Get Popular', () {
+    final url = BASE_URL + '/store_list/';
+
+    setUp(() {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 200),
+      );
+    });
+
+    test('should perform a get() on the url', () {
+      dataSourceImpl.getPopular(lat: lat, long: long);
+      verify(mockClient.get(any));
+    });
+
+    test('should return List<RestaurentModel> when status 200', () async {
+      final result = await dataSourceImpl.getPopular(lat: lat, long: long);
+      verify(mockClient.get(url + '?lat=$lat&lon=$long&popular_brand=true'));
+
+      expect(result, isA<List<Restaurant>>());
+    });
+
+    test('should throw ServerException when status not 200', () async {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 404),
+      );
+
+      final result = dataSourceImpl.getPopular;
+      expect(
+          () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
+      verify(mockClient.get(
+        url + '?lat=$lat&lon=$long&popular_brand=true',
+      ));
+    });
+  });
+
+  group('Get Trending Restaurants', () {
+    final url = BASE_URL + '/store_list/';
+
+    setUp(() {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 200),
+      );
+    });
+
+    test('should perform a get() on the url', () {
+      dataSourceImpl.getTrendingRestaurents(lat: lat, long: long);
+      verify(mockClient.get(any));
+    });
+
+    test('should return List<RestaurentModel> when status 200', () async {
+      final result =
+          await dataSourceImpl.getTrendingRestaurents(lat: lat, long: long);
+      verify(mockClient
+          .get(url + '?lat=$lat&lon=$long&option=trending&store_type=food'));
+
+      expect(result, isA<List<Restaurant>>());
+    });
+
+    test('should throw ServerException when status not 200', () async {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 404),
+      );
+
+      final result = dataSourceImpl.getTrendingRestaurents;
+      expect(
+          () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
+      verify(mockClient.get(
+        url + '?lat=$lat&lon=$long&option=trending&store_type=food',
+      ));
+    });
+  });
+
+  group('Get Trending groceries', () {
+    final url = BASE_URL + '/store_list/';
+
+    setUp(() {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 200),
+      );
+    });
+
+    test('should perform a get() on the url', () {
+      dataSourceImpl.getTrendingGrocery(lat: lat, long: long);
+      verify(mockClient.get(any));
+    });
+
+    test('should return List<RestaurentModel> when status 200', () async {
+      final result =
+          await dataSourceImpl.getTrendingGrocery(lat: lat, long: long);
+      verify(mockClient
+          .get(url + '?lat=$lat&lon=$long&option=trending&store_type=grocery'));
+
+      expect(result, isA<List<Restaurant>>());
+    });
+
+    test('should throw ServerException when status not 200', () async {
+      when(mockClient.get(any)).thenAnswer(
+        (realInvocation) async => Response(fixture('brands.json'), 404),
+      );
+
+      final result = dataSourceImpl.getTrendingGrocery;
+      expect(
+          () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
+      verify(mockClient.get(
+        url + '?lat=$lat&lon=$long&option=trending&store_type=grocery',
+      ));
     });
   });
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:quiky_user/core/error/failure.dart';
-import 'package:quiky_user/features/home/data/model/recipie_model.dart';
-import 'package:quiky_user/features/home/domain/entity/recipie.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_recipies.dart';
 
+import '../../features/home/data/model/recipie_model.dart';
+import '../../features/home/domain/entity/recipie.dart';
+import '../../features/home/domain/usecase/get_recipies.dart';
 import '../../injection_container.dart';
+import '../error/failure.dart';
 
 class HomeProvider extends ChangeNotifier {
   List<RecipieModel> _recipies;
