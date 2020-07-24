@@ -23,5 +23,5 @@ jobs:
       # run static analys code
       # - run: flutter  analyze
       # run  flutter widgets tests  and unit tests
-      - run: flutter test test
+      - run: flutter test
      
