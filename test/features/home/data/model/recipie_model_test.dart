@@ -8,10 +8,11 @@ import '../../../../fixtures/fixture_reader.dart';
 
 main() {
   RecipieModel recipieModel = RecipieModel(
-      id: 1,
-      title: 'test filter',
-      imgUrl: 'http://3.7.65.63/media/1_BitcONx.jpg',
-      stores: [1]);
+    id: 1,
+    title: 'test filter',
+    imgUrl: 'http://3.7.65.63/media/1_BitcONx.jpg',
+    stores: [1],
+  );
 
   test('should be subType of Recipie', () {
     expect(recipieModel, isA<Recipie>());
