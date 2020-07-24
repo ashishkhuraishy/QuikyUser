@@ -40,12 +40,14 @@ class HomeProvider extends ChangeNotifier {
   /// Call this fn each time the location is changed
   ///
   /// Only call this after making sure Lat & Long are non - null
-  getData(double lat, double long) {
+  getData(double lat, double long) async {
     _getRecipiesData();
-    _trendingGrosList = _getRestaurantData(_getTrendingRestaurents, lat, long);
-    _featuredList = _getRestaurantData(_getFeatured, lat, long);
-    _populatList = _getRestaurantData(_getPopular, lat, long);
-    _trendingGrosList = _getRestaurantData(_getTrendingGrocery, lat, long);
+    _trendingGrosList =
+        await _getRestaurantData(_getTrendingRestaurents, lat, long);
+    _featuredList = await _getRestaurantData(_getFeatured, lat, long);
+    _populatList = await _getRestaurantData(_getPopular, lat, long);
+    _trendingGrosList =
+        await _getRestaurantData(_getTrendingGrocery, lat, long);
   }
 
   /// Local Helper Methods
@@ -85,7 +87,7 @@ class HomeProvider extends ChangeNotifier {
           _error = 3;
       }
       notifyListeners();
-      return null;
+      return [];
     }, (value) {
       notifyListeners();
       return value;
