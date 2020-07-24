@@ -20,8 +20,8 @@ main() {
   });
 
   group('fromJson', () {
-    test('should return a [AddressModel] from the given json', () async {
-      final tJson = jsonDecode(await fixture('geo_coding_response.json'));
+    test('should return a [AddressModel] from the given json', () {
+      final tJson = jsonDecode(fixture('geo_coding_response.json'));
 
       final result = AddressModel.fromJson(tJson);
       expect(result, tAddressModel);
