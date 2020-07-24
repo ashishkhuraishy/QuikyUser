@@ -14,7 +14,7 @@ class HomeProvider extends ChangeNotifier {
   List<Recipie> get getRecipies => _recipies;
   int get error => _error;
 
-  getData() {
+  getData(double lat, double long) {
     _getRecipiesData();
   }
 
