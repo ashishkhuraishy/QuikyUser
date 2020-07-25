@@ -8,6 +8,8 @@ import 'package:quiky_user/features/home/domain/entity/recipie.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import 'package:quiky_user/features/home/domain/repository/home_repository.dart';
 
+typedef Future<List<Restaurant>> _GetRestaurantsOrError();
+
 class HomeRepositoryImpl extends HomeRepository {
   final HomeRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
@@ -32,61 +34,53 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, List<Restaurant>>> getFeatured(
       {double lat, double long}) async {
-    if (!await networkInfo.isConnected) return Left(ConnectionFailure());
-
-    try {
-      final result = await remoteDataSource.getFeatured(
+    return await _getRestaurants(
+      () => remoteDataSource.getFeatured(
         lat: lat,
         long: long,
-      );
-      return Right(result);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
+      ),
+    );
   }
 
   @override
   Future<Either<Failure, List<Restaurant>>> getPopular(
       {double lat, double long}) async {
-    if (!await networkInfo.isConnected) return Left(ConnectionFailure());
-
-    try {
-      final result = await remoteDataSource.getPopular(
+    return await _getRestaurants(
+      () => remoteDataSource.getPopular(
         lat: lat,
         long: long,
-      );
-      return Right(result);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
+      ),
+    );
   }
 
   @override
   Future<Either<Failure, List<Restaurant>>> getTrendingGrocery(
       {double lat, double long}) async {
-    if (!await networkInfo.isConnected) return Left(ConnectionFailure());
-
-    try {
-      final result = await remoteDataSource.getTrendingGrocery(
+    return await _getRestaurants(
+      () => remoteDataSource.getTrendingGrocery(
         lat: lat,
         long: long,
-      );
-      return Right(result);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
+      ),
+    );
   }
 
   @override
   Future<Either<Failure, List<Restaurant>>> getTrendingRestaurents(
       {double lat, double long}) async {
+    return await _getRestaurants(
+      () => remoteDataSource.getTrendingRestaurents(
+        lat: lat,
+        long: long,
+      ),
+    );
+  }
+
+  Future<Either<Failure, List<Restaurant>>> _getRestaurants(
+      _GetRestaurantsOrError _getRestaurantsOrError) async {
     if (!await networkInfo.isConnected) return Left(ConnectionFailure());
 
     try {
-      final result = await remoteDataSource.getTrendingRestaurents(
-        lat: lat,
-        long: long,
-      );
+      final result = await _getRestaurantsOrError();
       return Right(result);
     } on ServerException {
       return Left(ServerFailure());

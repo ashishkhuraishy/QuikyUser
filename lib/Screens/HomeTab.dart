@@ -20,6 +20,13 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () => Provider.of<HomeProvider>(context, listen: false)
+                .getData(10.0261, 76.3125),
+          ),
+        ],
         title: GestureDetector(
           onTap: () {
             Navigator.of(context).popAndPushNamed('/selectlocation');
