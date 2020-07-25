@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
 class VariationModel extends Variation {
-  int id;
-  String image;
-  String title;
-  String color;
-  String weight;
-  String size;
-  bool isStock;
-  String price;
-  String quantity;
-  String updated;
-  bool active;
-  int productId;
+  final int id;
+  final String image;
+  final String title;
+  final String color;
+  final String weight;
+  final String size;
+  final bool isStock;
+  final String price;
+  final String quantity;
+  final String updated;
+  final bool active;
+  final int productId;
 
   VariationModel({
     @required this.id,
@@ -43,18 +43,20 @@ class VariationModel extends Variation {
           productId: productId,
         );
 
-  VariationModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    image = json['image'] ?? '';
-    title = json['title'] ?? '';
-    color = json['color'] ?? '';
-    weight = json['weight'] ?? '';
-    size = json['size'] ?? '';
-    isStock = json['is_stock'] ?? false;
-    price = json['price'] ?? '';
-    quantity = json['quantity'] ?? '';
-    updated = json['updated'] ?? '';
-    active = json['active'] ?? false;
-    productId = json['product'] ?? -1;
+  factory VariationModel.fromJson(Map<String, dynamic> json) {
+    return VariationModel(
+      id: json['id'],
+      image: json['image'] ?? '',
+      title: json['title'] ?? '',
+      color: json['color'] ?? '',
+      weight: json['weight'] ?? '',
+      size: json['size'] ?? '',
+      isStock: json['is_stock'] ?? false,
+      price: json['price'] ?? '',
+      quantity: json['quantity'] ?? '',
+      updated: json['updated'] ?? '',
+      active: json['active'] ?? false,
+      productId: json['product'] ?? -1,
+    );
   }
 }

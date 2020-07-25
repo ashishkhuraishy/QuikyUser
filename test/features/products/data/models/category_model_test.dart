@@ -7,7 +7,7 @@ import 'package:quiky_user/features/products/domain/entity/category.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 main() {
-  test('should return a valid VariationModel from the json', () {
+  test('should return a valid CategoryModel from the json', () {
     final data = jsonDecode(fixture('category.json'));
 
     final result = CategoryModel.fromJson(data);

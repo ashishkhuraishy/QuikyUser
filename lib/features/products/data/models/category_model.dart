@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/products/domain/entity/category.dart';
 
 class CategoryModel extends Category {
-  int id;
-  String imgUrl;
-  String title;
-  int userId;
+  final int id;
+  final String imgUrl;
+  final String title;
+  final int userId;
 
   CategoryModel({
     @required this.id,
@@ -19,10 +19,12 @@ class CategoryModel extends Category {
           userId: userId,
         );
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    imgUrl = json['image'];
-    title = json['title'];
-    userId = json['user'];
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['id'],
+      imgUrl: json['image'],
+      title: json['title'],
+      userId: json['user'],
+    );
   }
 }

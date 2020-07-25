@@ -1,55 +1,56 @@
+import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/products/data/models/category_model.dart';
 import 'package:quiky_user/features/products/data/models/variation_model.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 
 class ProductModel extends Product {
-  int id;
-  List<String> productimage;
-  List<VariationModel> variation;
-  List<String> productreviews;
-  List<String> productviews;
-  CategoryModel category;
-  String image;
-  String title;
-  String sku;
-  String tax;
-  String description;
-  int quantity;
-  String discount;
-  bool isStock;
-  bool isFeatured;
-  bool isDiscount;
-  String vegNvEgg;
-  bool active;
-  String timestamp;
-  String updated;
-  int user;
-  String filter;
+  final int id;
+  final List<String> productimage;
+  final List<VariationModel> variation;
+  final List<String> productreviews;
+  final List<String> productviews;
+  final CategoryModel category;
+  final String image;
+  final String title;
+  final String sku;
+  final String tax;
+  final String description;
+  final int quantity;
+  final String discount;
+  final bool isStock;
+  final bool isFeatured;
+  final bool isDiscount;
+  final String vegNvEgg;
+  final bool active;
+  final String timestamp;
+  final String updated;
+  final int user;
+  final String filter;
 
-  ProductModel(
-      {this.id,
-      this.productimage,
-      this.variation,
-      this.productreviews,
-      this.productviews,
-      this.category,
-      this.image,
-      this.title,
-      this.sku,
-      this.tax,
-      this.description,
-      this.quantity,
-      this.discount,
-      this.isStock,
-      this.isFeatured,
-      this.isDiscount,
-      this.vegNvEgg,
-      this.active,
-      this.timestamp,
-      this.updated,
-      this.user,
-      this.filter})
-      : super(
+  ProductModel({
+    @required this.id,
+    @required this.productimage,
+    @required this.variation,
+    @required this.productreviews,
+    @required this.productviews,
+    @required this.category,
+    @required this.image,
+    @required this.title,
+    @required this.sku,
+    @required this.tax,
+    @required this.description,
+    @required this.quantity,
+    @required this.discount,
+    @required this.isStock,
+    @required this.isFeatured,
+    @required this.isDiscount,
+    @required this.vegNvEgg,
+    @required this.active,
+    @required this.timestamp,
+    @required this.updated,
+    @required this.user,
+    @required this.filter,
+  }) : super(
           id: id,
           productImages: productimage,
           variations: variation,
@@ -74,54 +75,42 @@ class ProductModel extends Product {
           filter: filter,
         );
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    if (json['productimage'] != null) {
-      productimage = new List<String>();
-      json['productimage'].forEach((v) {
-        productimage.add(v);
-      });
-    } else
-      productimage = [];
-    if (json['variation'] != null) {
-      variation = new List<VariationModel>();
-      json['variation'].forEach((v) {
-        variation.add(new VariationModel.fromJson(v));
-      });
-    } else
-      variation = [];
-    if (json['productreviews'] != String) {
-      productreviews = new List<String>();
-      json['productreviews'].forEach((v) {
-        productreviews.add(v);
-      });
-    } else
-      productreviews = [];
-    if (json['productviews'] != String) {
-      productviews = new List<String>();
-      json['productviews'].forEach((v) {
-        productviews.add(v);
-      });
-    } else
-      productviews = [];
-    category = json['category'] != String
-        ? new CategoryModel.fromJson(json['category'])
-        : [];
-    image = json['image'] ?? '';
-    title = json['title'] ?? '';
-    sku = json['sku'] ?? '';
-    tax = json['tax'] ?? '';
-    description = json['description'] ?? '';
-    quantity = json['quantity'] ?? 0;
-    discount = json['discount'] ?? '';
-    isStock = json['is_stock'] ?? false;
-    isFeatured = json['is_featured'] ?? false;
-    isDiscount = json['is_discount'] ?? false;
-    vegNvEgg = json['veg_nv_egg'] ?? '';
-    active = json['active'] ?? false;
-    timestamp = json['timestamp'] ?? '';
-    updated = json['updated'] ?? '';
-    user = json['user'] ?? -1;
-    filter = json['filter'] ?? '';
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'],
+      productimage: json['productimage'] != null
+          ? json['productimage'].map<String>((e) => e.toString()).toList()
+          : [],
+      variation: json['variation'] != null
+          ? json['variation']
+              .map<VariationModel>((e) => VariationModel.fromJson(e))
+              .toList()
+          : [],
+      productreviews: json['productreviews'] != null
+          ? json['productreviews'].map<String>((e) => e.toString()).toList()
+          : [],
+      productviews: json['productviews'] != null
+          ? json['productviews'].map<String>((e) => e.toString()).toList()
+          : [],
+      category: json['category'] != null
+          ? CategoryModel.fromJson(json['category'])
+          : CategoryModel(id: null, imgUrl: null, title: null, userId: null),
+      image: json['image'] ?? '',
+      title: json['title'] ?? '',
+      sku: json['sku'] ?? '',
+      tax: json['tax'] ?? '',
+      description: json['description'] ?? '',
+      quantity: json['quantity'] ?? 0,
+      discount: json['discount'] ?? '',
+      isStock: json['is_stock'] ?? false,
+      isFeatured: json['is_featured'] ?? false,
+      isDiscount: json['is_discount'] ?? false,
+      vegNvEgg: json['veg_nv_egg'] ?? '',
+      active: json['active'] ?? false,
+      timestamp: json['timestamp'] ?? '',
+      updated: json['updated'] ?? '',
+      user: json['user'] ?? -1,
+      filter: json['filter'] ?? '',
+    );
   }
 }
