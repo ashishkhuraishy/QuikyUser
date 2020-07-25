@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/Store.dart';
 import 'package:quiky_user/Screens/selectlocation.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Providers/HomeProvider.dart';
 import 'package:quiky_user/features/location_service/data/data_source/address_local_data_sourc.dart';
 import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AddressProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeProvider(),
         ),
       ],
       child: MaterialApp(

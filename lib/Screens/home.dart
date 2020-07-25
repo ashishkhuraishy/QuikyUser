@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../core/Providers/AddressProvider.dart';
 import '../theme/themedata.dart';
 import 'CartTab.dart';
 import 'HomeTab.dart';
@@ -26,7 +24,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final currentAddress = Provider.of<AddressProvider>(context).currentAddress;
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: TabBarView(

@@ -44,8 +44,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     if (response.statusCode == 200) {
       List body = jsonDecode(response.body);
       return body.map<RecipieModel>((e) => RecipieModel.fromJson(e)).toList();
-    } else
+    } else {
+      _debug(response);
       throw ServerException();
+    }
   }
 
   @override
@@ -59,8 +61,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       return body
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
-    } else
+    } else {
+      _debug(response);
       throw ServerException();
+    }
   }
 
   @override
@@ -73,8 +77,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       return body
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
-    } else
+    } else {
+      _debug(response);
       throw ServerException();
+    }
   }
 
   @override
@@ -89,8 +95,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       return body
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
-    } else
+    } else {
+      _debug(response);
       throw ServerException();
+    }
   }
 
   @override
@@ -105,7 +113,21 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       return body
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
-    } else
+    } else {
+      _debug(response);
       throw ServerException();
+    }
   }
+
+  _debug(Response response) {
+    print(response.statusCode);
+    print(response.body);
+  }
+
+  /*
+    _debugResponse(Response response, String name) {
+      print('$name finished with StatusCode ${response.statusCode}');
+      print(response.body);
+    } 
+  */
 }

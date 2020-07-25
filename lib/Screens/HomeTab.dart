@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../core/Providers/AddressProvider.dart';
+import '../core/Providers/HomeProvider.dart';
 import '../theme/themedata.dart';
 import '../widgets/HomeMegaButton.dart';
 import '../widgets/OptionCard.dart';
