@@ -1,4 +1,4 @@
-[
+
     {
         "id": 38,
         "productimage": [],
@@ -42,49 +42,5 @@
         "updated": "2020-07-21T11:36:42.476340+05:30",
         "user": 27,
         "filter": null
-    },
-    {
-        "id": 39,
-        "productimage": [],
-        "variation": [
-            {
-                "id": 29,
-                "image": null,
-                "title": null,
-                "color": null,
-                "weight": null,
-                "size": null,
-                "is_stock": true,
-                "price": "180.00",
-                "quantity": null,
-                "updated": "2020-06-21T22:30:26.424375+05:30",
-                "active": true,
-                "product": 39
-            }
-        ],
-        "productreviews": [],
-        "productviews": [],
-        "category": {
-            "id": 17,
-            "image": "http://34.67.186.69/media/14_rhIxYYK.png",
-            "title": "Combo",
-            "user": 27
-        },
-        "image": null,
-        "title": "Veg. Fried Rice+Gobi Manchurian",
-        "sku": null,
-        "tax": "5.00",
-        "description": "",
-        "quantity": 0,
-        "discount": "0.00",
-        "is_stock": true,
-        "is_featured": true,
-        "is_discount": false,
-        "veg_nv_egg": "veg",
-        "active": false,
-        "timestamp": "2020-06-21T22:26:33.662653+05:30",
-        "updated": "2020-07-21T11:36:42.749669+05:30",
-        "user": 27,
-        "filter": null
     }
-]
+    
