@@ -13,7 +13,8 @@ class SearchTab extends StatelessWidget {
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.go,
           style: Theme.of(context).textTheme.bodyText1,
-          decoration:searchDecoration("Search Restaurants and foods"),
+          decoration: InputDecoration(
+              hintText: "Search Restaurants and foods",),
           autofocus: true,
         ),
       ),

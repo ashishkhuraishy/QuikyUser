@@ -1,0 +1,382 @@
+{
+   "plus_code" : {
+      "compound_code" : "W7J8+FW Kochi, Kerala, India",
+      "global_code" : "6JXRW7J8+FW"
+   },
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Aroor - Thoppumpady Road",
+               "short_name" : "Aroor - Thoppumpady Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Valummel",
+               "short_name" : "Valummel",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Kochi",
+               "short_name" : "Kochi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ernakulam",
+               "short_name" : "EKM",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "682005",
+               "short_name" : "682005",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Aroor - Thoppumpady Rd, Valummel, Kochi, Kerala 682005, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 9.9312763,
+                  "lng" : 76.26747320000001
+               },
+               "southwest" : {
+                  "lat" : 9.9310279,
+                  "lng" : 76.26731169999999
+               }
+            },
+            "location" : {
+               "lat" : 9.9311521,
+               "lng" : 76.2673925
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 9.932501080291503,
+                  "lng" : 76.2687414302915
+               },
+               "southwest" : {
+                  "lat" : 9.929803119708499,
+                  "lng" : 76.26604346970849
+               }
+            }
+         },
+         "place_id" : "ChIJSy2lGn9tCDsR9B2f6aHU-xU",
+         "types" : [ "route" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Valummel",
+               "short_name" : "Valummel",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Kochi",
+               "short_name" : "Kochi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ernakulam",
+               "short_name" : "EKM",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Valummel, Kochi, Kerala, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 9.931923899999999,
+                  "lng" : 76.27042280000001
+               },
+               "southwest" : {
+                  "lat" : 9.921901,
+                  "lng" : 76.26049069999999
+               }
+            },
+            "location" : {
+               "lat" : 9.927531999999999,
+               "lng" : 76.2638427
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 9.931923899999999,
+                  "lng" : 76.27042280000001
+               },
+               "southwest" : {
+                  "lat" : 9.921901,
+                  "lng" : 76.26049069999999
+               }
+            }
+         },
+         "place_id" : "ChIJX0aCPIJtCDsRKDQc6HwRPTs",
+         "types" : [ "political", "sublocality", "sublocality_level_1" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "682005",
+               "short_name" : "682005",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "Kochi",
+               "short_name" : "Kochi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ernakulam",
+               "short_name" : "EKM",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Kochi, Kerala 682005, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 9.940227999999999,
+                  "lng" : 76.2766365
+               },
+               "southwest" : {
+                  "lat" : 9.922023899999999,
+                  "lng" : 76.2548281
+               }
+            },
+            "location" : {
+               "lat" : 9.930259399999999,
+               "lng" : 76.2638427
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 9.940227999999999,
+                  "lng" : 76.2766365
+               },
+               "southwest" : {
+                  "lat" : 9.922023899999999,
+                  "lng" : 76.2548281
+               }
+            }
+         },
+         "place_id" : "ChIJTzVqLn9tCDsR9tU6TPuo1j0",
+         "types" : [ "postal_code" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Kochi",
+               "short_name" : "Kochi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ernakulam",
+               "short_name" : "EKM",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Kochi, Kerala, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 10.1840374,
+                  "lng" : 76.4384936
+               },
+               "southwest" : {
+                  "lat" : 9.780706600000002,
+                  "lng" : 76.1633741
+               }
+            },
+            "location" : {
+               "lat" : 9.9312328,
+               "lng" : 76.26730409999999
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 10.1840374,
+                  "lng" : 76.4384936
+               },
+               "southwest" : {
+                  "lat" : 9.780706600000002,
+                  "lng" : 76.1633741
+               }
+            }
+         },
+         "place_id" : "ChIJv8a-SlENCDsRkkGEpcqC1Qs",
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Ernakulam",
+               "short_name" : "EKM",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Ernakulam, Kerala, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 10.3032617,
+                  "lng" : 77.08654
+               },
+               "southwest" : {
+                  "lat" : 9.791478999999999,
+                  "lng" : 76.1660308
+               }
+            },
+            "location" : {
+               "lat" : 10.071771,
+               "lng" : 76.5488232
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 10.3032617,
+                  "lng" : 77.08654
+               },
+               "southwest" : {
+                  "lat" : 9.791478999999999,
+                  "lng" : 76.1660308
+               }
+            }
+         },
+         "place_id" : "ChIJH9ar3hXkBzsRb_fT7icSkWs",
+         "types" : [ "administrative_area_level_2", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Kerala",
+               "short_name" : "KL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Kerala, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 12.7883001,
+                  "lng" : 77.3956369
+               },
+               "southwest" : {
+                  "lat" : 8.2929599,
+                  "lng" : 74.861
+               }
+            },
+            "location" : {
+               "lat" : 10.8505159,
+               "lng" : 76.2710833
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 12.7883001,
+                  "lng" : 77.3956369
+               },
+               "southwest" : {
+                  "lat" : 8.2929599,
+                  "lng" : 74.861
+               }
+            }
+         },
+         "place_id" : "ChIJW_Wc1P8SCDsRmXw47fuQvWQ",
+         "types" : [ "administrative_area_level_1", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 35.513327,
+                  "lng" : 97.39535869999999
+               },
+               "southwest" : {
+                  "lat" : 6.4626999,
+                  "lng" : 68.1097
+               }
+            },
+            "location" : {
+               "lat" : 20.593684,
+               "lng" : 78.96288
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 35.513327,
+                  "lng" : 97.39535869999999
+               },
+               "southwest" : {
+                  "lat" : 6.4626999,
+                  "lng" : 68.1097
+               }
+            }
+         },
+         "place_id" : "ChIJkbeSa_BfYzARphNChaFPjNc",
+         "types" : [ "country", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
 class StoreCard extends StatelessWidget {
   const StoreCard({
     Key key,
     @required this.scWidth,
+    @required this.restaurantModel,
   }) : super(key: key);
 
   final double scWidth;
+  final RestaurantModel restaurantModel;
+
+  static String api = "http://3.7.65.63";
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +35,8 @@ class StoreCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                  child: Image.asset(
-                    "assets/img/Burger.jpeg",
+                  child: Image.network(
+                    "$api${restaurantModel.profilePicture}" ,
                     width: 90,
                     height: 110,
                     fit: BoxFit.fill,
@@ -39,7 +44,7 @@ class StoreCard extends StatelessWidget {
                 ),
                 Positioned.fill(
                   bottom: -6,
-                  child: Align(
+                  child: restaurantModel.offers.length>0? Align(
                     alignment: Alignment.bottomCenter,
                                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal:8,vertical: 2),
@@ -47,9 +52,9 @@ class StoreCard extends StatelessWidget {
                         color: primary,
                         borderRadius: BorderRadius.all(Radius.circular(5))
                       ),
-                      child: Text("20% off",style: whiteBold13,),
+                      child: Text("${restaurantModel.offers[0].percentage}% OFF",style: whiteBold13,),
                     ),
-                  ),
+                  ):Container(),
                 )
               ],
             ),
@@ -64,25 +69,25 @@ class StoreCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "Arabian Paradise hotel edappally kerala india india  india",
+                    "${restaurantModel.title}",
                     style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                   // Spacer(flex:1),
                   Text(
-                    "Arabian, South indian",
+                    "${restaurantModel.storeSubType}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "Edappally | 1.9kms",
+                    "${restaurantModel.avgDeliveryTime}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   // Spacer(flex:8),
                   Text(
-                    "★4.5 • 28 mins • ₹200 for two",
+                    "★${restaurantModel.avgRating} • ${restaurantModel.avgDeliveryTime} mins • ₹${restaurantModel.minimumCostTwo} for two",
                     style: Theme.of(context).textTheme.bodyText1,
                     overflow: TextOverflow.ellipsis,
                   ),

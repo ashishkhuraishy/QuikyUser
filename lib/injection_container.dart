@@ -3,6 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
+import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:quiky_user/features/home/data/repository/home_repository_impl.dart';
+import 'package:quiky_user/features/home/domain/repository/home_repository.dart';
 
 import 'core/platform/location_info.dart';
 import 'core/platform/network_info.dart';
@@ -29,6 +32,13 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(
+      networkInfo: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<AddressRemoteDataSource>(
     () => AddressRemoteDataSourceImpl(client: sl()),
@@ -36,6 +46,10 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AddressLocalDataSource>(
     () => AddresLocalDataSourceImpl(hive: sl()),
+  );
+
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(client: sl()),
   );
 
   //! Core

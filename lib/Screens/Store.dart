@@ -10,54 +10,56 @@ class Store extends StatelessWidget {
   Widget build(BuildContext context) {
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      // persistentFooterButtons: <Widget>[Text("asdsad")],
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              onPressed: () {},
-              color: Colors.redAccent,
-              child: Text("Menu", style: whiteBold13),
-            ),
-            Container(
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              width: scWidth - 30,
-              decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // persistentFooterButtons: <Widget>[Text("asdsad")],
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.all(0),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          width: scWidth - 30,
+          height: 60,
+          decoration: BoxDecoration(
+            color: primary,
+            // borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("1 item", style: white13),
-                      Row(
-                        children: <Widget>[
-                          Text("₹45 ", style: whiteBold13),
-                          Text("plus taxes", style: white13),
-                        ],
-                      ),
-                    ],
-                  ),
+                  Text("1 item", style: white13),
                   Row(
                     children: <Widget>[
-                      Text(
-                        "View Cart ►",
-                        style: whiteBold13,
-                      )
+                      Text("₹45 ", style: whiteBold13),
+                      Text("plus taxes", style: white13),
                     ],
-                  )
+                  ),
                 ],
               ),
-            ),
-          ],
+              Row(
+                children: <Widget>[
+                  Text(
+                    "View Cart ►",
+                    style: whiteBold13,
+                  )
+                ],
+              )
+            ],
+          ),
         ),
+        // floatingActionButton: Column(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   crossAxisAlignment: CrossAxisAlignment.end,
+        //   children: <Widget>[
+
+        // FlatButton(
+        //   shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(10)),
+        //   onPressed: () {},
+        //   color: Colors.redAccent,
+        //   child: Text("Menu", style: whiteBold13),
+        // ),
+        //   ],
+        // ),
         appBar: AppBar(
           actions: <Widget>[
             Spacer(
@@ -88,7 +90,8 @@ class Store extends StatelessWidget {
                         maxLines: 3),
                     RatingStarIdicator(),
                     Text("South Indian, Kerala, North Indian, Chinease ",
-                        style: Theme.of(context).textTheme.bodyText1, overflow: TextOverflow.ellipsis),
+                        style: Theme.of(context).textTheme.bodyText1,
+                        overflow: TextOverflow.ellipsis),
                   ],
                 ),
               ),
@@ -129,11 +132,11 @@ class Store extends StatelessWidget {
                 height: 2,
               ),
               Container(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                padding: EdgeInsets.only(top: 0, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("₹30 Distance fee applicable", style: primary13),
+                    // Text("₹30 Distance fee applicable", style: primary13),
                     Row(
                       children: <Widget>[
                         Icon(Icons.fastfood, size: 20, color: success),
@@ -169,10 +172,10 @@ class Store extends StatelessWidget {
               ExpansionTileProducts(scWidth: scWidth),
               ExpansionTileProducts(scWidth: scWidth),
               ExpansionTileProducts(scWidth: scWidth),
-              Container(
-                width: scWidth,
-                height: 105,
-              ),
+              // Container(
+              //   width: scWidth,
+              //   height: 105,
+              // ),
             ],
           ),
         ));
@@ -190,7 +193,9 @@ class ExpansionTileProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text("Idili", style: Theme.of(context).textTheme.headline5, overflow: TextOverflow.ellipsis),
+      title: Text("Idili",
+          style: Theme.of(context).textTheme.headline5,
+          overflow: TextOverflow.ellipsis),
       subtitle: Text(
           "5 items, idili, vada ididli, vada, dosa, idili, vada dosa idili, vada dosa",
           style: Theme.of(context).textTheme.subtitle1,

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/Store.dart';
 import 'package:quiky_user/Screens/selectlocation.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Providers/HomeProvider.dart';
 import 'package:quiky_user/features/location_service/data/data_source/address_local_data_sourc.dart';
 import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
@@ -27,9 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AddressProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => AddressProvider()),
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
       ],
       child: MaterialApp(
         title: 'Quiky',
@@ -38,28 +38,48 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.orange,
             brightness: Brightness.light,
             primaryColorDark: dark,
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide:
+                    BorderSide(width: 1, style: BorderStyle.none, color: grey),
+              ),
+              contentPadding: EdgeInsets.only(left: 16, bottom: 0),
+              // fillColor: bglight1,
+              // filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide:
+                    BorderSide(width: 1, style: BorderStyle.solid, color: grey),
+              ),
+            ),
             textTheme: TextTheme(
-              headline5: TextStyle(//darkbold16
+              headline5: TextStyle(
+                //darkbold16
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 color: dark,
               ),
-              headline6: TextStyle(//darkbold14
+              headline6: TextStyle(
+                //darkbold14
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
                 color: dark,
               ),
-              bodyText1: TextStyle(//dark14
+              bodyText1: TextStyle(
+                //dark14
                 fontWeight: FontWeight.normal,
                 fontSize: 13,
                 color: dark,
               ),
-              subtitle1: TextStyle(//grey14
+              subtitle1: TextStyle(
+                //grey14
                 fontWeight: FontWeight.normal,
                 fontSize: 13,
                 color: grey,
               ),
-              subtitle2: new TextStyle(//grey11
+              subtitle2: new TextStyle(
+                //grey11
                 fontWeight: FontWeight.bold,
                 fontSize: 11,
                 color: grey,
@@ -78,33 +98,59 @@ class MyApp extends StatelessWidget {
           dividerColor: Color.fromRGBO(58, 58, 58, 1),
           scaffoldBackgroundColor: Color.fromRGBO(39, 39, 39, 1),
           // secondaryHeaderColor: bgSecondary,
-            textTheme: TextTheme(
-              headline5: TextStyle(//darkbold16
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                // color: dark,
-              ),
-              headline6: TextStyle(//darkbold14
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                // color: dark,
-              ),
-              bodyText1: TextStyle(//dark14
-                fontWeight: FontWeight.normal,
-                fontSize: 13,
-                // color: dark,
-              ),
-              subtitle1: TextStyle(//grey14
-                fontWeight: FontWeight.normal,
-                fontSize: 13,
-                color: Colors.grey,
-              ),
-              subtitle2: new TextStyle(//grey11
-                fontWeight: FontWeight.bold,
-                fontSize: 11,
-                color: Colors.grey,
-              ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide:
+                  BorderSide(width: 1, style: BorderStyle.none, color: grey),
             ),
+            contentPadding: EdgeInsets.only(left: 16, bottom: 0),
+            // fillColor: bglight1,
+            // filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide:
+                  BorderSide(width: 1, style: BorderStyle.solid, color: grey),
+            ),
+          ),
+          textTheme: TextTheme(
+            headline5: TextStyle(
+              //darkbold16
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              // color: dark,
+            ),
+            headline6: TextStyle(
+              //darkbold14
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              // color: dark,
+            ),
+            bodyText1: TextStyle(
+              //dark14
+              fontWeight: FontWeight.normal,
+              fontSize: 13,
+              // color: dark,
+            ),
+            bodyText2: TextStyle(
+              //dark14
+              fontWeight: FontWeight.normal,
+              fontSize: 14,
+              // color: dark,
+            ),
+            subtitle1: TextStyle(
+              //grey14
+              fontWeight: FontWeight.normal,
+              fontSize: 13,
+              color: Colors.grey,
+            ),
+            subtitle2: new TextStyle(
+              //grey11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: Colors.grey,
+            ),
+          ),
         ),
         themeMode: ThemeMode.system,
         routes: {

@@ -57,10 +57,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Icon(Icons.home),
-                Text(
-                  "QUIKY",
-                  style: Theme.of(context).textTheme.subtitle2
-                )
+                Text("QUIKY", style: textBold11)
               ],
             ),
           ),
@@ -71,7 +68,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Icon(Icons.search),
                 Text(
                   "SEARCH",
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: textBold11,
                 )
               ],
             ),
@@ -80,10 +77,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             icon: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Icon(Icons.shopping_cart),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.shopping_cart),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Text("1",style: whiteBold13,),
+                    )
+                  ],
+                ),
                 Text(
                   "MY CART",
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: textBold11,
                 )
               ],
             ),
@@ -95,7 +105,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Icon(Icons.account_circle),
                 Text(
                   "PROFILE",
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: textBold11,
                 )
               ],
             ),

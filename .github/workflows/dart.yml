@@ -1,0 +1,27 @@
+#The name of your workflow.
+name:  Test, build and deploy
+# Trigger the workflow on push or pull request
+on:
+  push:
+    branches: 
+  pull_request:
+    branches: 
+#A workflow run is made up of one or more jobs. Jobs run in parallel by default.
+jobs:
+
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      # Setup a flutter environment.
+      # https://github.com/marketplace/actions/flutter-action
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.19.0-4.3.pre'
+          channel: 'beta' 
+      - run: flutter pub get
+      # run static analys code
+      - run: flutter  analyze
+      # run  flutter widgets tests  and unit tests
+      - run: flutter test test
+     
