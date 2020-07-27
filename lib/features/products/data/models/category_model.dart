@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/products/domain/entity/category.dart';
 
+// ignore: must_be_immutable
 class CategoryModel extends Category {
   final int id;
   final String imgUrl;
