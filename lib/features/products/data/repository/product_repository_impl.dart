@@ -33,9 +33,14 @@ class ProductRepositoryImpl extends ProductRepository {
 
     _categories.forEach((element) {
       List<Product> _temp = _products.products;
-      _temp.retainWhere((e) => e.category.id == element.id);
-
+      _temp.retainWhere((e) {
+        print(e.category.id);
+        return e.category.id == element.id;
+      });
+      print('${element.title} : ${_temp.length}');
       element.addProducts(_temp);
+      print(_products.products.length);
+      print(_temp.length);
     });
 
     return Right(_categories);
