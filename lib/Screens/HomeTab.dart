@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/core/Providers/HomeProvider.dart';
 import 'package:quiky_user/theme/themedata.dart';
