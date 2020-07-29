@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 
 import '../core/Providers/AddressProvider.dart';
 import '../theme/themedata.dart';
 import '../widgets/HomeMegaButton.dart';
 import '../widgets/OptionCard.dart';
 import '../widgets/StoreCard.dart';
+=======
+import 'package:quiky_user/Models/address/AddressModel.dart';
+import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Providers/HomeProvider.dart';
+import 'package:quiky_user/theme/themedata.dart';
+import 'package:quiky_user/widgets/DividerLight.dart';
+import 'package:quiky_user/widgets/HomeMegaButton.dart';
+import 'package:quiky_user/widgets/OptionCard.dart';
+import 'package:quiky_user/widgets/StoreCard.dart';
+import 'package:shimmer/shimmer.dart';
+>>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({
     Key key,
     @required this.scWidth,
@@ -16,7 +28,28 @@ class HomeTab extends StatelessWidget {
   final double scWidth;
 
   @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  // }
+  @override
+  void initState() {
+    super.initState();
+    final currentAddress =
+        Provider.of<AddressProvider>(context, listen: false).currentAddress;
+
+    final getData = Provider.of<HomeProvider>(context, listen: false)
+        .getData(currentAddress.lat, currentAddress.long);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // final currentAddress =  Provider.of<AddressProvider>(context,listen: false).currentAddress;
+    // final getData = Provider.of<HomeProvider>(context,listen:false).getData(10.0551215, 76.43577259999999);
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
@@ -34,7 +67,7 @@ class HomeTab extends StatelessWidget {
                   return Text(
                     "${val.currentAddress.shortAddress}",
                     textAlign: TextAlign.left,
-                    // style: TextTheme().headline1,
+                    style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                   );
                 },
@@ -46,16 +79,17 @@ class HomeTab extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
               children: <Widget>[
                 HomeMegaButton(
-                    scWidth: scWidth,
+                    scWidth: widget.scWidth,
                     title: 'Restaurant',
                     image: 'assets/img/plate-of-food.png',
                     color: primary),
                 HomeMegaButton(
-                    scWidth: scWidth,
+                    scWidth: widget.scWidth,
                     title: 'Grocery',
                     image: 'assets/img/plate-of-food.png',
                     color: Colors.brown),
@@ -65,7 +99,7 @@ class HomeTab extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Container(
                   constraints: BoxConstraints(
-                    minWidth: scWidth,
+                    minWidth: widget.scWidth,
                   ),
                   height: 110,
                   child: Row(
@@ -119,33 +153,47 @@ class HomeTab extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   Container(
-                    height: 260,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            StoreCard(
-                              scWidth: scWidth,
-                            ),
-                            StoreCard(
-                              scWidth: scWidth,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: <Widget>[
-                            StoreCard(
-                              scWidth: scWidth,
-                            ),
-                            StoreCard(
-                              scWidth: scWidth,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
+                      height: 260,
+                      child: Consumer<HomeProvider>(
+                        builder: (ctx, provider, _) {
+                          if (provider.inTheSpotLight != null) {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              // shrinkWrap: true,
+                              itemCount: provider.inTheSpotLight.length > 1
+                                  ? provider.inTheSpotLight.length ~/ 2
+                                  : provider.inTheSpotLight.length,
+                              itemBuilder: (ctex, index) {
+                                var index1 = index + 1;
+                                if (index > 0 && index ~/ 2 != 0) {
+                                  return Container();
+                                } else {
+                                  return Column(
+                                    children: <Widget>[
+                                      StoreCard(
+                                        scWidth: widget.scWidth,
+                                        restaurantModel:
+                                            provider.inTheSpotLight[index],
+                                      ),
+                                      provider.inTheSpotLight.length > index + 1
+                                          ? StoreCard(
+                                              scWidth: widget.scWidth,
+                                              restaurantModel: provider
+                                                  .inTheSpotLight[index + 1],
+                                            )
+                                          : Container(),
+                                    ],
+                                  );
+                                }
+                              },
+                            );
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ))
                 ],
               ),
             ),
@@ -154,21 +202,27 @@ class HomeTab extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(top: 10),
-              width: scWidth,
+              width: widget.scWidth,
               height: 110,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  OptionCard(
-                      title: "South Indian", image: "assets/img/milk.png"),
-                  OptionCard(title: "Biriyani", image: "assets/img/fish.png"),
-                  OptionCard(
-                      title: "Chinese", image: "assets/img/Electronics.png"),
-                  OptionCard(
-                      title: "Burgers", image: "assets/img/Quiky-Specials.png"),
-                  OptionCard(
-                      title: "Bulk Order", image: "assets/img/bulk_order.png"),
-                ],
+              child: Consumer<HomeProvider>(
+                builder: (ctx, val, _) {
+                  if (val.getRecipies != null) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: val.getRecipies.length,
+                      itemBuilder: (contx, index) {
+                        return OptionCard(
+                          title: "${val.getRecipies[index].title}",
+                          networkImage: val.getRecipies[index].imgUrl,
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ),
             Divider(
@@ -176,7 +230,7 @@ class HomeTab extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              width: scWidth,
+              width: widget.scWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -191,7 +245,7 @@ class HomeTab extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(top: 10),
-              width: scWidth,
+              width: widget.scWidth,
               height: 126,
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -229,7 +283,7 @@ class HomeTab extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-              width: scWidth,
+              width: widget.scWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -244,38 +298,93 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            ListView(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(left: 10),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-                StoreCard(
-                  scWidth: scWidth + 20,
-                ),
-              ],
+            Consumer<HomeProvider>(
+              builder: (ctx, provider, _) {
+                if (provider.restaurantsNearBy != null) {
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(left: 10),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: provider.restaurantsNearBy.length,
+                    itemBuilder: (ctex, index) {
+                      return StoreCard(
+                        scWidth: widget.scWidth + 20,
+                        restaurantModel: provider.restaurantsNearBy[index],
+                      );
+                    },
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FlatButton(
+                onPressed: () {},
+                child: Text("Seel All Restaurants"),
+                color: primary,
+              ),
             ),
             Divider(
               thickness: 8,
             ),
+            Container(
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              width: widget.scWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Near by Store",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Text(
+                    "Best Grocery near you",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
+            ),
+            Consumer<HomeProvider>(
+              builder: (ctx, provider, _) {
+                if (provider.restaurantsNearBy != null) {
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(left: 10),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: provider.storesNearBy.length,
+                    itemBuilder: (ctex, index) {
+                      return StoreCard(
+                        scWidth: widget.scWidth + 20,
+                        restaurantModel: provider.storesNearBy[index],
+                      );
+                    },
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FlatButton(
+                onPressed: () {},
+                child: Text("Seel All Stores"),
+                color: primary,
+              ),
+            ),
+            Divider(
+              thickness: 8,
+            )
           ],
         ),
       ),

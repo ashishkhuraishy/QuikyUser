@@ -13,7 +13,8 @@ class FoodSafetyDot extends StatelessWidget {
       margin: EdgeInsets.all(3),
       padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
-        border: Border.all(width:2,color: success),
+        border: Border.all(width:2,color: success,),
+        color: Colors.white
       ),
       width: 20,
       height: 20,

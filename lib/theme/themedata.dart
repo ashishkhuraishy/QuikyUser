@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 Color primary = Color.fromRGBO(244, 166, 44, 1);
+Color primary10Fade = Color.fromRGBO(244, 161, 30, .10);
 Color bgSecondary = Color.fromRGBO(242, 243, 247, 1);
 Color dark = Color.fromRGBO(80, 82, 93, 1);
 Color grey = Color.fromRGBO(148, 149, 152, 1);
@@ -75,22 +76,27 @@ TextStyle success13 = new TextStyle(
   fontSize: 13,
 );
 
+TextStyle textBold11 = new TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 11,
+);
+
 Image mapPionter = Image.asset('assets/img/map-pointer.png');
 
-InputDecoration searchDecoration(String hint) => InputDecoration(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        borderSide: BorderSide(width: 1, style: BorderStyle.none, color: grey),
-      ),
-      hintText: hint,
-      contentPadding: EdgeInsets.only(left: 16, bottom: 0),
-      // fillColor: bglight1,
-      // filled: true,
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        borderSide: BorderSide(width: 1, style: BorderStyle.solid, color: grey),
-      ),
-    );
+// InputDecoration customInput(String hint) => InputDecoration(
+//       border: OutlineInputBorder(
+//         borderRadius: BorderRadius.all(Radius.circular(5)),
+//         borderSide: BorderSide(width: 1, style: BorderStyle.none, color: grey),
+//       ),
+//       hintText: hint,
+//       contentPadding: EdgeInsets.only(left: 16, bottom: 0),
+//       // fillColor: bglight1,
+//       // filled: true,
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.all(Radius.circular(5)),
+//         borderSide: BorderSide(width: 1, style: BorderStyle.solid, color: grey),
+//       ),
+//     );
 
 class CustomBorderedButton extends StatelessWidget {
   const CustomBorderedButton({
@@ -107,7 +113,7 @@ class CustomBorderedButton extends StatelessWidget {
       onPressed: onTap,
       child: child,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
+        borderRadius: BorderRadius.circular(8.0),
         side: BorderSide(color: primary),
       ),
       padding: EdgeInsets.all(0),
