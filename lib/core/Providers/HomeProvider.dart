@@ -65,11 +65,7 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetFeatured');
     }, (restaurants) {
-<<<<<<< HEAD
       print('Featured ${restaurants[0].title}');
-=======
-      print('Featured $restaurants');
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
       _featuredList = restaurants;
       notifyListeners();
     });
@@ -80,11 +76,7 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetPopular');
     }, (restaurants) {
-<<<<<<< HEAD
       print('Popular ${restaurants[0].title}');
-=======
-      print('Popular $restaurants');
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
       _populatList = restaurants;
       notifyListeners();
     });
@@ -95,11 +87,7 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingRestaurant');
     }, (restaurants) {
-<<<<<<< HEAD
       print('Trending Restaurants ${restaurants[0].title}');
-=======
-      print('Trending Restaurants $restaurants');
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
       _trendingResList = restaurants;
       notifyListeners();
     });
@@ -110,11 +98,7 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingGrocery');
     }, (restaurants) {
-<<<<<<< HEAD
       print('Trending Grocery ${restaurants[0].title}');
-=======
-      print('Trending Grocery $restaurants');
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
       _trendingGrosList = restaurants;
       notifyListeners();
     });

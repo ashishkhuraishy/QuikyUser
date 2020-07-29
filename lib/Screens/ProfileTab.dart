@@ -92,38 +92,38 @@ class ProfileTab extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.shopping_basket),
                   title: "Past Orders",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.favorite_border),
                   title: "Favorite Orders",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.book),
                   title: "Address Book",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "About",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Terms And Condition",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Rate Us on PlayStore",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Contact Us",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Logout",
                 ),
               ],
@@ -140,7 +140,10 @@ class ProfileTab extends StatelessWidget {
 
 class CustomRowButton extends StatelessWidget {
   const CustomRowButton({
-    Key key, this.onTap, this.icon, this.title,
+    Key key,
+    this.onTap,
+    this.icon,
+    this.title,
   }) : super(key: key);
 
   final Function onTap;
@@ -157,11 +160,11 @@ class CustomRowButton extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                icon!=null?icon:Container(),
+                icon != null ? icon : Container(),
                 Padding(
-                  padding:  EdgeInsets.only(left: icon!=null?20.0:0),
+                  padding: EdgeInsets.only(left: icon != null ? 20.0 : 0),
                   child: Text(
-                    "${title}",
+                    "$title",
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),

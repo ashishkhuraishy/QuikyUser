@@ -36,7 +36,7 @@ class StoreCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   child: Image.network(
-                    "$api${restaurantModel.profilePicture}" ,
+                    "$api${restaurantModel.profilePicture}",
                     width: 90,
                     height: 110,
                     fit: BoxFit.fill,
@@ -44,23 +44,25 @@ class StoreCard extends StatelessWidget {
                 ),
                 Positioned.fill(
                   bottom: -6,
-                  child: restaurantModel.offers.length>0? Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                          color: primary,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Text(
-                        "20% off",
-                        style: whiteBold13,
-                      ),
-<<<<<<< HEAD
-=======
-                      child: Text("${restaurantModel.offers[0].percentage}% OFF",style: whiteBold13,),
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
-                    ),
-                  ):Container(),
+                  child: restaurantModel.offers.length > 0
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: primary,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: Text(
+                              "20% off",
+                              style: whiteBold13,
+                            ),
+                            // TODO : 2 child found is it required?
+                            //child: Text("${restaurantModel.offers[0].percentage}% OFF",style: whiteBold13,),
+                          ),
+                        )
+                      : Container(),
                 )
               ],
             ),

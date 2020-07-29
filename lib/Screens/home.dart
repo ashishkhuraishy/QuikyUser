@@ -1,20 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
-import 'package:quiky_user/Models/address/AddressModel.dart';
-import 'package:quiky_user/Screens/CartTab.dart';
-import 'package:quiky_user/Screens/ProfileTab.dart';
-import 'package:quiky_user/Screens/SearchTab.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/HomeMegaButton.dart';
-import 'package:quiky_user/widgets/DividerLight.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
-import 'package:quiky_user/widgets/StoreCard.dart';
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
 
 import '../theme/themedata.dart';
 import 'CartTab.dart';
@@ -64,11 +48,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Icon(Icons.home),
-<<<<<<< HEAD
-                Text("QUIKY", style: Theme.of(context).textTheme.subtitle2)
-=======
                 Text("QUIKY", style: textBold11)
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
               ],
             ),
           ),
@@ -93,12 +73,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     Icon(Icons.shopping_cart),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 5),
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                       decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(5)
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        "1",
+                        style: whiteBold13,
                       ),
-                      child: Text("1",style: whiteBold13,),
                     )
                   ],
                 ),

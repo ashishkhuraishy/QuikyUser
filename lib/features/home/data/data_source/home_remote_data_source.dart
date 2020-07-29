@@ -54,43 +54,15 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   Future<List<RestaurantModel>> getFeatured({double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-<<<<<<< HEAD
-        '?lat=$lat&lon=$long&featured_brand=true&store_type=food';
-    return _getRestaurants(url);
-=======
         '?lat=$lat&long=$long&featured_brand=true&store_type=food';
-    Response response = await client.get(url);
-    if (response.statusCode == 200) {
-      List body = jsonDecode(response.body);
-      return body
-          .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
-          .toList();
-    } else {
-      _debug(response);
-      throw ServerException();
-    }
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
+    return _getRestaurants(url);
   }
 
   @override
   Future<List<RestaurantModel>> getPopular({double lat, double long}) async {
     final url =
-<<<<<<< HEAD
-        BASE_URL + '/store_list/' + '?lat=$lat&lon=$long&popular_brand=true';
-    return _getRestaurants(url);
-=======
         BASE_URL + '/store_list/' + '?lat=$lat&long=$long&popular_brand=true';
-    Response response = await client.get(url);
-    if (response.statusCode == 200) {
-      List body = jsonDecode(response.body);
-      return body
-          .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
-          .toList();
-    } else {
-      _debug(response);
-      throw ServerException();
-    }
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
+    return _getRestaurants(url);
   }
 
   @override
@@ -98,22 +70,8 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-<<<<<<< HEAD
-        '?lat=$lat&lon=$long&option=trending&store_type=grocery';
-    return _getRestaurants(url);
-=======
         '?lat=$lat&long=$long&option=trending&store_type=grocery';
-    Response response = await client.get(url);
-    if (response.statusCode == 200) {
-      List body = jsonDecode(response.body);
-      return body
-          .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
-          .toList();
-    } else {
-      _debug(response);
-      throw ServerException();
-    }
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
+    return _getRestaurants(url);
   }
 
   @override
@@ -121,15 +79,11 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-<<<<<<< HEAD
-        '?lat=$lat&lon=$long&option=trending&store_type=food';
+        '?lat=$lat&long=$long&option=trending&store_type=food';
     return _getRestaurants(url);
   }
 
   Future<List<RestaurantModel>> _getRestaurants(String url) async {
-=======
-        '?lat=$lat&long=$long&option=trending&store_type=food';
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
     Response response = await client.get(url);
     if (response.statusCode == 200) {
       List body = jsonDecode(response.body);

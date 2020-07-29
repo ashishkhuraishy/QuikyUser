@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiky_user/widgets/FoodSafetyDot.dart';
 
 import '../theme/themedata.dart';
 
@@ -22,17 +23,9 @@ class ProductCard extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(8)),
-<<<<<<< HEAD
-              child: Image.asset(
-                "assets/img/Burger.jpeg",
-                width: 90,
-                height: 110,
-                fit: BoxFit.fill,
-              ) //FoodSafetyDot(),
-=======
               child: Stack(
                 children: <Widget>[
-                    Image.asset(
+                  Image.asset(
                     "assets/img/Burger.jpeg",
                     width: 90,
                     height: 112,
@@ -45,7 +38,6 @@ class ProductCard extends StatelessWidget {
                   Positioned(top: 0, right: 0, child: FoodSafetyDot())
                 ],
               ) //,
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
               ),
           Container(
             constraints: BoxConstraints(
@@ -75,17 +67,6 @@ class ProductCard extends StatelessWidget {
                   style: primaryBold14,
                   overflow: TextOverflow.ellipsis,
                 ),
-<<<<<<< HEAD
-                Align(
-                    alignment: Alignment.bottomRight,
-                    child: CustomBorderedButton(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text("Add"),
-                          Icon(Icons.add, color: primary)
-                        ],
-=======
                 addedToCart != null && addedToCart
                     ? Align(
                         alignment: Alignment.bottomRight,
@@ -134,7 +115,6 @@ class ProductCard extends StatelessWidget {
                             ],
                           ),
                         ),
->>>>>>> 49f70a62e59534fa2b2da06a2d76cf76e9b4e931
                       ),
               ],
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
 
 class SearchTab extends StatelessWidget {
   const SearchTab({Key key}) : super(key: key);
@@ -14,7 +13,8 @@ class SearchTab extends StatelessWidget {
           textInputAction: TextInputAction.go,
           style: Theme.of(context).textTheme.bodyText1,
           decoration: InputDecoration(
-              hintText: "Search Restaurants and foods",),
+            hintText: "Search Restaurants and foods",
+          ),
           autofocus: true,
         ),
       ),
