@@ -54,12 +54,16 @@ Future<void> init() async {
     () => AddressRemoteDataSourceImpl(client: sl()),
   );
 
-  sl.registerLazySingleton<ProductsRemoteDataSource>(
-    () => ProductsRemoteDataSourceImpl(client: sl()),
+  sl.registerLazySingleton<AddressLocalDataSource>(
+    () => AddresLocalDataSourceImpl(hive: sl()),
   );
 
   sl.registerLazySingleton<HomeRemoteDataSource>(
     () => HomeRemoteDataSourceImpl(client: sl()),
+  );
+
+  sl.registerLazySingleton<ProductsRemoteDataSource>(
+    () => ProductsRemoteDataSourceImpl(client: sl()),
   );
 
   //! Core
