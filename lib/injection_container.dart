@@ -6,6 +6,8 @@ import 'package:location/location.dart';
 import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/home/data/repository/home_repository_impl.dart';
 import 'package:quiky_user/features/home/domain/repository/home_repository.dart';
+import 'package:quiky_user/features/products/data/repository/product_repository_impl.dart';
+import 'package:quiky_user/features/products/domain/repository/products_repository.dart';
 
 import 'core/platform/location_info.dart';
 import 'core/platform/network_info.dart';
@@ -34,6 +36,13 @@ Future<void> init() async {
 
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(
+      networkInfo: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
       networkInfo: sl(),
       remoteDataSource: sl(),
     ),
