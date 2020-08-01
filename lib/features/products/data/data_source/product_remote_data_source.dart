@@ -32,8 +32,10 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
     if (response.statusCode == 200) {
       List body = jsonDecode(response.body);
       return body.map<CategoryModel>((e) => CategoryModel.fromJson(e)).toList();
-    } else
+    } else {
+      print('Error GetCategories ${response.statusCode}');
       throw ServerException();
+    }
   }
 
   @override
@@ -43,7 +45,9 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
     if (response.statusCode == 200) {
       Map body = jsonDecode(response.body);
       return StoreProductsModel.fromJson(body);
-    } else
+    } else {
+      print('Error at Products ${response.statusCode}');
       throw ServerException();
+    }
   }
 }

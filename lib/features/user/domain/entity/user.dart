@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 class User extends Equatable {
   final int id;
@@ -10,13 +11,13 @@ class User extends Equatable {
   final String mobile;
 
   User({
-    this.id,
-    this.userId,
-    this.userName,
-    this.name,
-    this.token,
-    this.email,
-    this.mobile,
+    @required this.id,
+    @required this.userId,
+    @required this.userName,
+    @required this.name,
+    @required this.token,
+    @required this.email,
+    @required this.mobile,
   });
 
   @override

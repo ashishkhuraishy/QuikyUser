@@ -54,14 +54,14 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   Future<List<RestaurantModel>> getFeatured({double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-        '?lat=$lat&lon=$long&featured_brand=true&store_type=food';
+        '?lat=$lat&long=$long&featured_brand=true&store_type=food';
     return _getRestaurants(url);
   }
 
   @override
   Future<List<RestaurantModel>> getPopular({double lat, double long}) async {
     final url =
-        BASE_URL + '/store_list/' + '?lat=$lat&lon=$long&popular_brand=true';
+        BASE_URL + '/store_list/' + '?lat=$lat&long=$long&popular_brand=true';
     return _getRestaurants(url);
   }
 
@@ -70,7 +70,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-        '?lat=$lat&lon=$long&option=trending&store_type=grocery';
+        '?lat=$lat&long=$long&option=trending&store_type=grocery';
     return _getRestaurants(url);
   }
 
@@ -79,7 +79,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-        '?lat=$lat&lon=$long&option=trending&store_type=food';
+        '?lat=$lat&long=$long&option=trending&store_type=food';
     return _getRestaurants(url);
   }
 
