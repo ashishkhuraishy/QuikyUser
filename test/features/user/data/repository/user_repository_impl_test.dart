@@ -113,9 +113,7 @@ main() {
       final result = await repositoryImpl.signUp(
         username: userName,
         password: password,
-        email: email,
         name: name,
-        phoneNo: mobile,
       );
 
       expect(result, Left(ConnectionFailure()));
@@ -132,9 +130,7 @@ main() {
           mockRemoteDataSource.signUp(
             username: anyNamed('username'),
             password: anyNamed('password'),
-            email: anyNamed('email'),
             name: anyNamed('name'),
-            phoneNo: anyNamed('phoneNo'),
           ),
         ).thenAnswer(
           (realInvocation) async => userModel,
@@ -143,17 +139,13 @@ main() {
         final result = await repositoryImpl.signUp(
           username: userName,
           password: password,
-          email: email,
           name: name,
-          phoneNo: mobile,
         );
         verify(
           mockRemoteDataSource.signUp(
             username: userName,
             password: password,
-            email: email,
             name: name,
-            phoneNo: mobile,
           ),
         );
         verify(mockLocalDataSource.cacheUser(userModel));
@@ -163,25 +155,19 @@ main() {
         when(mockRemoteDataSource.signUp(
           username: anyNamed('username'),
           password: anyNamed('password'),
-          email: anyNamed('email'),
           name: anyNamed('name'),
-          phoneNo: anyNamed('phoneNo'),
         )).thenThrow(ServerException());
 
         final result = await repositoryImpl.signUp(
           username: userName,
           password: password,
-          email: email,
           name: name,
-          phoneNo: mobile,
         );
         verify(
           mockRemoteDataSource.signUp(
             username: userName,
             password: password,
-            email: email,
             name: name,
-            phoneNo: mobile,
           ),
         );
         expect(result, Left(ServerFailure()));

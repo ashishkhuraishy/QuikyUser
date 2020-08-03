@@ -45,7 +45,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       List body = jsonDecode(response.body);
       return body.map<RecipieModel>((e) => RecipieModel.fromJson(e)).toList();
     } else {
-      _debug(response);
+      // _debug(response);
       throw ServerException();
     }
   }
@@ -91,15 +91,15 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
     } else {
-      _debug(response);
+      //_debug(response);
       throw ServerException();
     }
   }
 
-  _debug(Response response) {
-    print(response.statusCode);
-    print(response.body);
-  }
+  // _debug(Response response) {
+  //   print(response.statusCode);
+  //   print(response.body);
+  // }
 
   /*
     _debugResponse(Response response, String name) {

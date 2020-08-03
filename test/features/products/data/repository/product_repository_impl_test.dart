@@ -42,8 +42,8 @@ main() {
     ),
   );
 
-  print(tCategories.length);
-  print(tProducts.products.length);
+  // print(tCategories.length);
+  // print(tProducts.products.length);
 
   group('Get Products', () {
     setUp(() {

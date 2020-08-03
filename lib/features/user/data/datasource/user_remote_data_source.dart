@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
+import 'package:quiky_user/core/error/exception.dart';
+import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/user/data/model/user_model.dart';
 
 abstract class UserRemoteDataSource {
@@ -10,8 +15,43 @@ abstract class UserRemoteDataSource {
   Future<UserModel> signUp({
     @required String username,
     @required String name,
-    @required String email,
-    @required String phoneNo,
     @required String password,
   });
+}
+
+class UserRemoteDataSourceImpl extends UserRemoteDataSource {
+  final Client client;
+
+  UserRemoteDataSourceImpl({this.client});
+
+  @override
+  Future<UserModel> login({String username, String password}) async {
+    final String url = BASE_URL + '/login/$username/$password/?user=customer';
+    Response response = await client.get(url);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return UserModel.fromJson(data);
+    }
+    throw ServerException();
+  }
+
+  @override
+  Future<UserModel> signUp(
+      {String username, String name, String password}) async {
+    final String url = BASE_URL + '/signup/?customer=true';
+    Map body = {
+      "username": username,
+      "password": password,
+      "email": "dummy@dummymail.com",
+      "first_name": name,
+      "last_name": ""
+    };
+
+    Response response = await client.post(url, body: jsonEncode(body));
+    if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      return UserModel.fromJson(data);
+    }
+    throw ServerException();
+  }
 }

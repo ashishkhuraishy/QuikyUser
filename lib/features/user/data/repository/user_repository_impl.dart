@@ -19,12 +19,6 @@ class UserRepositoryImpl extends UserRepository {
   });
 
   @override
-  Future<Either<Failure, User>> account() {
-    // TODO: implement account
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<Failure, User>> login({
     String username,
     String password,
@@ -50,8 +44,6 @@ class UserRepositoryImpl extends UserRepository {
   Future<Either<Failure, User>> signUp({
     String username,
     String name,
-    String email,
-    String phoneNo,
     String password,
   }) async {
     if (!await networkInfo.isConnected) return Left(ConnectionFailure());
@@ -60,9 +52,7 @@ class UserRepositoryImpl extends UserRepository {
       final user = await remoteDataSource.signUp(
         username: username,
         password: password,
-        email: email,
         name: name,
-        phoneNo: phoneNo,
       );
       await localDataSource.cacheUser(user);
       return Right(user);

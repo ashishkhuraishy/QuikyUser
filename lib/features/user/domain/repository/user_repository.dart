@@ -12,11 +12,8 @@ abstract class UserRepository {
   Future<Either<Failure, User>> signUp({
     @required String username,
     @required String name,
-    @required String email,
-    @required String phoneNo,
     @required String password,
   });
 
-  Future<Either<Failure, User>> account();
   void logout();
 }
