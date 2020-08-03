@@ -100,12 +100,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Client());
   sl.registerLazySingleton(() => Location());
   sl.registerLazySingleton(() => DataConnectionChecker());
-
-  // DB Inits
-  final appDocumentDir = await getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDir.path);
-  Hive.registerAdapter(AddressModelAdapter());
-  Hive.registerAdapter(UserModelAdapter());
-  await Hive.openBox(ADDRESS_BOX);
-  await Hive.openBox(CORE_BOX);
 }
