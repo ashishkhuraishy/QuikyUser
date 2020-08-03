@@ -36,5 +36,5 @@ class AddressModelAdapter extends TypeAdapter<AddressModel> {
   }
 
   @override
-  int get typeId => 0;
+  int get typeId => 2;
 }

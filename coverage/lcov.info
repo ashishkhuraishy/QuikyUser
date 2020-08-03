@@ -54,10 +54,7 @@ DA:89,2
 DA:91,3
 DA:92,1
 DA:95,1
-DA:99,0
-DA:100,0
-DA:101,0
-LF:36
+LF:33
 LH:33
 end_of_record
 SF:lib\features\home\data\model\recipie_model.dart
