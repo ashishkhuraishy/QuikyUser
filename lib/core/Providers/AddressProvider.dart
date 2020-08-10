@@ -51,7 +51,6 @@ class AddressProvider extends ChangeNotifier {
         // TODO : Do Something when Connection Fails
         break;
       case CacheFailure:
-
         /// TODO : Do Something when getting data
         /// from localStorage  Fails
         break;
