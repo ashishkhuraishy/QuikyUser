@@ -3,6 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
+import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
+import 'package:quiky_user/features/cart/data/model/cart_model.dart';
+import 'package:quiky_user/features/home/data/model/offer_model.dart';
 
 import 'Screens/Store.dart';
 import 'Screens/selectlocation.dart';
@@ -23,6 +26,9 @@ void main() async {
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(AddressModelAdapter());
+  Hive.registerAdapter(CartModelAdapter());
+  Hive.registerAdapter(OfferModelAdapter());
+  Hive.registerAdapter(CartItemModelAdapter());
   Hive.registerAdapter(UserModelAdapter());
   await Hive.openBox(ADDRESS_BOX);
   await Hive.openBox(CORE_BOX);
