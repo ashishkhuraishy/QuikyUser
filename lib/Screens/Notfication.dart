@@ -6,10 +6,21 @@ class Notif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Align(
-            alignment: Alignment.centerRight,
-            child:
-                Text('Support', style: Theme.of(context).textTheme.headline6)),
+        title: Center(
+            child: Text('Notifications',
+                style: Theme.of(context).textTheme.headline6)),
+        actions: [
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return Constants.choices.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -20,7 +31,7 @@ class Notif extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Notifications',
+                    'Recent',
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   Text(
@@ -29,9 +40,32 @@ class Notif extends StatelessWidget {
                   ),
                 ],
               ),
-              NotificationMessege(),
-              NotificationMessege(),
-              NotificationMessege(),
+              Divider(
+                thickness: 2,
+
+              ),
+              NotificationMessege(important: true),
+              NotificationMessege(
+                important: true,
+              ),
+              NotificationMessege(
+                important: true,
+              ),
+              NotificationMessege(
+                important: true,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Yesterday',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 2,
+              ),
               NotificationMessege(),
               NotificationMessege(),
               NotificationMessege(),
@@ -42,4 +76,12 @@ class Notif extends StatelessWidget {
       ),
     );
   }
+}
+
+class Constants {
+  static const String Select = 'Select All';
+
+  static const String Delete = 'Delete All';
+
+  static const List<String> choices = <String>[Select, Delete];
 }
