@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -47,7 +48,11 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       "last_name": ""
     };
 
-    Response response = await client.post(url, body: jsonEncode(body));
+    Response response = await client.post(url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+        body: jsonEncode(body));
     if (response.statusCode == 201) {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
