@@ -65,9 +65,7 @@ main() {
       verify(
         mockClient.post(
           url,
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-          },
+          headers: {HttpHeaders.contentTypeHeader: "application/json"},
           body: jsonEncode(body),
         ),
       );
@@ -77,20 +75,20 @@ main() {
       final result = await remoteDataSourceImpl.signUp(
           name: name, password: password, username: userName);
 
-      verify(
-        mockClient.post(
-          url,
-          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-          body: jsonEncode(body),
-        ),
-      );
+      verify(mockClient.post(url,
+          headers: {HttpHeaders.contentTypeHeader: "application/json"},
+          body: jsonEncode(body)));
       expect(result, userModel);
     });
 
     test('should return [ServerFailure] if any failure occurs', () async {
-      when(mockClient.post(any,
-              headers: anyNamed('headers'), body: anyNamed('body')))
-          .thenThrow(ServerException());
+      when(
+        mockClient.post(
+          any,
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        ),
+      ).thenThrow(ServerException());
       final result = remoteDataSourceImpl.signUp;
 
       expect(() => result(name: name, password: password, username: userName),
