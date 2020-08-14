@@ -16,10 +16,10 @@ main() {
     getProducts = GetProducts(repository: mockProductRepository);
   });
   final categories = [
-    Category(id: null, imgUrl: null, title: null, userId: null),
-    Category(id: null, imgUrl: null, title: null, userId: null),
-    Category(id: null, imgUrl: null, title: null, userId: null),
-    Category(id: null, imgUrl: null, title: null, userId: null),
+    Category(id: null, imgUrl: null, title: null, userId: null, produts: []),
+    Category(id: null, imgUrl: null, title: null, userId: null, produts: []),
+    Category(id: null, imgUrl: null, title: null, userId: null, produts: []),
+    Category(id: null, imgUrl: null, title: null, userId: null, produts: []),
   ];
 
   test('should return a StoreProduct from the response', () async {
