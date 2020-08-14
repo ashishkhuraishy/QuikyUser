@@ -37,24 +37,22 @@ class Address extends StatelessWidget {
                 thickness: 1,
               ),
               addressBox != null
-        ? WatchBoxBuilder(
-            box: addressBox,
-            builder: (context, box) {
-              Map<dynamic, dynamic> data = box.toMap();
-              List Sdata = data.values.toList();
-              return SingleChildScrollView(
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      AddressModel addressModel = data[index];
-                      return AddressItem();
-                      Divider(
-                        thickness: 1,
-                      );
-                    }),
-              );
-            })
-        : Text("Address is empty");
+                  ? WatchBoxBuilder(
+                      box: addressBox,
+                      builder: (context, box) {
+                        Map<dynamic, dynamic> data = box.toMap();
+                        List Sdata = data.values.toList();
+                        return SingleChildScrollView(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                print(data[index]);
+                                return AddressItem(data: data[index]);
+                              }),
+                        );
+                      })
+                  : Text("Address is empty")
             ],
           ),
         ),
