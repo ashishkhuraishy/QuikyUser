@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:quiky_user/features/location_service/data/data_source/address_local_data_sourc.dart';
+import 'package:quiky_user/features/location_service/data/model/address_model.dart';
+
 import 'package:quiky_user/widgets/AddressItem.dart';
 
 class Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Box addressBox = Hive.box(ADDRESS_BOX);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -31,15 +36,25 @@ class Address extends StatelessWidget {
               Divider(
                 thickness: 1,
               ),
-              AddressItem(),
-              Divider(
-                thickness: 1,
-              ),
-              AddressItem(),
-              Divider(
-                thickness: 1,
-              ),
-              AddressItem(),
+              addressBox != null
+        ? WatchBoxBuilder(
+            box: addressBox,
+            builder: (context, box) {
+              Map<dynamic, dynamic> data = box.toMap();
+              List Sdata = data.values.toList();
+              return SingleChildScrollView(
+                child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      AddressModel addressModel = data[index];
+                      return AddressItem();
+                      Divider(
+                        thickness: 1,
+                      );
+                    }),
+              );
+            })
+        : Text("Address is empty");
             ],
           ),
         ),

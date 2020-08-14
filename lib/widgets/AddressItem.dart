@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class AddressItem extends StatelessWidget {
   const AddressItem({
     Key key,
+    this.formattedAddress,
+    this.shortAddress,
+    this.lat,
+    this.long,
   }) : super(key: key);
+  final String formattedAddress;
+  final String shortAddress;
+  final String lat;
+  final String long;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +22,7 @@ class AddressItem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Home',
-              ),
+              Text(shortAddress, style: Theme.of(context).textTheme.bodyText1),
               Row(
                 children: [
                   Text('A28', style: Theme.of(context).textTheme.bodyText1),
