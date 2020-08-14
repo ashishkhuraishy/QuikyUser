@@ -9,6 +9,7 @@ import 'package:quiky_user/features/products/data/data_source/product_remote_dat
 import 'package:quiky_user/features/products/data/models/category_model.dart';
 import 'package:quiky_user/features/products/data/models/store_product_models.dart';
 import 'package:quiky_user/features/products/data/repository/product_repository_impl.dart';
+import 'package:quiky_user/features/products/domain/entity/category.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 import '../../../location_service/data/repository/address_repository_impl_test.dart';
@@ -32,11 +33,11 @@ main() {
   });
 
   final tStoreId = 1;
-  final tCategories = jsonDecode(fixture('categories.json'))
+  List<Category> tCategories = jsonDecode(fixture('categories.json'))
       .map<CategoryModel>((e) => CategoryModel.fromJson(e))
       .toList();
 
-  final tProducts = StoreProductsModel.fromJson(
+  StoreProductsModel tProducts = StoreProductsModel.fromJson(
     jsonDecode(
       fixture('store-products.json'),
     ),
@@ -58,9 +59,23 @@ main() {
       );
     });
 
-    test('check Internet connection', () {
-      repositoryImpl.getProducts(tStoreId);
+    test('check Internet connection', () async {
+      await repositoryImpl.getProducts(tStoreId);
       verify(mockNetworkInfo.isConnected);
+    });
+
+    test('should return list of categories', () async {
+      final result = await repositoryImpl.getProducts(tStoreId);
+      verify(mockRemoteDataSource.getCategories(tStoreId));
+      verify(mockRemoteDataSource.getProducts(tStoreId));
+
+      // result.fold((l) => null, (r) {
+      //   r.forEach((element) {
+      //     print(element.products);
+      //   });
+      // });
+
+      expect(result, Right(tCategories));
     });
 
     test('should return [ConnectionFailure] if there is no internet connection',
@@ -73,14 +88,6 @@ main() {
 
       verify(mockNetworkInfo.isConnected);
       expect(result, Left(ConnectionFailure()));
-    });
-
-    test('should return list of categories', () async {
-      final result = await repositoryImpl.getProducts(tStoreId);
-      verify(mockRemoteDataSource.getCategories(tStoreId));
-      verify(mockRemoteDataSource.getProducts(tStoreId));
-
-      expect(result, Right(tCategories));
     });
 
     test('should return [ServerFailure] if categories return error', () async {

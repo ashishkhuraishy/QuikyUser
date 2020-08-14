@@ -31,14 +31,24 @@ class ProductRepositoryImpl extends ProductRepository {
       return Left(ServerFailure());
     }
 
+    print(_products.products);
+    print(_categories);
+
+    int indx = -1;
+
     _categories.forEach((element) {
+      indx++;
+      print(element.title);
+      //print(_products.products);
       List<Product> _temp = _products.products;
-      _temp.retainWhere((e) {
-        // print(e.category.id);
+      _temp.where((e) {
+        if (e.category.id == element.id) print(e.title);
         return e.category.id == element.id;
-      });
-      // print('${element.title} : ${_temp.length}');
-      element.addProducts(_temp);
+      }).toList();
+      print('Products ${element.products}');
+      _categories[indx].addProducts(_temp);
+      print('Product After ${element.products}');
+
       // print(_products.products.length);
       // print(_temp.length);
     });
