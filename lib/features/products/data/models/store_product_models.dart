@@ -19,6 +19,7 @@ class StoreProductsModel extends StoreProducts {
         );
 
   factory StoreProductsModel.fromJson(Map<String, dynamic> json) {
+    // print("ssssss $json");
     return StoreProductsModel(
       products: json['products']
           .map<ProductModel>((e) => ProductModel.fromJson(e))

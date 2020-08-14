@@ -5,6 +5,7 @@ import 'package:quiky_user/Screens/CartTab.dart';
 import 'package:quiky_user/Screens/ProfileTab.dart';
 import 'package:quiky_user/Screens/SearchTab.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Providers/UserProvider.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/HomeMegaButton.dart';
@@ -25,10 +26,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
     controller = TabController(length: 4, vsync: this);
+    controller.addListener(tabListener);
     super.initState();
   }
 
   TabController controller;
+
+  void tabListener(){
+    if(controller.indexIsChanging && controller.index==3 && Provider.of<UserProvider>(context, listen: false).getUser==null){
+      controller.index=controller.previousIndex;
+      Navigator.of(context).pushNamed('/signup');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +90,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     Icon(Icons.shopping_cart),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 5),
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                       decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(5)
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        "1",
+                        style: whiteBold13,
                       ),
-                      child: Text("1",style: whiteBold13,),
                     )
                   ],
                 ),
@@ -98,17 +109,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ),
           Tab(
-            icon: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Icon(Icons.account_circle),
-                Text(
-                  "PROFILE",
-                  style: textBold11,
-                )
-              ],
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Icon(Icons.account_circle),
+                  Text(
+                    "PROFILE",
+                    style: textBold11,
+                  )
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

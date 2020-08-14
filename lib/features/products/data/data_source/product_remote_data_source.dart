@@ -38,12 +38,14 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
 
   @override
   Future<StoreProducts> getProducts(int id) async {
-    final url = BASE_URL + '/product_list/?store_id=$id';
+    final url = BASE_URL + '/product_list/?store_id=${id}';
     Response response = await client.get(url);
     if (response.statusCode == 200) {
       Map body = jsonDecode(response.body);
+      // print(body);
       return StoreProductsModel.fromJson(body);
-    } else
+    } else{
       throw ServerException();
+    }
   }
 }

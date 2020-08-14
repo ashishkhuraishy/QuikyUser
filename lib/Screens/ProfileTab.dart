@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Providers/UserProvider.dart';
+import 'package:quiky_user/features/user/domain/entity/user.dart';
 import 'package:quiky_user/widgets/OptionCard.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -17,16 +20,20 @@ class ProfileTab extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Midhun P S",
-                        style: Theme.of(context).textTheme.headline5),
-                    Text("midhunps2019@gmail.com",
-                        style: Theme.of(context).textTheme.bodyText1),
-                    Text("+91 7907689254",
-                        style: Theme.of(context).textTheme.bodyText1),
-                  ],
+                Consumer<UserProvider>(
+                  builder: (ctx, provider, _) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("${provider.getUser.name}",
+                            style: Theme.of(context).textTheme.headline5),
+                        // Text("${provider.getUser.email}",
+                        //     style: Theme.of(context).textTheme.bodyText1),
+                        Text("${provider.getUser.mobile}",
+                            style: Theme.of(context).textTheme.bodyText1),
+                      ],
+                    );
+                  },
                 ),
                 Container(
                   child: Icon(
@@ -92,38 +99,41 @@ class ProfileTab extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.shopping_basket),
                   title: "Past Orders",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.favorite_border),
                   title: "Favorite Orders",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   icon: Icon(Icons.book),
                   title: "Address Book",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "About",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Terms And Condition",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Rate Us on PlayStore",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: () {},
                   title: "Contact Us",
                 ),
                 CustomRowButton(
-                  onTap:(){},
+                  onTap: ()async {
+                    await Provider.of<UserProvider>(context,listen: false).logOut();
+                    Navigator.of(context).popAndPushNamed('/home');
+                  },
                   title: "Logout",
                 ),
               ],
@@ -140,7 +150,10 @@ class ProfileTab extends StatelessWidget {
 
 class CustomRowButton extends StatelessWidget {
   const CustomRowButton({
-    Key key, this.onTap, this.icon, this.title,
+    Key key,
+    this.onTap,
+    this.icon,
+    this.title,
   }) : super(key: key);
 
   final Function onTap;
@@ -157,9 +170,9 @@ class CustomRowButton extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                icon!=null?icon:Container(),
+                icon != null ? icon : Container(),
                 Padding(
-                  padding:  EdgeInsets.only(left: icon!=null?20.0:0),
+                  padding: EdgeInsets.only(left: icon != null ? 20.0 : 0),
                   child: Text(
                     "${title}",
                     style: Theme.of(context).textTheme.bodyText2,

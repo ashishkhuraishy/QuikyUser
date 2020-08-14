@@ -8,21 +8,23 @@ class Category extends Equatable {
   final String imgUrl;
   final String title;
   final int userId;
+  final List<Product> produts;
 
   Category({
     @required this.id,
     @required this.imgUrl,
     @required this.title,
     @required this.userId,
+    @required this.produts,
   });
 
   @override
-  List<Object> get props => [id, imgUrl, title, userId];
+  List<Object> get props => [id, imgUrl, title, userId,produts];
 
-  List<Product> _produts = [];
-  List<Product> get products => _produts;
+  // List<Product> produts = [];
+  List<Product> get products => produts;
 
-  addProducts(List<Product> products) {
-    _produts.addAll(products);
-  }
+  // addProducts(List<Product> products) {
+  //   _produts.addAll(products);
+  // }
 }

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiky_user/Screens/Store.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
@@ -18,10 +20,13 @@ class StoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.of(context).pushNamed('/store');
+      onTap: () {
+        Navigator.of(context).pushNamed('/store', arguments: restaurantModel);
+        // Navigator.push(context,CupertinoPageRoute(builder: (context) => Store(),settings: RouteSettings(arguments: restaurantModel)));
+        
+        //ModalRoute.of(context).settings.arguments;
       },
-          child: Container(
+      child: Container(
         margin: EdgeInsets.only(
           right: 10,
           bottom: 10,
@@ -36,7 +41,7 @@ class StoreCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   child: Image.network(
-                    "$api${restaurantModel.profilePicture}" ,
+                    "$api${restaurantModel.profilePicture}",
                     width: 90,
                     height: 110,
                     fit: BoxFit.fill,
@@ -44,17 +49,23 @@ class StoreCard extends StatelessWidget {
                 ),
                 Positioned.fill(
                   bottom: -6,
-                  child: restaurantModel.offers.length>0? Align(
-                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal:8,vertical: 2),
-                      decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                      child: Text("${restaurantModel.offers[0].percentage}% OFF",style: whiteBold13,),
-                    ),
-                  ):Container(),
+                  child: restaurantModel.offers.length > 0
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: primary,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: Text(
+                              "${restaurantModel.offers[0].percentage}% OFF",
+                              style: whiteBold13,
+                            ),
+                          ),
+                        )
+                      : Container(),
                 )
               ],
             ),
