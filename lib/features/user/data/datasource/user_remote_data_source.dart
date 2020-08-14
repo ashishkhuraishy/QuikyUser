@@ -45,22 +45,18 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       "password": password,
       "email": "dummy@dummymail.com",
       "first_name": name,
-      "last_name": "1"
+      "last_name": ""
     };
 
-    Response response = await client.post(url, headers: {
+    Response response = await client.post(url,
+        headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-        }, body: jsonEncode(body));
+        },
+        body: jsonEncode(body));
     if (response.statusCode == 201) {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
     }
-    print("Deeeeeeeeeeeeebug");
-    print(body);
-    print(response.statusCode);
-    print(response.body);
-    print("Deeeeeeeeeeeeebug --------------- END");
-
     throw ServerException();
   }
 }
