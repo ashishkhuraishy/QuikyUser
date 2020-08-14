@@ -23,13 +23,13 @@ class ProductCard extends StatelessWidget {
         return StatefulBuilder(
           builder: (ctxx, val) {
             return ListView.builder(
-              itemCount: data.variation.length,
+              itemCount: data.variations.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {
                 print("${data}");
-                print("${data.variation[index].price} $index");
-                return Text("${data.variation[index].title}");
+                print("${data.variations[index].price} $index");
+                return Text("${data.variations[index].title}");
               },
             );
           },
@@ -40,18 +40,32 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxPrice = data.variation!=null ? data.variation
-        .reduce((value, element) =>
-            int.tryParse(value.price) > int.tryParse(element.price)
-                ? value
-                : element)
-        .price:0;
-    final minPrice =data.variation !=null ?  data.variation
-        .reduce((value, element) =>
-            int.tryParse(value.price) < int.tryParse(element.price)
-                ? value
-                : element)
-        .price:0;
+    final maxPrice = data.variations != null
+        ? data.variations.reduce(
+            (value, element) {
+               if(int.tryParse(element.price)!=null && int.tryParse(value.price)!=null){
+                 return int.tryParse(value.price) > int.tryParse(element.price)
+                  ? value
+                  : element;
+               }else{
+                 return value;
+               }
+            },
+          ).price
+        : 0;
+    final minPrice = data.variations != null
+        ? data.variations
+            .reduce((value, element){
+               if(int.tryParse(element.price)!=null && int.tryParse(value.price)!=null){
+                 return int.parse(value.price) < int.parse(element.price)
+                  ? value
+                  : element;
+               }else{
+                 return element;
+               }
+            },)
+            .price
+        : 0;
 
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, bottom: 15.0, right: 15.0),

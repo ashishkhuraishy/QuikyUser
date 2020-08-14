@@ -12,7 +12,7 @@ class CartTab extends StatelessWidget {
     ProductModel p = new ProductModel(
         id: 1,
         productimage: null,
-        variation: null,
+        variations: null,
         productreviews: null,
         productviews: null,
         category: null,

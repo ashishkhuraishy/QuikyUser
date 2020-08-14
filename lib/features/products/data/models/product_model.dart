@@ -6,7 +6,7 @@ import 'package:quiky_user/features/products/domain/entity/product.dart';
 class ProductModel extends Product {
   final int id;
   final List<String> productimage;
-  final List<VariationModel> variation;
+  final List<VariationModel> variations;
   final List<String> productreviews;
   final List<String> productviews;
   final CategoryModel category;
@@ -30,7 +30,7 @@ class ProductModel extends Product {
   ProductModel({
     @required this.id,
     @required this.productimage,
-    @required this.variation,
+    @required this.variations,
     @required this.productreviews,
     @required this.productviews,
     @required this.category,
@@ -53,7 +53,7 @@ class ProductModel extends Product {
   }) : super(
           id: id,
           productImages: productimage,
-          variations: variation,
+          variations: variations,
           productReviews: productreviews,
           productViews: productreviews,
           category: category,
@@ -81,7 +81,7 @@ class ProductModel extends Product {
       productimage: json['productimage'] != null
           ? json['productimage'].map<String>((e) => e.toString()).toList()
           : [],
-      variation: json['variation'] != null
+      variations: json['variation'] != null
           ? json['variation']
               .map<VariationModel>((e) => VariationModel.fromJson(e))
               .toList()
@@ -94,7 +94,7 @@ class ProductModel extends Product {
           : [],
       category: json['category'] != null
           ? CategoryModel.fromJson(json['category'])
-          : CategoryModel(id: null, imgUrl: null, title: null, userId: null),
+          : CategoryModel(id: null, imgUrl: null, title: null, userId: null,produts: []),
       image: json['image'] ?? '',
       title: json['title'] ?? '',
       sku: json['sku'] ?? '',
