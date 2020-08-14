@@ -156,8 +156,8 @@ class RestaurantModel extends Restaurant {
       highlightStatus: json['highlight_status'] ?? false,
       featuredBrand: json['featured_brand'] ?? false,
       commisionPercentage: "${json['commision_percentage']}" ?? '',
-      user: "${json['user']}"?? -1,
-      city: "${json['city']}" ?? -1,
+      user: "${json['user']}"?? '',
+      city: "${json['city']}" ?? '',
       zone: "${json['zone']}" ?? '',
       vendorLocation: json['vendor_location'] ?? '',
     );
