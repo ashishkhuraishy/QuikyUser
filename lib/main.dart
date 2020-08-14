@@ -40,15 +40,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AddressProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => HomeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => CartProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => AddressProvider()),
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
       ],
       child: MaterialApp(
         title: 'Quiky',
@@ -57,6 +50,21 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.orange,
             brightness: Brightness.light,
             primaryColorDark: dark,
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide:
+                    BorderSide(width: 1, style: BorderStyle.none, color: grey),
+              ),
+              contentPadding: EdgeInsets.only(left: 16, bottom: 0),
+              // fillColor: bglight1,
+              // filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide:
+                    BorderSide(width: 1, style: BorderStyle.solid, color: grey),
+              ),
+            ),
             textTheme: TextTheme(
               headline5: TextStyle(
                 //darkbold16
@@ -102,6 +110,21 @@ class MyApp extends StatelessWidget {
           dividerColor: Color.fromRGBO(58, 58, 58, 1),
           scaffoldBackgroundColor: Color.fromRGBO(39, 39, 39, 1),
           // secondaryHeaderColor: bgSecondary,
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide:
+                  BorderSide(width: 1, style: BorderStyle.none, color: grey),
+            ),
+            contentPadding: EdgeInsets.only(left: 16, bottom: 0),
+            // fillColor: bglight1,
+            // filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide:
+                  BorderSide(width: 1, style: BorderStyle.solid, color: grey),
+            ),
+          ),
           textTheme: TextTheme(
             headline5: TextStyle(
               //darkbold16
@@ -119,6 +142,12 @@ class MyApp extends StatelessWidget {
               //dark14
               fontWeight: FontWeight.normal,
               fontSize: 13,
+              // color: dark,
+            ),
+            bodyText2: TextStyle(
+              //dark14
+              fontWeight: FontWeight.normal,
+              fontSize: 14,
               // color: dark,
             ),
             subtitle1: TextStyle(

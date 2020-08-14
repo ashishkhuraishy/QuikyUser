@@ -153,12 +153,12 @@ class RestaurantModel extends Restaurant {
       bulkOrder: json['bulk_order'] ?? false,
       opening: json['opening'] ?? '',
       closing: json['closing'] ?? '',
-      highlightStatus: json['highlight_status'] ?? '',
-      featuredBrand: json['featured_brand'] ?? '',
-      commisionPercentage: json['commision_percentage'] ?? '',
+      highlightStatus: json['highlight_status'] ?? false,
+      featuredBrand: json['featured_brand'] ?? false,
+      commisionPercentage: "${json['commision_percentage']}" ?? '',
       user: json['user'] ?? -1,
       city: json['city'] ?? -1,
-      zone: json['zone'] ?? '',
+      zone: "${json['zone']}" ?? '',
       vendorLocation: json['vendor_location'] ?? '',
     );
   }
