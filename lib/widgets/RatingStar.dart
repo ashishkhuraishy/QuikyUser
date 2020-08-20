@@ -4,16 +4,17 @@ import 'package:quiky_user/theme/themedata.dart';
 class RatingStarIdicator extends StatelessWidget {
   const RatingStarIdicator({
     Key key,
-    this.rating, this.totalReview,
+    this.rating,
+    this.totalReview,
   }) : super(key: key);
   final String rating;
   final String totalReview;
 
-  IconData ratingShow(int limit ) {
-    double ratingD=double.tryParse(rating);
+  IconData ratingShow(int limit) {
+    double ratingD = double.tryParse(rating);
     if (ratingD >= limit) {
       return Icons.star;
-    } else if (ratingD > limit -1 ) {
+    } else if (ratingD > limit - 1) {
       return Icons.star_half;
     } else {
       return Icons.star_border;
@@ -49,8 +50,9 @@ class RatingStarIdicator extends StatelessWidget {
           size: 15,
           color: primary,
         ),
-        Text(" ${rating} ", style: Theme.of(context).textTheme.bodyText1),
-        Text(" (${totalReview=='null'?0:totalReview} Reviews) ", style: Theme.of(context).textTheme.subtitle1),
+        Text(" $rating ", style: Theme.of(context).textTheme.bodyText1),
+        Text(" (${totalReview == 'null' ? 0 : totalReview} Reviews) ",
+            style: Theme.of(context).textTheme.subtitle1),
       ],
     );
   }

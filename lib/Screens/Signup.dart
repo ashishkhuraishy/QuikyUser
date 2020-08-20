@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/features/user/domain/entity/user.dart';
-import 'package:quiky_user/theme/themedata.dart';
 
-class Signup extends StatelessWidget {
+import '../core/Providers/UserProvider.dart';
+import '../features/user/domain/entity/user.dart';
+import '../theme/themedata.dart';
+
+class Signup extends StatefulWidget {
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> signup(context) async {
@@ -23,6 +29,7 @@ class Signup extends StatelessWidget {
   }
 
   User u;
+
   final Map formdata = {
     'name': '',
     'phone': '',
@@ -66,11 +73,7 @@ class Signup extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: "Full Name",
                   ),
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Name is required";
-                    }
-                  },
+                  validator: (val) => val.isEmpty ? "Name is Empty" : null,
                 ),
               ),
               Padding(
@@ -81,11 +84,7 @@ class Signup extends StatelessWidget {
                   },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(hintText: "Phone Number"),
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Phone is empty";
-                    }
-                  },
+                  validator: (val) => val.isEmpty ? "Phone is empty" : null,
                 ),
               ),
               // Padding(
@@ -122,6 +121,7 @@ class Signup extends StatelessWidget {
                     } else if (!regex.hasMatch(val)) {
                       return "Password must be 6 characters and one number";
                     }
+                    return null;
                   },
                 ),
               ),

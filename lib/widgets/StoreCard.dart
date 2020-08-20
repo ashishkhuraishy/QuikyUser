@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quiky_user/Screens/Store.dart';
-import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
-import 'package:quiky_user/theme/themedata.dart';
+
+import '../features/home/data/model/restaurant_model.dart';
+import '../theme/themedata.dart';
 
 class StoreCard extends StatelessWidget {
   const StoreCard({
@@ -23,7 +23,7 @@ class StoreCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed('/store', arguments: restaurantModel);
         // Navigator.push(context,CupertinoPageRoute(builder: (context) => Store(),settings: RouteSettings(arguments: restaurantModel)));
-        
+
         //ModalRoute.of(context).settings.arguments;
       },
       child: Container(

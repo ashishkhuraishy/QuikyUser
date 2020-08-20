@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
 
 class OptionCard extends StatelessWidget {
   const OptionCard({
@@ -17,8 +16,6 @@ class OptionCard extends StatelessWidget {
   final String networkImage;
   final String secondTitle;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,17 +29,21 @@ class OptionCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(50)),
             child: icon != null
                 ? icon
-                : networkImage!=null? Image.network(
-                    networkImage,
-                    width: 70,
-                    height: 70,
-                    fit:BoxFit.cover,
-                  ):image!=null?Image.asset(
-                    image,
-                    width: 70,
-                    height: 70,
-                    fit:BoxFit.cover,
-                  ):CircularProgressIndicator(),
+                : networkImage != null
+                    ? Image.network(
+                        networkImage,
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      )
+                    : image != null
+                        ? Image.asset(
+                            image,
+                            width: 70,
+                            height: 70,
+                            fit: BoxFit.cover,
+                          )
+                        : CircularProgressIndicator(),
           ),
           Text(
             title,

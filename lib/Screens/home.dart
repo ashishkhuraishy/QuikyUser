@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Screens/CartTab.dart';
-import 'package:quiky_user/Screens/ProfileTab.dart';
-import 'package:quiky_user/Screens/SearchTab.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/HomeMegaButton.dart';
-import 'package:quiky_user/widgets/DividerLight.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
-import 'package:quiky_user/widgets/StoreCard.dart';
 
+import '../core/Providers/UserProvider.dart';
+import '../theme/themedata.dart';
+import 'CartTab.dart';
 import 'HomeTab.dart';
+import 'ProfileTab.dart';
+import 'SearchTab.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -32,9 +25,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController controller;
 
-  void tabListener(){
-    if(controller.indexIsChanging && controller.index==3 && Provider.of<UserProvider>(context, listen: false).getUser==null){
-      controller.index=controller.previousIndex;
+  void tabListener() {
+    if (controller.indexIsChanging &&
+        controller.index == 3 &&
+        Provider.of<UserProvider>(context, listen: false).getUser == null) {
+      controller.index = controller.previousIndex;
       Navigator.of(context).pushNamed('/signup');
     }
   }
@@ -109,17 +104,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ),
           Tab(
-              icon: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Icon(Icons.account_circle),
-                  Text(
-                    "PROFILE",
-                    style: textBold11,
-                  )
-                ],
-              ),
+            icon: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Icon(Icons.account_circle),
+                Text(
+                  "PROFILE",
+                  style: textBold11,
+                )
+              ],
             ),
+          ),
         ],
       ),
     );

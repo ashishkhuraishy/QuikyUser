@@ -22,10 +22,11 @@ class ProductRepositoryImpl extends ProductRepository {
   Future<Either<Failure, List<Category>>> getProducts(int id) async {
     if (!await networkInfo.isConnected) return Left(ConnectionFailure());
 
-    List<Category> _categories;
+    /// TODO : check if categories is needed
+    // List<Category> _categories;
     StoreProducts _products;
     try {
-      _categories = await remoteDataSource.getCategories(id);
+      // _categories = await remoteDataSource.getCategories(id);
       _products = await remoteDataSource.getProducts(id);
     } on ServerException {
       return Left(ServerFailure());

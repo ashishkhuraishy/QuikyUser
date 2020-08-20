@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {
-                print("${data}");
+                print("$data");
                 print("${data.variations[index].price} $index");
                 return Text("${data.variations[index].title}");
               },
@@ -43,28 +43,30 @@ class ProductCard extends StatelessWidget {
     final maxPrice = data.variations != null
         ? data.variations.reduce(
             (value, element) {
-               if(int.tryParse(element.price)!=null && int.tryParse(value.price)!=null){
-                 return int.tryParse(value.price) > int.tryParse(element.price)
-                  ? value
-                  : element;
-               }else{
-                 return value;
-               }
+              if (int.tryParse(element.price) != null &&
+                  int.tryParse(value.price) != null) {
+                return int.tryParse(value.price) > int.tryParse(element.price)
+                    ? value
+                    : element;
+              } else {
+                return value;
+              }
             },
           ).price
         : 0;
     final minPrice = data.variations != null
-        ? data.variations
-            .reduce((value, element){
-               if(int.tryParse(element.price)!=null && int.tryParse(value.price)!=null){
-                 return int.parse(value.price) < int.parse(element.price)
-                  ? value
-                  : element;
-               }else{
-                 return element;
-               }
-            },)
-            .price
+        ? data.variations.reduce(
+            (value, element) {
+              if (int.tryParse(element.price) != null &&
+                  int.tryParse(value.price) != null) {
+                return int.parse(value.price) < int.parse(element.price)
+                    ? value
+                    : element;
+              } else {
+                return element;
+              }
+            },
+          ).price
         : 0;
 
     return Padding(

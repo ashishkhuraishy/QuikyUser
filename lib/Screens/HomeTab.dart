@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/Providers/HomeProvider.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/DividerLight.dart';
-import 'package:quiky_user/widgets/HomeMegaButton.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
-import 'package:quiky_user/widgets/StoreCard.dart';
-import 'package:shimmer/shimmer.dart';
+
+import '../core/Providers/AddressProvider.dart';
+import '../core/Providers/HomeProvider.dart';
+import '../features/home/data/data_source/home_remote_data_source.dart';
+import '../theme/themedata.dart';
+import '../widgets/HomeMegaButton.dart';
+import '../widgets/OptionCard.dart';
+import '../widgets/StoreCard.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({
@@ -28,15 +26,19 @@ class _HomeTabState extends State<HomeTab> {
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   // }
-  @override
-  void initState() {
-    super.initState();
-    final currentAddress =
-        Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
-    final getData = Provider.of<HomeProvider>(context, listen: false)
-        .getData(currentAddress.lat, currentAddress.long);
-  }
+  /// TODO : Commented out unused varibles and [INIT] state
+  /// [DELETE] if not using them
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final currentAddress =
+  //       Provider.of<AddressProvider>(context, listen: false).currentAddress;
+
+  //   final getData = Provider.of<HomeProvider>(context, listen: false)
+  //       .getData(currentAddress.lat, currentAddress.long);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +253,7 @@ class _HomeTabState extends State<HomeTab> {
                         return OptionCard(
                           title: "${provider.popularBrands[index].title}",
                           networkImage:
-                              "${BASE_URL}${provider.popularBrands[index].profilePicture}",
+                              "$BASE_URL${provider.popularBrands[index].profilePicture}",
                           secondTitle:
                               "${provider.popularBrands[index].avgDeliveryTime} mins",
                         );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/core/Services/products_listing_service.dart';
-import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
-import 'package:quiky_user/features/products/data/models/category_model.dart';
-import 'package:quiky_user/features/products/domain/entity/category.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/ProductCard.dart';
-import 'package:quiky_user/widgets/RatingStar.dart';
+
+import '../core/Services/products_listing_service.dart';
+import '../features/home/data/model/restaurant_model.dart';
+import '../features/products/data/models/category_model.dart';
+import '../theme/themedata.dart';
+import '../widgets/ProductCard.dart';
+import '../widgets/RatingStar.dart';
 
 class Store extends StatelessWidget {
   const Store({
@@ -185,7 +185,8 @@ class Store extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: categories.data.length,
                       itemBuilder: (ctx, index) {
-                        return ExpansionTileProducts(scWidth: scWidth,data:categories.data[index]);
+                        return ExpansionTileProducts(
+                            scWidth: scWidth, data: categories.data[index]);
                       },
                     );
                   } else if (categories.hasError) {
@@ -207,24 +208,25 @@ class Store extends StatelessWidget {
 class ExpansionTileProducts extends StatelessWidget {
   const ExpansionTileProducts({
     Key key,
-    @required this.scWidth, this.data,
+    @required this.scWidth,
+    this.data,
   }) : super(key: key);
 
   final double scWidth;
   final CategoryModel data;
 
-  String productTitles(List products){
+  String productTitles(List products) {
     String a = "";
     products.forEach((element) {
-      a+=" ${element.title}";
+      a += " ${element.title}";
     });
     return a;
   }
 
-  List<Widget> productWidgets(List products){
-    List<Widget> a=[];
+  List<Widget> productWidgets(List products) {
+    List<Widget> a = [];
     products.forEach((element) {
-      a.add(ProductCard(scWidth: scWidth,data:element));
+      a.add(ProductCard(scWidth: scWidth, data: element));
     });
     return a;
   }

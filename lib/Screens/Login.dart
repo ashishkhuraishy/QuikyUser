@@ -4,7 +4,12 @@ import 'package:quiky_user/core/Providers/UserProvider.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> login(context) async {
@@ -22,6 +27,7 @@ class Login extends StatelessWidget {
   }
 
   User u;
+
   final Map formdata = {
     'phone': '',
     'password': '',
@@ -64,6 +70,7 @@ class Login extends StatelessWidget {
                     if (val.isEmpty) {
                       return "Phone is empty";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -87,6 +94,7 @@ class Login extends StatelessWidget {
                     } else if (!regex.hasMatch(val)) {
                       return "Password must be 6 characters and one number";
                     }
+                    return null;
                   },
                 ),
               ),

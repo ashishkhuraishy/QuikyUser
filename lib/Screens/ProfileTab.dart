@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/features/user/domain/entity/user.dart';
 import 'package:quiky_user/widgets/OptionCard.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -130,8 +129,9 @@ class ProfileTab extends StatelessWidget {
                   title: "Contact Us",
                 ),
                 CustomRowButton(
-                  onTap: ()async {
-                    await Provider.of<UserProvider>(context,listen: false).logOut();
+                  onTap: () async {
+                    await Provider.of<UserProvider>(context, listen: false)
+                        .logOut();
                     Navigator.of(context).popAndPushNamed('/home');
                   },
                   title: "Logout",
@@ -174,7 +174,7 @@ class CustomRowButton extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: icon != null ? 20.0 : 0),
                   child: Text(
-                    "${title}",
+                    "$title",
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
