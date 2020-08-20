@@ -4,7 +4,6 @@ import 'package:quiky_user/core/platform/network_info.dart';
 import 'package:quiky_user/features/products/data/data_source/product_remote_data_source.dart';
 import 'package:quiky_user/features/products/data/models/category_model.dart';
 import 'package:quiky_user/features/products/domain/entity/category.dart';
-import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/store_products.dart';
 import 'package:quiky_user/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -47,7 +46,8 @@ class ProductRepositoryImpl extends ProductRepository {
     List<Category> c = [];
 
     _products.products.forEach((product) {
-      final itemIndex = c.indexWhere((element) => element.id == product.category.id);
+      final itemIndex =
+          c.indexWhere((element) => element.id == product.category.id);
       if (itemIndex == -1) {
         c.add(
           new CategoryModel(

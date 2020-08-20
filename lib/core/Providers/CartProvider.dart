@@ -18,9 +18,14 @@ class CartProvider extends ChangeNotifier {
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
 
-  addProducts({Variation variation, Offer offer, int quantity, int storeId}) {
+  addProducts({
+    Variation variation,
+    List<Offer> offers,
+    int quantity,
+    int storeId,
+  }) {
     _addItem.call(
-      offer: offer,
+      offers: offers,
       quantity: quantity,
       storeId: storeId,
       variation: variation,
