@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/ProductCard.dart';
-import 'package:quiky_user/widgets/RatingStar.dart';
+
+import '../core/Services/products_listing_service.dart';
+import '../features/home/data/model/restaurant_model.dart';
+import '../features/products/data/models/category_model.dart';
+import '../theme/themedata.dart';
+import '../widgets/ProductCard.dart';
+import '../widgets/RatingStar.dart';
 
 class Store extends StatelessWidget {
-  const Store({Key key}) : super(key: key);
+  const Store({
+    Key key,
+  }) : super(key: key);
+
+  Future<List> loadProducts(RestaurantModel restaurant) async {
+    ProductListingService p = ProductListingService(id: restaurant.id);
+    return await p.getCategories;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final RestaurantModel restaurant =
+        ModalRoute.of(context).settings.arguments;
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        // persistentFooterButtons: <Widget>[Text("asdsad")],
         bottomNavigationBar: Container(
           margin: EdgeInsets.all(0),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -83,13 +95,14 @@ class Store extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                        "Hotel Saravana Bhavan perumbavoor eranakulam kerala india ",
+                    Text("${restaurant.title}",
                         style: Theme.of(context).textTheme.headline5,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3),
-                    RatingStarIdicator(),
-                    Text("South Indian, Kerala, North Indian, Chinease ",
+                    RatingStarIdicator(
+                        rating: restaurant.avgRating,
+                        totalReview: restaurant.totalReviews),
+                    Text("${restaurant.storeSubType}",
                         style: Theme.of(context).textTheme.bodyText1,
                         overflow: TextOverflow.ellipsis),
                   ],
@@ -163,19 +176,29 @@ class Store extends StatelessWidget {
                   ],
                 ),
               ),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              ExpansionTileProducts(scWidth: scWidth),
-              // Container(
-              //   width: scWidth,
-              //   height: 105,
-              // ),
+              FutureBuilder<List>(
+                future: loadProducts(restaurant),
+                builder: (ctx, AsyncSnapshot<List> categories) {
+                  if (categories.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: categories.data.length,
+                      itemBuilder: (ctx, index) {
+                        return ExpansionTileProducts(
+                            scWidth: scWidth, data: categories.data[index]);
+                      },
+                    );
+                  } else if (categories.hasError) {
+                    return Text(
+                        "${categories.error} ${categories.connectionState}");
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ));
@@ -186,25 +209,39 @@ class ExpansionTileProducts extends StatelessWidget {
   const ExpansionTileProducts({
     Key key,
     @required this.scWidth,
+    this.data,
   }) : super(key: key);
 
   final double scWidth;
+  final CategoryModel data;
+
+  String productTitles(List products) {
+    String a = "";
+    products.forEach((element) {
+      a += " ${element.title}";
+    });
+    return a;
+  }
+
+  List<Widget> productWidgets(List products) {
+    List<Widget> a = [];
+    products.forEach((element) {
+      a.add(ProductCard(scWidth: scWidth, data: element));
+    });
+    return a;
+  }
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text("Idili",
+      title: Text("${data.title}",
           style: Theme.of(context).textTheme.headline5,
           overflow: TextOverflow.ellipsis),
       subtitle: Text(
-          "5 items, idili, vada ididli, vada, dosa, idili, vada dosa idili, vada dosa",
+          "${data.products.length} items, ${productTitles(data.products)} ",
           style: Theme.of(context).textTheme.subtitle1,
           overflow: TextOverflow.ellipsis),
-      children: <Widget>[
-        ProductCard(scWidth: scWidth),
-        ProductCard(scWidth: scWidth),
-        ProductCard(scWidth: scWidth),
-      ],
+      children: productWidgets(data.products),
     );
   }
 }

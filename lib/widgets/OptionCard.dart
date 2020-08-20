@@ -18,7 +18,10 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: 100,
+      ),
       padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
       child: Column(
         children: <Widget>[
@@ -45,11 +48,15 @@ class OptionCard extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyText1,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
           ),
           secondTitle != null
               ? Text(
                   secondTitle,
                   style: Theme.of(context).textTheme.subtitle1,
+                  maxLines: 1,
                 )
               : Container()
         ],

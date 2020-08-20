@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiky_user/features/products/data/models/product_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/ProductCard.dart';
 
@@ -8,54 +9,76 @@ class CartTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double scWidth = MediaQuery.of(context).size.width;
+    ProductModel p = new ProductModel(
+        id: 1,
+        productimage: null,
+        variations: null,
+        productreviews: null,
+        productviews: null,
+        category: null,
+        image: "",
+        title: "Test",
+        sku: null,
+        tax: null,
+        description: "Test desc",
+        quantity: null,
+        discount: null,
+        isStock: null,
+        isFeatured: null,
+        isDiscount: null,
+        vegNvEgg: null,
+        active: null,
+        timestamp: null,
+        updated: null,
+        user: null,
+        filter: null);
     return Scaffold(
+        bottomSheet: Container(
+          width: double.infinity,
+          child: FlatButton(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: EdgeInsets.all(15),
+                      color: primary,
+            onPressed: () {},
+            child: Text("asdads"),
+          ),
+        ),
         body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            StoreDetails(),
-            ListView(
-              scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ProductCard(scWidth: scWidth, addedToCart: true),
-                ProductCard(scWidth: scWidth, addedToCart: true),
-                ProductCard(scWidth: scWidth, addedToCart: true),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                
-                children: <Widget>[
-                  Text(
-                      "Apply Coupon",
-                      style: whiteBold13,
-                    ),
-                  FlatButton(
+                StoreDetails(),
+                ListView(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
+                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
+                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  width: double.infinity,
+                  child: FlatButton(
                     color: primary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        bottomRight: Radius.circular(5),
-                      ),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     onPressed: () {},
                     child: Text(
-                      "Apply",
+                      "Apply Coupon",
                       style: whiteBold13,
                     ),
                   ),
-                ],
-              )
+                ),
+                NoContactDeliveryCard(),
+              ],
             ),
-            NoContactDeliveryCard(),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
 
@@ -67,7 +90,7 @@ class NoContactDeliveryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 20, right: 20),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
           border: Border.all(width: 2, color: primary),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../core/Providers/AddressProvider.dart';
 import '../core/Providers/HomeProvider.dart';
+import '../features/home/data/data_source/home_remote_data_source.dart';
 import '../theme/themedata.dart';
 import '../widgets/HomeMegaButton.dart';
 import '../widgets/OptionCard.dart';
@@ -25,15 +26,19 @@ class _HomeTabState extends State<HomeTab> {
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   // }
-  @override
-  void initState() {
-    super.initState();
-    final currentAddress =
-        Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
-    final getData = Provider.of<HomeProvider>(context, listen: false)
-        .getData(currentAddress.lat, currentAddress.long);
-  }
+  /// TODO : Commented out unused varibles and [INIT] state
+  /// [DELETE] if not using them
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final currentAddress =
+  //       Provider.of<AddressProvider>(context, listen: false).currentAddress;
+
+  //   final getData = Provider.of<HomeProvider>(context, listen: false)
+  //       .getData(currentAddress.lat, currentAddress.long);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +115,7 @@ class _HomeTabState extends State<HomeTab> {
                   )),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             ),
             Container(
               padding: EdgeInsets.only(
@@ -141,53 +146,55 @@ class _HomeTabState extends State<HomeTab> {
                     "Explore sponsored partner brands",
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  Container(
-                      height: 260,
-                      child: Consumer<HomeProvider>(
-                        builder: (ctx, provider, _) {
-                          if (provider.inTheSpotLight != null) {
-                            return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              itemCount: provider.inTheSpotLight.length > 1
-                                  ? provider.inTheSpotLight.length ~/ 2
-                                  : provider.inTheSpotLight.length,
-                              itemBuilder: (ctex, index) {
-                                var index1 = index + 1;
-                                if (index > 0 && index ~/ 2 != 0) {
-                                  return Container();
-                                } else {
-                                  return Column(
-                                    children: <Widget>[
-                                      StoreCard(
-                                        scWidth: widget.scWidth,
-                                        restaurantModel:
-                                            provider.inTheSpotLight[index],
-                                      ),
-                                      provider.inTheSpotLight.length > index + 1
-                                          ? StoreCard(
-                                              scWidth: widget.scWidth,
-                                              restaurantModel: provider
-                                                  .inTheSpotLight[index + 1],
-                                            )
-                                          : Container(),
-                                    ],
-                                  );
-                                }
-                              },
-                            );
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ))
+                  Consumer<HomeProvider>(
+                    builder: (ctx, provider, _) {
+                      return Container(
+                        height: provider.inTheSpotLight != null
+                            ? provider.inTheSpotLight.length > 1 ? 260 : 130
+                            : 200,
+                        child: provider.inTheSpotLight != null
+                            ? ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                // shrinkWrap: true,
+                                itemCount: provider.inTheSpotLight.length > 1
+                                    ? provider.inTheSpotLight.length ~/ 2
+                                    : provider.inTheSpotLight.length,
+                                itemBuilder: (ctex, index) {
+                                  // var index1 = index + 1;
+                                  if (index > 0 && index ~/ 2 != 0) {
+                                    return Container();
+                                  } else {
+                                    return Column(
+                                      children: <Widget>[
+                                        StoreCard(
+                                          scWidth: widget.scWidth,
+                                          restaurantModel:
+                                              provider.inTheSpotLight[index],
+                                        ),
+                                        provider.inTheSpotLight.length >
+                                                index + 1
+                                            ? StoreCard(
+                                                scWidth: widget.scWidth,
+                                                restaurantModel: provider
+                                                    .inTheSpotLight[index + 1],
+                                              )
+                                            : Container(),
+                                      ],
+                                    );
+                                  }
+                                },
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             ),
             Container(
               padding: EdgeInsets.only(top: 10),
@@ -215,7 +222,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             ),
             Container(
               padding: EdgeInsets.all(10),
@@ -235,40 +242,34 @@ class _HomeTabState extends State<HomeTab> {
             Container(
               padding: EdgeInsets.only(top: 10),
               width: widget.scWidth,
-              height: 126,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  OptionCard(
-                    title: "Mc Donald's",
-                    image: "assets/img/mcdonalds.jpg",
-                    secondTitle: "3 mins",
-                  ),
-                  OptionCard(
-                    title: "Mc Donald's",
-                    image: "assets/img/mcdonalds.jpg",
-                    secondTitle: "3 mins",
-                  ),
-                  OptionCard(
-                    title: "Mc Donald's",
-                    image: "assets/img/mcdonalds.jpg",
-                    secondTitle: "3 mins",
-                  ),
-                  OptionCard(
-                    title: "Mc Donald's",
-                    image: "assets/img/mcdonalds.jpg",
-                    secondTitle: "3 mins",
-                  ),
-                  OptionCard(
-                    title: "Mc Donald's",
-                    image: "assets/img/mcdonalds.jpg",
-                    secondTitle: "3 mins",
-                  ),
-                ],
+              height: 141,
+              child: Consumer<HomeProvider>(
+                builder: (ctx, provider, _) {
+                  if (provider.popularBrands != null) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: provider.popularBrands.length,
+                      itemBuilder: (ctxx, index) {
+                        return OptionCard(
+                          title: "${provider.popularBrands[index].title}",
+                          networkImage:
+                              "$BASE_URL${provider.popularBrands[index].profilePicture}",
+                          secondTitle:
+                              "${provider.popularBrands[index].avgDeliveryTime} mins",
+                        );
+                      },
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                },
               ),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             ),
             Container(
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -320,7 +321,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             ),
             Container(
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -341,7 +342,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
             Consumer<HomeProvider>(
               builder: (ctx, provider, _) {
-                if (provider.restaurantsNearBy != null) {
+                if (provider.storesNearBy != null) {
                   return ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.only(left: 10),
@@ -372,7 +373,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             Divider(
-              thickness: 8,
+              thickness: 2,
             )
           ],
         ),

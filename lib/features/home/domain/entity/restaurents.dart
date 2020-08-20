@@ -21,7 +21,7 @@ class Restaurant extends Equatable {
   final String storeSubType;
   final String status;
   final String option;
-  final int totalReviews;
+  final String totalReviews;
   final String avgRating;
   final String coordinate;
   final String address;
@@ -36,8 +36,8 @@ class Restaurant extends Equatable {
   final bool highlightStatus;
   final bool featuredBrand;
   final String commisionPercentage;
-  final int user;
-  final int city;
+  final String user;
+  final String city;
   final String zone;
   final String vendorLocation;
 

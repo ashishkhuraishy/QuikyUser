@@ -7,10 +7,14 @@ class AddItem {
 
   AddItem({this.repository});
 
-  Future<void> call(
-      {Variation variation, int quantity, int storeId, Offer offer}) async {
+  Future<void> call({
+    Variation variation,
+    int quantity,
+    int storeId,
+    List<Offer> offers,
+  }) async {
     return await repository.addItem(
-      offer: offer,
+      offers: offers,
       quantity: quantity,
       storeId: storeId,
       variation: variation,

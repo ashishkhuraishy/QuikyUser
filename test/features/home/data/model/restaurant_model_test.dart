@@ -36,7 +36,7 @@ main() {
     storeSubType: "Indian, Chinese",
     status: "opened",
     option: "trending",
-    totalReviews: 0,
+    totalReviews: "",
     avgRating: '',
     coordinate: "10.0142468,76.2775775",
     address:
@@ -52,8 +52,8 @@ main() {
     highlightStatus: true,
     featuredBrand: true,
     commisionPercentage: '',
-    user: 37,
-    city: 1,
+    user: "37",
+    city: "1",
     zone: '',
     vendorLocation: "10.0142468,76.2775775",
   );

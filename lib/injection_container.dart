@@ -72,15 +72,45 @@ Future<void> init() async {
 
   // Data sources
   sl.registerLazySingleton<AddressRemoteDataSource>(
-    () => AddressRemoteDataSourceImpl(client: sl()),
+    () => AddressRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   sl.registerLazySingleton<AddressLocalDataSource>(
-    () => AddresLocalDataSourceImpl(hive: sl()),
+    () => AddresLocalDataSourceImpl(
+      hive: sl(),
+    ),
   );
 
   sl.registerLazySingleton<HomeRemoteDataSource>(
-    () => HomeRemoteDataSourceImpl(client: sl()),
+    () => HomeRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<ProductsRemoteDataSource>(
+    () => ProductsRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<UserRemoteDataSource>(
+    () => UserRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<UserLocalDataSource>(
+    () => UserLocalDataSourceImpl(
+      hive: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<CartLocalDataSource>(
+    () => CartLocalDataSourceImpl(
+      hive: sl(),
+    ),
   );
 
   sl.registerLazySingleton<ProductsRemoteDataSource>(
@@ -102,7 +132,10 @@ Future<void> init() async {
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton<LocationInfo>(
-      () => LocationInfoImpl(location: sl()));
+    () => LocationInfoImpl(
+      location: sl(),
+    ),
+  );
 
   //! External
   final hive = Hive;

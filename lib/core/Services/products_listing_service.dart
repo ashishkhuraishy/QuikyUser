@@ -11,15 +11,15 @@ class ProductListingService {
   ProductListingService({this.id});
 
   Future<List<Category>> get getCategories async {
+    // print("id $id");
     final resultOrError = await _getProducts(id: this.id);
-
     List<Category> _result;
 
     resultOrError.fold((l) {
       _result = null;
       print('${l.runtimeType} error occured while calling GetProducts');
     }, (products) => _result = products);
-
+    // print(_result);
     return _result;
   }
 }

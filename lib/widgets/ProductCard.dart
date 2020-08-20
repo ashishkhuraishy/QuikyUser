@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:quiky_user/features/products/data/models/product_model.dart';
+import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/FoodSafetyDot.dart';
 
 import '../theme/themedata.dart';
@@ -8,13 +11,66 @@ class ProductCard extends StatelessWidget {
     Key key,
     @required this.scWidth,
     this.addedToCart,
+    this.data,
   }) : super(key: key);
 
   final double scWidth;
   final bool addedToCart;
+  final ProductModel data;
+
+  void displayBottomSheet(BuildContext context, ProductModel data) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctxx, val) {
+            return ListView.builder(
+              itemCount: data.variations.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (ctx, index) {
+                print("$data");
+                print("${data.variations[index].price} $index");
+                return Text("${data.variations[index].title}");
+              },
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final maxPrice = data.variations != null
+        ? data.variations.reduce(
+            (value, element) {
+              if (int.tryParse(element.price) != null &&
+                  int.tryParse(value.price) != null) {
+                return int.tryParse(value.price) > int.tryParse(element.price)
+                    ? value
+                    : element;
+              } else {
+                return value;
+              }
+            },
+          ).price
+        : 0;
+    final minPrice = data.variations != null
+        ? data.variations.reduce(
+            (value, element) {
+              if (int.tryParse(element.price) != null &&
+                  int.tryParse(value.price) != null) {
+                return int.parse(value.price) < int.parse(element.price)
+                    ? value
+                    : element;
+              } else {
+                return element;
+              }
+            },
+          ).price
+        : 0;
+
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, bottom: 15.0, right: 15.0),
       child: Row(
@@ -25,23 +81,24 @@ class ProductCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
               child: Stack(
                 children: <Widget>[
-                  Image.asset(
-                    "assets/img/Burger.jpeg",
-                    width: 90,
-                    height: 112,
-                    fit: BoxFit.cover,
-                  ),
-                  // Container(
-                  //   width: 30,
-                  //   height: 30,
-                  // ),
+                  data.image != ""
+                      ? Image.network(
+                          "$BASE_URL${data.image}",
+                          width: 90,
+                          height: 112,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          width: 30,
+                          height: 30,
+                        ),
                   Positioned(top: 0, right: 0, child: FoodSafetyDot())
                 ],
               ) //,
               ),
           Container(
             constraints: BoxConstraints(
-              maxWidth: scWidth - 120,
+              maxWidth: scWidth - (data.image != "" ? 120 : 60),
               // maxWidth: scWidth - 70,
             ),
             height: 112,
@@ -51,19 +108,19 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  "Arabian Paradise hotel edappally kerala india india  india",
+                  "${data.title}",
                   style: Theme.of(context).textTheme.headline5,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
                 // Spacer(flex:1),
                 Text(
-                  "Arabian, South indian",
+                  "${data.description}",
                   style: Theme.of(context).textTheme.subtitle1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "₹45",
+                  "${minPrice != maxPrice ? '₹$minPrice ~ ₹$maxPrice' : '₹$minPrice'} ",
                   style: primaryBold14,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -107,6 +164,9 @@ class ProductCard extends StatelessWidget {
                     : Align(
                         alignment: Alignment.bottomRight,
                         child: CustomBorderedButton(
+                          onTap: () {
+                            displayBottomSheet(context, data);
+                          },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[

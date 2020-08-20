@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../core/Providers/UserProvider.dart';
 import '../theme/themedata.dart';
 import 'CartTab.dart';
 import 'HomeTab.dart';
@@ -17,10 +19,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
     controller = TabController(length: 4, vsync: this);
+    controller.addListener(tabListener);
     super.initState();
   }
 
   TabController controller;
+
+  void tabListener() {
+    if (controller.indexIsChanging &&
+        controller.index == 3 &&
+        Provider.of<UserProvider>(context, listen: false).getUser == null) {
+      controller.index = controller.previousIndex;
+      Navigator.of(context).pushNamed('/signup');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
