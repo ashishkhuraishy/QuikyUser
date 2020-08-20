@@ -4,6 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
+import 'package:quiky_user/features/cart/data/repository/cart_repository_impl.dart';
+import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
 
 import 'core/platform/location_info.dart';
 import 'core/platform/network_info.dart';
@@ -64,35 +67,62 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<CartRepository>(
+    () => CartRepositoryImpl(
+      localDataSource: sl(),
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<AddressRemoteDataSource>(
-    () => AddressRemoteDataSourceImpl(client: sl()),
+    () => AddressRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   sl.registerLazySingleton<AddressLocalDataSource>(
-    () => AddresLocalDataSourceImpl(hive: sl()),
+    () => AddresLocalDataSourceImpl(
+      hive: sl(),
+    ),
   );
 
   sl.registerLazySingleton<HomeRemoteDataSource>(
-    () => HomeRemoteDataSourceImpl(client: sl()),
+    () => HomeRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   sl.registerLazySingleton<ProductsRemoteDataSource>(
-    () => ProductsRemoteDataSourceImpl(client: sl()),
+    () => ProductsRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   sl.registerLazySingleton<UserRemoteDataSource>(
-    () => UserRemoteDataSourceImpl(client: sl()),
+    () => UserRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   sl.registerLazySingleton<UserLocalDataSource>(
-    () => UserLocalDataSourceImpl(hive: sl()),
+    () => UserLocalDataSourceImpl(
+      hive: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<CartLocalDataSource>(
+    () => CartLocalDataSourceImpl(
+      hive: sl(),
+    ),
   );
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton<LocationInfo>(
-      () => LocationInfoImpl(location: sl()));
+    () => LocationInfoImpl(
+      location: sl(),
+    ),
+  );
 
   //! External
   final hive = Hive;
