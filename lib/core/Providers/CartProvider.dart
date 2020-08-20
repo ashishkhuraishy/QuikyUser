@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
+import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
@@ -15,8 +16,15 @@ class CartProvider extends ChangeNotifier {
   Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
 
   List<Product> get currentProducts => _getProductsFromCart();
+  Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
+  List<CartItem> get currentCartItems => _currentCart.cartItems;
+
+  /// function used to add an Item into the cart
+  /// @requires [VARIATION], quantity for cartItem and
+  /// offerDetails and storeId for making things easier
+  /// to handle
 
   addProducts({
     Variation variation,
@@ -34,10 +42,29 @@ class CartProvider extends ChangeNotifier {
     _updateCart();
   }
 
+  /// Function to check if a given variation Id is already inside
+  /// the [CART] if there is an elemnt it wi;; return [CARTITEM.QUANTITY]
+  /// else will return -1
+
+  int getQuantity(int id) {
+    final cartItem = currentCartItems.firstWhere(
+      (element) => element.id == id,
+      orElse: () => null,
+    );
+
+    if (cartItem != null) return cartItem.quantity;
+
+    return -1;
+  }
+
+  /// Helper Function Invoked to update the cart
   _updateCart() async {
     _currentCart = await _getCart();
     notifyListeners();
   }
+
+  /// Helper Function to convert all cart Items Into [PRODUCT]
+  /// for hellping out the front end reusability
 
   _getProductsFromCart() async {
     final res = await _getCart.call();
