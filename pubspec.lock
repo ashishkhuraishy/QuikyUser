@@ -28,11 +28,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "2.5.0-nullsafety"
-=======
     version: "2.4.2"
->>>>>>> home
   boolean_selector:
     dependency: transitive
     description:
@@ -102,11 +98,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.1.0-nullsafety.2"
-=======
     version: "1.0.0"
->>>>>>> home
   charcode:
     dependency: transitive
     description:
@@ -127,11 +119,7 @@ packages:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.1.0-nullsafety"
-=======
     version: "1.0.1"
->>>>>>> home
   code_builder:
     dependency: transitive
     description:
@@ -145,11 +133,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.15.0-nullsafety.2"
-=======
     version: "1.14.13"
->>>>>>> home
   convert:
     dependency: transitive
     description:
@@ -205,22 +189,14 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.2.3"
-=======
     version: "1.2.2"
->>>>>>> home
   fake_async:
     dependency: transitive
     description:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.1.0-nullsafety"
-=======
     version: "1.1.0"
->>>>>>> home
   file:
     dependency: transitive
     description:
@@ -445,11 +421,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "0.12.10-nullsafety"
-=======
     version: "0.12.8"
->>>>>>> home
   meta:
     dependency: transitive
     description:
@@ -505,11 +477,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.8.0-nullsafety"
-=======
     version: "1.7.0"
->>>>>>> home
   path_provider:
     dependency: "direct main"
     description:
