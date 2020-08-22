@@ -191,7 +191,7 @@ class Store extends StatelessWidget {
                     );
                   } else if (categories.hasError) {
                     return Text(
-                        "${categories.error} ${categories.connectionState}");
+                        "${categories.error} ${categories.connectionState} ");
                   } else {
                     return Center(
                       child: CircularProgressIndicator(),

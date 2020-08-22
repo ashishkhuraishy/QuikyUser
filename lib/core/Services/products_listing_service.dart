@@ -16,10 +16,11 @@ class ProductListingService {
     List<Category> _result;
 
     resultOrError.fold((l) {
+    print(_result);
       _result = null;
       print('${l.runtimeType} error occured while calling GetProducts');
     }, (products) => _result = products);
-    // print(_result);
+    print(_result);
     return _result;
   }
 }

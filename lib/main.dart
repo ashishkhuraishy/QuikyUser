@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/Login.dart';
 import 'package:quiky_user/Screens/Signup.dart';
 import 'package:quiky_user/Screens/home.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/core/Providers/UserProvider.dart';
 
 import 'Screens/Store.dart';
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
         ),
       ],
       child: MaterialApp(

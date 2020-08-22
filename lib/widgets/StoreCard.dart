@@ -80,7 +80,7 @@ class StoreCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "${restaurantModel.title}",
+                    "${restaurantModel.title} ${restaurantModel.id}",
                     style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,

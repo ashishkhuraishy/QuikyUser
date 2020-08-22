@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
 import '../core/Providers/HomeProvider.dart';
@@ -30,20 +31,24 @@ class _HomeTabState extends State<HomeTab> {
   /// TODO : Commented out unused varibles and [INIT] state
   /// [DELETE] if not using them
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final currentAddress =
-  //       Provider.of<AddressProvider>(context, listen: false).currentAddress;
+  @override
+  void initState() {
+    super.initState();
+    final currentAddress =
+        Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
-  //   final getData = Provider.of<HomeProvider>(context, listen: false)
-  //       .getData(currentAddress.lat, currentAddress.long);
+    final getData = Provider.of<HomeProvider>(context, listen: false)
+        .getData(currentAddress.lat, currentAddress.long);
+  }
+
+  // void fetchData(Address currectAddress){
+  //   final getData = Provider.of<HomeProvider>(context,listen:false).getData(currectAddress.lat, currectAddress.long);
   // }
 
   @override
   Widget build(BuildContext context) {
     // final currentAddress =  Provider.of<AddressProvider>(context,listen: false).currentAddress;
-    // final getData = Provider.of<HomeProvider>(context,listen:false).getData(10.0551215, 76.43577259999999);
+    // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
@@ -58,6 +63,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
               Consumer<AddressProvider>(
                 builder: (ctx, val, widget) {
+                  // fetchData(val.currentAddress);
                   return Text(
                     "${val.currentAddress.shortAddress}",
                     textAlign: TextAlign.left,
