@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Widgets/ProductCard.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/features/products/data/models/product_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/ProductCard.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
@@ -60,7 +60,7 @@ class CartTab extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: provider.cartProducts.length,
                     itemBuilder: (ctxx,index){
-                      return Text("sad");
+                      return ProductCard(scWidth: scWidth,addedToCart:2,data:provider.cartProducts[index]);
                     },
                   );
                   },
