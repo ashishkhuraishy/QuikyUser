@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Screens/Login.dart';
+import 'package:quiky_user/Screens/Signup.dart';
+import 'package:quiky_user/Screens/home.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
+import 'package:quiky_user/core/Providers/UserProvider.dart';
 
 import 'Screens/Login.dart';
 import 'Screens/Signup.dart';
@@ -51,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
         ),
       ],
       child: MaterialApp(

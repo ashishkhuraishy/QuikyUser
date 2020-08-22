@@ -42,34 +42,19 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxPrice = data.variations != null
-        ? data.variations.reduce(
-            (value, element) {
-              if (int.tryParse(element.price) != null &&
-                  int.tryParse(value.price) != null) {
-                return int.tryParse(value.price) > int.tryParse(element.price)
-                    ? value
-                    : element;
-              } else {
-                return value;
-              }
-            },
-          ).price
-        : 0;
-    final minPrice = data.variations != null
-        ? data.variations.reduce(
-            (value, element) {
-              if (int.tryParse(element.price) != null &&
-                  int.tryParse(value.price) != null) {
-                return int.parse(value.price) < int.parse(element.price)
-                    ? value
-                    : element;
-              } else {
-                return element;
-              }
-            },
-          ).price
-        : 0;
+    double maxPrice=0.0;
+    double minPrice = data.variations[0]!=null ? double.tryParse(data.variations[0].price) : 0;
+    data.variations.forEach((element) {
+       if(element.price!=null){
+         if(double.tryParse(element.price)>maxPrice){
+           maxPrice=double.tryParse(element.price);
+         }
+         if(double.tryParse(element.price)<minPrice){
+           minPrice=double.tryParse(element.price);
+         }
+
+       }
+    });
 
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, bottom: 15.0, right: 15.0),

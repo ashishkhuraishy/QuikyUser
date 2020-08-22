@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 
-// ignore: must_be_immutable
+// ignore: must_be_immutable 
 class Category extends Equatable {
   final int id;
   final String imgUrl;
