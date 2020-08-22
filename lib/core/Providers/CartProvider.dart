@@ -6,6 +6,7 @@ import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
+import 'package:quiky_user/widgets/ProductCard.dart';
 
 import '../../injection_container.dart';
 
@@ -14,8 +15,9 @@ class CartProvider extends ChangeNotifier {
   AddItem _addItem = AddItem(repository: sl());
 
   Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
+  List<Product> _product;
 
-  List<Product> get currentProducts => _getProductsFromCart();
+  List<Product> get currentProduts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
@@ -66,8 +68,8 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
 
-  _getProductsFromCart() async {
-    final res = await _getCart.call();
+  _getProductsFromCart() {
+    final res = _currentCart;
     List<Product> products = List<Product>();
 
     res.cartItems.forEach((element) {

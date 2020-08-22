@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
@@ -15,9 +16,9 @@ class CartModel extends Cart {
   final List<CartItemModel> cartItems;
 
   CartModel({
-    this.storeId,
-    this.offers,
-    this.cartItems,
+    @required this.storeId,
+    @required this.offers,
+    @required this.cartItems,
   }) : super(
           storeId: storeId,
           offers: offers,
