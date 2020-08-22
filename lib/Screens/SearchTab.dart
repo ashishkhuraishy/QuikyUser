@@ -15,7 +15,7 @@ class SearchTab extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Search Restaurants and foods",
           ),
-          autofocus: true,
+          autofocus: false,
         ),
       ),
     );
