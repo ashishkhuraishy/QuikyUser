@@ -1,8 +1,10 @@
 import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
 import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
+import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
+import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 
@@ -17,7 +19,7 @@ class CartRepositoryImpl extends CartRepository {
       int quantity,
       int storeId,
       List<Offer> offers}) async {
-    Cart currentCart = await localDataSource.getCart();
+    CartModel currentCart = await localDataSource.getCart();
 
     if (currentCart.storeId == storeId) {
       currentCart.cartItems
@@ -34,11 +36,11 @@ class CartRepositoryImpl extends CartRepository {
         currentCart.cartItems.add(cartItemModel);
       }
     } else {
-      currentCart = Cart(
+      currentCart = CartModel(
         storeId: storeId,
-        offers: offers,
+        offers: [],
         cartItems: [
-          CartItem(
+          CartItemModel(
             id: variation.id,
             name: variation.title,
             price: variation.price,
@@ -53,7 +55,7 @@ class CartRepositoryImpl extends CartRepository {
   }
 
   @override
-  Future<Cart> getCart() {
+  Future<CartModel> getCart() {
     return localDataSource.getCart();
   }
 }

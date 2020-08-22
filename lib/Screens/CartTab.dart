@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/features/products/data/models/product_model.dart';
 import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/ProductCard.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartProvider>(context,listen:false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
     ProductModel p = new ProductModel(
         id: 1,
@@ -38,7 +41,7 @@ class CartTab extends StatelessWidget {
           child: FlatButton(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             padding: EdgeInsets.all(15),
-                      color: primary,
+            color: primary,
             onPressed: () {},
             child: Text("asdads"),
           ),
@@ -49,15 +52,18 @@ class CartTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 StoreDetails(),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
-                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
-                    ProductCard(scWidth: scWidth, addedToCart: true, data: p),
-                  ],
+                Consumer<CartProvider>(
+                  builder: (ctx,provider,_){
+                    return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: provider.cartProducts.length,
+                    itemBuilder: (ctxx,index){
+                      return ProductCard(scWidth: scWidth,addedToCart:2,data:provider.cartProducts[index]);
+                    },
+                  );
+                  },
                 ),
                 Container(
                   padding: EdgeInsets.all(20),

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
+import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
@@ -13,10 +15,12 @@ class CartProvider extends ChangeNotifier {
   GetCart _getCart = GetCart(repository: sl());
   AddItem _addItem = AddItem(repository: sl());
 
-  Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
+  CartModel _currentCart = CartModel(storeId: null, offers: null, cartItems: null);
 
-  List<Product> get currentProducts => _getProductsFromCart();
-  Future<Cart> get getCart async => await _getCart.call();
+  List<Product> cartProducts=[];
+
+  // List<Product> get currentProducts => _getProductsFromCart();
+  Future<CartModel> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
@@ -66,7 +70,7 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
 
-  _getProductsFromCart() async {
+  Future<List<Product>> getProductsFromCart() async {
     final res = await _getCart.call();
     List<Product> products = List<Product>();
 
@@ -112,8 +116,8 @@ class CartProvider extends ChangeNotifier {
       ));
     });
 
+    cartProducts = products;
     _updateCart();
-
     return products;
   }
 }

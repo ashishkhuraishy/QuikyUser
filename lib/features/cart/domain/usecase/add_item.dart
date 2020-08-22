@@ -1,4 +1,5 @@
 import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
+import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
