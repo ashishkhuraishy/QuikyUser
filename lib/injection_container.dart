@@ -3,12 +3,12 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
+import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
+import 'package:quiky_user/features/cart/data/repository/cart_repository_impl.dart';
+import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
 
 import 'core/platform/location_info.dart';
 import 'core/platform/network_info.dart';
-import 'features/cart/data/data_sources/cart_local_data_source.dart';
-import 'features/cart/data/repository/cart_repository_impl.dart';
-import 'features/cart/domain/repository/cart_repository.dart';
 import 'features/home/data/data_source/home_remote_data_source.dart';
 import 'features/home/data/repository/home_repository_impl.dart';
 import 'features/home/domain/repository/home_repository.dart';

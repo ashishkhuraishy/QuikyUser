@@ -7,6 +7,9 @@ import 'package:quiky_user/Screens/Signup.dart';
 import 'package:quiky_user/Screens/home.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/core/Providers/UserProvider.dart';
+import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
+import 'package:quiky_user/features/cart/data/model/cart_model.dart';
+import 'package:quiky_user/features/home/data/model/offer_model.dart';
 
 import 'Screens/Store.dart';
 import 'Screens/selectlocation.dart';
@@ -26,10 +29,13 @@ void main() async {
   // DB Inits
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-  Hive.registerAdapter(AddressModelAdapter());
-  Hive.registerAdapter(UserModelAdapter());
-  await Hive.openBox(ADDRESS_BOX);
+  Hive.registerAdapter<AddressModel>(AddressModelAdapter());
+  Hive.registerAdapter<CartModel>(CartModelAdapter());
+  Hive.registerAdapter<OfferModel>(OfferModelAdapter());
+  Hive.registerAdapter<CartItemModel>(CartItemModelAdapter());
+  Hive.registerAdapter<UserModel>(UserModelAdapter());
   await Hive.openBox(CORE_BOX);
+  await Hive.openBox(ADDRESS_BOX);
   runApp(MyApp());
 }
 

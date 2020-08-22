@@ -15,7 +15,9 @@ class CartProvider extends ChangeNotifier {
 
   Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
 
-  List<Product> get currentProducts => _getProductsFromCart();
+  List<Product> cartProducts=[];
+
+  // List<Product> get currentProducts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
@@ -66,7 +68,7 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
 
-  _getProductsFromCart() async {
+  Future<List<Product>> getProductsFromCart() async {
     final res = await _getCart.call();
     List<Product> products = List<Product>();
 
@@ -112,8 +114,8 @@ class CartProvider extends ChangeNotifier {
       ));
     });
 
+    cartProducts = products;
     _updateCart();
-
     return products;
   }
 }
