@@ -8,10 +8,13 @@ part of 'user_model.dart';
 
 class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
+  final int typeId = 1;
+
+  @override
   UserModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserModel(
       id: fields[4] as int,
@@ -45,5 +48,12 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   }
 
   @override
-  int get typeId => 1;
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

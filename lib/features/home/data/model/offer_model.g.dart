@@ -8,10 +8,13 @@ part of 'offer_model.dart';
 
 class OfferModelAdapter extends TypeAdapter<OfferModel> {
   @override
+  final int typeId = 5;
+
+  @override
   OfferModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OfferModel(
       id: fields[0] as int,
@@ -42,5 +45,12 @@ class OfferModelAdapter extends TypeAdapter<OfferModel> {
   }
 
   @override
-  int get typeId => 5;
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OfferModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

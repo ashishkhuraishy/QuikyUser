@@ -4,7 +4,7 @@ import 'package:quiky_user/features/location_service/domain/entity/address.dart'
 
 part 'address_model.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 6)
 class AddressModel extends Address {
   @HiveField(0)
   final String formattedAddress;

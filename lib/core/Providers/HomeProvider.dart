@@ -61,6 +61,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   _getFeaturedData(double lat, double long) async {
+    print("Called featured with Lat : $lat Long : $long");
     final result = await _getFeatured(lat: lat, long: long);
     result.fold((failure) {
       _checkeroor(failure, 'GetFeatured');

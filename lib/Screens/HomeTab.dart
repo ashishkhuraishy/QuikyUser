@@ -27,18 +27,15 @@ class _HomeTabState extends State<HomeTab> {
   //   super.didChangeDependencies();
   // }
 
-  /// TODO : Commented out unused varibles and [INIT] state
-  /// [DELETE] if not using them
+  @override
+  void initState() {
+    super.initState();
+    final currentAddress =
+        Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final currentAddress =
-  //       Provider.of<AddressProvider>(context, listen: false).currentAddress;
-
-  //   final getData = Provider.of<HomeProvider>(context, listen: false)
-  //       .getData(currentAddress.lat, currentAddress.long);
-  // }
+    final getData = Provider.of<HomeProvider>(context, listen: false)
+        .getData(currentAddress.lat, currentAddress.long);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +45,10 @@ class _HomeTabState extends State<HomeTab> {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () {
-            Navigator.of(context).popAndPushNamed('/selectlocation');
+            final address = Provider.of<AddressProvider>(context, listen: false)
+                .currentAddress;
+            print(address);
+            // Navigator.of(context).popAndPushNamed('/selectlocation');
           },
           child: Row(
             children: <Widget>[

@@ -28,13 +28,13 @@ void main() async {
   // DB Inits
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-  Hive.registerAdapter(AddressModelAdapter());
-  Hive.registerAdapter(CartModelAdapter());
-  Hive.registerAdapter(OfferModelAdapter());
-  Hive.registerAdapter(CartItemModelAdapter());
-  Hive.registerAdapter(UserModelAdapter());
-  await Hive.openBox(ADDRESS_BOX);
+  Hive.registerAdapter<AddressModel>(AddressModelAdapter());
+  Hive.registerAdapter<CartModel>(CartModelAdapter());
+  Hive.registerAdapter<OfferModel>(OfferModelAdapter());
+  Hive.registerAdapter<CartItemModel>(CartItemModelAdapter());
+  Hive.registerAdapter<UserModel>(UserModelAdapter());
   await Hive.openBox(CORE_BOX);
+  await Hive.openBox(ADDRESS_BOX);
   runApp(MyApp());
 }
 

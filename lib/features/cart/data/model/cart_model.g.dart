@@ -8,10 +8,13 @@ part of 'cart_model.dart';
 
 class CartModelAdapter extends TypeAdapter<CartModel> {
   @override
+  final int typeId = 3;
+
+  @override
   CartModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CartModel(
       storeId: fields[0] as int,
@@ -33,5 +36,12 @@ class CartModelAdapter extends TypeAdapter<CartModel> {
   }
 
   @override
-  int get typeId => 3;
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CartModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

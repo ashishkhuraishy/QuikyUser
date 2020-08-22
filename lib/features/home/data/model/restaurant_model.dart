@@ -141,7 +141,7 @@ class RestaurantModel extends Restaurant {
       storeSubType: json['store_sub_type'] ?? '',
       status: json['status'] ?? '',
       option: json['option'] ?? '',
-      totalReviews: "${json['total_reviews']}" ?? 0,
+      totalReviews: "${json['total_reviews']}" ?? '',
       avgRating: json['avg_rating'] ?? '0',
       coordinate: json['coordinate'] ?? '',
       address: json['address'] ?? '',
