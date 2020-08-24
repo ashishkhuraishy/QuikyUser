@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Screens/ExistingCards.dart';
 
 import 'Screens/Login.dart';
 import 'Screens/Signup.dart';
@@ -168,6 +169,7 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => Signup(),
           '/login': (context) => Login(),
           '/home': (context) => Home(),
+          '/existing-cards': (context) => ExistingCardsPage()
         },
         home: Wrapper(),
       ),
