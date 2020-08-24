@@ -37,7 +37,7 @@ class CartTab extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: provider.cartProducts.length,
                     itemBuilder: (ctxx,index){
-                      return ProductCard(scWidth: scWidth,addedToCart:2,dataVariation:provider.cartProducts[index].variations[0]);
+                      return ProductCard(scWidth: scWidth,addedToCart:2,dataVariation:provider.cartProducts[index]);
                     },
                   );
                   },

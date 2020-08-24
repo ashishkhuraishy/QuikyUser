@@ -9,6 +9,8 @@ import 'package:quiky_user/features/products/domain/entity/variation.dart';
 import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/FoodSafetyDot.dart';
 
+import '../theme/themedata.dart';
+
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
