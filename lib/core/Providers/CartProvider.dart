@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
-import 'package:quiky_user/features/products/data/models/product_model.dart';
-import 'package:quiky_user/features/products/data/models/variation_model.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
