@@ -34,7 +34,7 @@ main() {
   );
 
   final tVariation2 = Variation(
-    id: 2,
+    id: 5,
     image: '',
     title: '',
     color: '',
@@ -49,6 +49,7 @@ main() {
   );
 
   final tQuantity = 5;
+  final tNewQuantity = 9;
   final tSToreId = 3;
   final tOffers = [
     Offer(
@@ -69,12 +70,34 @@ main() {
     quantity: tQuantity,
   );
 
+  final tAddedCartItem = CartItem(
+    id: tVariation.id,
+    name: tVariation.title,
+    price: tVariation.price,
+    inStock: tVariation.isStock,
+    quantity: tNewQuantity,
+  );
+
   final tCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
     cartItems: [
       tCartItem,
     ],
+  );
+
+  final tAddedCart = Cart(
+    storeId: tSToreId,
+    offers: tOffers,
+    cartItems: [
+      tAddedCartItem,
+    ],
+  );
+
+  final tRemovedItemCart = Cart(
+    storeId: tSToreId,
+    offers: tOffers,
+    cartItems: [],
   );
 
   final tEmptyCart = Cart(
@@ -89,7 +112,7 @@ main() {
       when(mockCartLocalDataSource.getCart())
           .thenAnswer((realInvocation) async => tEmptyCart);
 
-      await repositoryImpl.addItem(
+      final result = await repositoryImpl.addItem(
         variation: tVariation,
         offers: tOffers,
         quantity: tQuantity,
@@ -97,6 +120,75 @@ main() {
       );
 
       verify(mockCartLocalDataSource.saveCart(tCart));
+      expect(result.storeId, 3);
+    });
+
+    test('should remove a [CARTITEM] if the `quantity` is 0', () async {
+      when(mockCartLocalDataSource.getCart())
+          .thenAnswer((realInvocation) async => tCart);
+      final result = await repositoryImpl.addItem(
+        variation: tVariation,
+        offers: tOffers,
+        quantity: 0,
+        storeId: tSToreId,
+      );
+
+      verify(mockCartLocalDataSource.saveCart(tRemovedItemCart));
+      expect(result.cartItems.length, 0);
+    });
+
+    test('should increase the quantity if element already in the [CART]',
+        () async {
+      when(mockCartLocalDataSource.getCart())
+          .thenAnswer((realInvocation) async => tCart);
+
+      final result = await repositoryImpl.addItem(
+        variation: tVariation,
+        offers: tOffers,
+        quantity: tNewQuantity,
+        storeId: tSToreId,
+      );
+
+      verify(mockCartLocalDataSource.saveCart(tAddedCart));
+      expect(result.cartItems[0].quantity, tNewQuantity);
+    });
+
+    test(
+        'should add the [VARIATION] as [CARTITEM] into [CART] if having same `storeId`',
+        () async {
+      when(mockCartLocalDataSource.getCart()).thenAnswer(
+        (realInvocation) async => tCart,
+      );
+
+      final result = await repositoryImpl.addItem(
+        variation: tVariation2,
+        offers: tOffers,
+        quantity: tQuantity,
+        storeId: tSToreId,
+      );
+
+      verify(mockCartLocalDataSource.saveCart(tCart));
+      expect(result.cartItems.length, 2);
+    });
+  });
+
+  group('Get Cart', () {
+    test('should return a valid [CART]', () async {
+      when(mockCartLocalDataSource.getCart()).thenAnswer(
+        (realInvocation) async => tCart,
+      );
+      final result = await repositoryImpl.getCart();
+
+      verify(mockCartLocalDataSource.getCart());
+      expect(result, tCart);
+    });
+  });
+
+  group('Clear Cart', () {
+    test('should add an Empty [CART]', () {
+      repositoryImpl.clear();
+
+      verify(mockCartLocalDataSource.saveCart(tEmptyCart));
     });
   });
 }

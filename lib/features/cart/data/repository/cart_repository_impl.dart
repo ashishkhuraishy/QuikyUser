@@ -5,8 +5,6 @@ import '../../../home/domain/entity/offer.dart';
 import '../../../products/domain/entity/variation.dart';
 import '../../domain/repository/cart_repository.dart';
 import '../data_sources/cart_local_data_source.dart';
-import '../model/cart_item_model.dart';
-import '../model/cart_model.dart';
 
 class CartRepositoryImpl extends CartRepository {
   final CartLocalDataSource localDataSource;
@@ -14,7 +12,7 @@ class CartRepositoryImpl extends CartRepository {
   CartRepositoryImpl({this.localDataSource});
 
   @override
-  Future<void> addItem(
+  Future<Cart> addItem(
       {Variation variation,
       int quantity,
       int storeId,
@@ -51,10 +49,22 @@ class CartRepositoryImpl extends CartRepository {
     }
 
     localDataSource.saveCart(currentCart);
+    return currentCart;
   }
 
   @override
-  Future<CartModel> getCart() {
+  Future<Cart> getCart() {
     return localDataSource.getCart();
+  }
+
+  @override
+  void clear() {
+    localDataSource.saveCart(
+      Cart(
+        storeId: -1,
+        offers: [],
+        cartItems: [],
+      ),
+    );
   }
 }
