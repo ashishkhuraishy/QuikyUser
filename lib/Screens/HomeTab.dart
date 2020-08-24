@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
 import '../core/Providers/HomeProvider.dart';
@@ -28,9 +27,6 @@ class _HomeTabState extends State<HomeTab> {
   //   super.didChangeDependencies();
   // }
 
-  /// TODO : Commented out unused varibles and [INIT] state
-  /// [DELETE] if not using them
-
   @override
   void initState() {
     super.initState();
@@ -39,6 +35,7 @@ class _HomeTabState extends State<HomeTab> {
 
     final getData = Provider.of<HomeProvider>(context, listen: false)
         .getData(currentAddress.lat, currentAddress.long);
+    print(getData);
   }
 
   // void fetchData(Address currectAddress){

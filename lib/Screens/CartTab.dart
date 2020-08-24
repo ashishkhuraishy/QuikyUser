@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Widgets/ProductCard.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/features/products/data/models/product_model.dart';
-import 'package:quiky_user/theme/themedata.dart';
+
+import '../Widgets/ProductCard.dart';
+import '../core/Providers/CartProvider.dart';
+import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CartProvider>(context,listen:false).getProductsFromCart();
+    Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         bottomSheet: Container(
@@ -30,16 +30,19 @@ class CartTab extends StatelessWidget {
               children: <Widget>[
                 StoreDetails(),
                 Consumer<CartProvider>(
-                  builder: (ctx,provider,_){
+                  builder: (ctx, provider, _) {
                     return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: provider.cartProducts.length,
-                    itemBuilder: (ctxx,index){
-                      return ProductCard(scWidth: scWidth,addedToCart:2,dataVariation:provider.cartProducts[index]);
-                    },
-                  );
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: provider.cartProducts.length,
+                      itemBuilder: (ctxx, index) {
+                        return ProductCard(
+                            scWidth: scWidth,
+                            addedToCart: 2,
+                            dataVariation: provider.cartProducts[index]);
+                      },
+                    );
                   },
                 ),
                 Container(
