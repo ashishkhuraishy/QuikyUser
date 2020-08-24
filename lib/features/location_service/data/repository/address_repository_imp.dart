@@ -8,7 +8,6 @@ import '../../domain/entity/address.dart';
 import '../../domain/repository/address_repo.dart';
 import '../data_source/address_local_data_sourc.dart';
 import '../data_source/address_remote_data_source.dart';
-import '../model/address_model.dart';
 
 class AddressRepositoryImpl extends AddressRepository {
   final NetworkInfo networkInfo;
@@ -47,11 +46,12 @@ class AddressRepositoryImpl extends AddressRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> cacheAddress(AddressModel address) async {
+  Future<Either<Failure, bool>> cacheAddress(Address address) async {
     final response = await localDataSource.cacheAddress(address);
     if (response) {
       return Right(true);
     }
     return Left(CacheFailure());
   }
+
 }

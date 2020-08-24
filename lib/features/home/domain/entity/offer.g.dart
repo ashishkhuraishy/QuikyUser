@@ -1,19 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'offer_model.dart';
+part of 'offer.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class OfferModelAdapter extends TypeAdapter<OfferModel> {
+class OfferAdapter extends TypeAdapter<Offer> {
   @override
-  OfferModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+  final int typeId = 13;
+
+  @override
+  Offer read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return OfferModel(
+    return Offer(
       id: fields[0] as int,
       title: fields[1] as String,
       code: fields[2] as String,
@@ -24,7 +27,7 @@ class OfferModelAdapter extends TypeAdapter<OfferModel> {
   }
 
   @override
-  void write(BinaryWriter writer, OfferModel obj) {
+  void write(BinaryWriter writer, Offer obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -42,5 +45,12 @@ class OfferModelAdapter extends TypeAdapter<OfferModel> {
   }
 
   @override
-  int get typeId => 5;
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OfferAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

@@ -20,7 +20,7 @@ class UserProvider extends ChangeNotifier {
   User get getUser => box.get(USER);
 
   setError() {
-    error="";
+    error = "";
     notifyListeners();
   }
 

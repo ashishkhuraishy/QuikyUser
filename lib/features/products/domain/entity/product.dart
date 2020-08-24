@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'category.dart';
 import 'variation.dart';
 
-class Product {
+class Product extends Equatable {
   final int id;
   final List<String> productImages;
   final List<Variation> variations;
@@ -51,4 +52,30 @@ class Product {
     @required this.user,
     @required this.filter,
   });
+
+  @override
+  List<Object> get props => [
+        id,
+        productImages,
+        variations,
+        productReviews,
+        productViews,
+        category,
+        image,
+        title,
+        sku,
+        tax,
+        description,
+        quantity,
+        discount,
+        isStock,
+        isFeatured,
+        isDiscount,
+        vegNvEgg,
+        active,
+        timestamp,
+        updated,
+        user,
+        filter,
+      ];
 }

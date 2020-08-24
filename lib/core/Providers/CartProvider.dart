@@ -4,8 +4,9 @@ import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
-import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
+import 'package:quiky_user/features/products/data/models/product_model.dart';
+import 'package:quiky_user/features/products/data/models/variation_model.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
@@ -15,12 +16,12 @@ class CartProvider extends ChangeNotifier {
   GetCart _getCart = GetCart(repository: sl());
   AddItem _addItem = AddItem(repository: sl());
 
-  CartModel _currentCart = CartModel(storeId: null, offers: null, cartItems: null);
+  Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
 
-  List<Product> cartProducts=[];
+  List<Variation> cartProducts = [];
 
   // List<Product> get currentProducts => _getProductsFromCart();
-  Future<CartModel> get getCart async => await _getCart.call();
+  Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
@@ -70,49 +71,24 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
 
-  Future<List<Product>> getProductsFromCart() async {
+  Future<List<Variation>> getProductsFromCart() async {
     final res = await _getCart.call();
-    List<Product> products = List<Product>();
+    List<Variation> products = List<Variation>();
 
     res.cartItems.forEach((element) {
-      products.add(Product(
-        id: null,
-        productImages: null,
-        variations: [
-          Variation(
-            id: element.id,
-            image: null,
-            title: element.name,
-            color: null,
-            weight: null,
-            size: null,
-            isStock: element.inStock,
-            price: element.price,
-            quantity: null,
-            updated: null,
-            active: null,
-            productId: null,
-          )
-        ],
-        productReviews: null,
-        productViews: null,
-        category: null,
+      products.add(Variation(
+        id: element.id,
         image: null,
-        title: null,
-        sku: null,
-        tax: null,
-        description: null,
+        title: element.name,
+        color: null,
+        weight: null,
+        size: null,
+        isStock: element.inStock,
+        price: element.price,
         quantity: null,
-        discount: null,
-        isStock: null,
-        isFeatured: null,
-        isDiscount: null,
-        vegNvEgg: null,
-        active: null,
-        timestamp: null,
         updated: null,
-        user: null,
-        filter: null,
+        active: null,
+        productId: null,
       ));
     });
 

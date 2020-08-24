@@ -9,6 +9,8 @@ import 'package:quiky_user/features/products/domain/entity/variation.dart';
 import 'package:quiky_user/theme/themedata.dart';
 import 'package:quiky_user/widgets/FoodSafetyDot.dart';
 
+import '../theme/themedata.dart';
+
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
@@ -34,22 +36,24 @@ class ProductCard extends StatelessWidget {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (ctxx, val) {
-            return Container(
-              padding: EdgeInsets.only(bottom: 5.0),
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: 10),
-                itemCount: data.variations.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (ctx, index) {
-                  print(data.variations);
-                  return ProductCard(
-                    scWidth: scWidth,
-                    dataVariation: data.variations[index],
-                    storeid: data.id,
-                    offer: [],
-                  );
-                },
+            return SingleChildScrollView(
+                          child: Container(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: ListView.builder(
+                  padding: EdgeInsets.only(top: 10),
+                  itemCount: data.variations.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (ctx, index) {
+                    print(data.variations);
+                    return ProductCard(
+                      scWidth: scWidth,
+                      dataVariation: data.variations[index],
+                      storeid: data.id,
+                      offer: [],
+                    );
+                  },
+                ),
               ),
             );
           },
@@ -89,7 +93,7 @@ class ProductCard extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   data != null
-                      ? data.image != ""
+                      ? data.image != "" && data.image !=null
                           ? Image.network(
                               "$BASE_URL${data.image}",
                               width: 90,
@@ -100,7 +104,7 @@ class ProductCard extends StatelessWidget {
                               width: 30,
                               height: 30,
                             )
-                      : dataVariation.image != ""
+                      : dataVariation.image != "" && dataVariation.image !=null
                           ? Image.network(
                               "$BASE_URL${dataVariation.image}",
                               width: 90,
@@ -118,8 +122,8 @@ class ProductCard extends StatelessWidget {
           Container(
             constraints: BoxConstraints(
               maxWidth: data != null
-                  ? scWidth - (data.image != "" ? 120 : 60)
-                  : scWidth - (dataVariation.image != "" ? 120 : 60),
+                  ? scWidth - (data.image != "" && data.image !=null? 120 : 60)
+                  : scWidth - (dataVariation.image != "" && dataVariation.image !=null ? 120 : 60),
               // maxWidth: scWidth - 70,
             ),
             height: 112,
@@ -193,7 +197,7 @@ class ProductCard extends StatelessWidget {
                                         listen: false)
                                     .addProducts(
                                   variation: dataVariation,
-                                  offers: offer,
+                                  offers: [],
                                   quantity: 1,
                                   storeId: storeid,
                                 );

@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Screens/Login.dart';
-import 'package:quiky_user/Screens/Signup.dart';
-import 'package:quiky_user/Screens/home.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
-import 'package:quiky_user/features/cart/data/model/cart_model.dart';
-import 'package:quiky_user/features/home/data/model/offer_model.dart';
 
+import 'Screens/Login.dart';
+import 'Screens/Signup.dart';
 import 'Screens/Store.dart';
+import 'Screens/home.dart';
 import 'Screens/selectlocation.dart';
 import 'core/Providers/AddressProvider.dart';
+import 'core/Providers/CartProvider.dart';
 import 'core/Providers/HomeProvider.dart';
+import 'core/Providers/UserProvider.dart';
+import 'features/cart/domain/entity/cart.dart';
+import 'features/cart/domain/entity/cart_item.dart';
+import 'features/home/domain/entity/offer.dart';
 import 'features/location_service/data/data_source/address_local_data_sourc.dart';
-import 'features/location_service/data/model/address_model.dart';
+import 'features/location_service/domain/entity/address.dart';
 import 'features/user/data/datasource/user_local_data_source.dart';
-import 'features/user/data/model/user_model.dart';
+import 'features/user/domain/entity/user.dart';
 import 'injection_container.dart' as container;
 import 'theme/themedata.dart';
 import 'wrapper.dart';
@@ -29,11 +29,11 @@ void main() async {
   // DB Inits
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-  Hive.registerAdapter<AddressModel>(AddressModelAdapter());
-  Hive.registerAdapter<CartModel>(CartModelAdapter());
-  Hive.registerAdapter<OfferModel>(OfferModelAdapter());
-  Hive.registerAdapter<CartItemModel>(CartItemModelAdapter());
-  Hive.registerAdapter<UserModel>(UserModelAdapter());
+  Hive.registerAdapter<Address>(AddressAdapter());
+  Hive.registerAdapter<Cart>(CartAdapter());
+  Hive.registerAdapter<Offer>(OfferAdapter());
+  Hive.registerAdapter<CartItem>(CartItemAdapter());
+  Hive.registerAdapter<User>(UserAdapter());
   await Hive.openBox(CORE_BOX);
   await Hive.openBox(ADDRESS_BOX);
   runApp(MyApp());
@@ -105,8 +105,7 @@ class MyApp extends StatelessWidget {
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              borderSide:
-                  BorderSide(width: 1, style: BorderStyle.none),
+              borderSide: BorderSide(width: 1, style: BorderStyle.none),
             ),
           ),
           buttonTheme: ButtonThemeData(

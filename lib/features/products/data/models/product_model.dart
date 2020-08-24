@@ -94,7 +94,8 @@ class ProductModel extends Product {
           : [],
       category: json['category'] != null
           ? CategoryModel.fromJson(json['category'])
-          : CategoryModel(id: null, imgUrl: null, title: null, userId: null,produts: []),
+          : CategoryModel(
+              id: null, imgUrl: null, title: null, userId: null, produts: []),
       image: json['image'] ?? '',
       title: json['title'] ?? '',
       sku: json['sku'] ?? '',
