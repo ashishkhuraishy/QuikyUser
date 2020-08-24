@@ -6,6 +6,8 @@ import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
 import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
+import 'package:quiky_user/features/products/data/models/product_model.dart';
+import 'package:quiky_user/features/products/data/models/variation_model.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 import 'package:quiky_user/widgets/ProductCard.dart';
@@ -74,14 +76,14 @@ class CartProvider extends ChangeNotifier {
 
   Future<List<Product>> getProductsFromCart() async {
     final res = await _getCart.call();
-    List<Product> products = List<Product>();
+    List<ProductModel> products = List<ProductModel>();
 
     res.cartItems.forEach((element) {
-      products.add(Product(
+      products.add(ProductModel(
         id: null,
-        productImages: null,
+        productimage: null,
         variations: [
-          Variation(
+          VariationModel(
             id: element.id,
             image: null,
             title: element.name,
@@ -96,8 +98,8 @@ class CartProvider extends ChangeNotifier {
             productId: null,
           )
         ],
-        productReviews: null,
-        productViews: null,
+        productreviews: null,
+        productviews: null,
         category: null,
         image: null,
         title: null,

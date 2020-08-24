@@ -1,12 +1,9 @@
-import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
-import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
-import 'package:quiky_user/features/cart/data/model/cart_model.dart';
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
-import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
-import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
-import 'package:quiky_user/features/home/data/model/offer_model.dart';
-import 'package:quiky_user/features/products/domain/entity/variation.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
+import '../../../home/domain/entity/offer.dart';
+import '../../../products/domain/entity/variation.dart';
+import '../../domain/repository/cart_repository.dart';
+import '../data_sources/cart_local_data_source.dart';
+import '../model/cart_item_model.dart';
+import '../model/cart_model.dart';
 
 class CartRepositoryImpl extends CartRepository {
   final CartLocalDataSource localDataSource;
@@ -37,7 +34,7 @@ class CartRepositoryImpl extends CartRepository {
     } else {
       currentCart = CartModel(
         storeId: storeId,
-        offers: [],
+        offers: offers,
         cartItems: [
           CartItemModel(
             id: variation.id,
