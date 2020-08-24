@@ -23,8 +23,9 @@ class CartProvider extends ChangeNotifier {
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
-  void get clear {
+  Future<void> get clear async {
     _clearCart.call();
+    cartProducts=await getProductsFromCart();
     notifyListeners();
   }
 
