@@ -41,7 +41,6 @@ main() {
   ]);
 
   test('should be a subType of [Cart]', () {
-    print("Checking");
     expect(cartModel, isA<Cart>());
   });
 }

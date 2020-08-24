@@ -141,7 +141,7 @@ class RestaurantModel extends Restaurant {
       storeSubType: json['store_sub_type'] ?? '',
       status: json['status'] ?? '',
       option: json['option'] ?? '',
-      totalReviews: "${json['total_reviews']}" ?? '',
+      totalReviews: "${json['total_reviews'] ?? 0}" ?? '',
       avgRating: json['avg_rating'] ?? '0',
       coordinate: json['coordinate'] ?? '',
       address: json['address'] ?? '',
@@ -155,10 +155,10 @@ class RestaurantModel extends Restaurant {
       closing: json['closing'] ?? '',
       highlightStatus: json['highlight_status'] ?? false,
       featuredBrand: json['featured_brand'] ?? false,
-      commisionPercentage: "${json['commision_percentage']}" ?? '',
-      user: "${json['user']}" ?? '',
-      city: "${json['city']}" ?? '',
-      zone: "${json['zone']}" ?? '',
+      commisionPercentage: "${json['commision_percentage'] ?? ''}" ?? '',
+      user: "${json['user'] ?? ''}" ?? '',
+      city: "${json['city'] ?? ''}" ?? '',
+      zone: "${json['zone'] ?? ''}" ?? '',
       vendorLocation: json['vendor_location'] ?? '',
     );
   }
