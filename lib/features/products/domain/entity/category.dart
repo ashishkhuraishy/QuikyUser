@@ -19,7 +19,7 @@ class Category extends Equatable {
   });
 
   @override
-  List<Object> get props => [id, imgUrl, title, userId,produts];
+  List<Object> get props => [id, imgUrl, title, userId, produts];
 
   // List<Product> produts = [];
   List<Product> get products => produts;

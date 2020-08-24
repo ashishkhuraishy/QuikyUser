@@ -12,29 +12,6 @@ class CartTab extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<CartProvider>(context,listen:false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
-    ProductModel p = new ProductModel(
-        id: 1,
-        productimage: null,
-        variations: null,
-        productreviews: null,
-        productviews: null,
-        category: null,
-        image: "",
-        title: "Test",
-        sku: null,
-        tax: null,
-        description: "Test desc",
-        quantity: null,
-        discount: null,
-        isStock: null,
-        isFeatured: null,
-        isDiscount: null,
-        vegNvEgg: null,
-        active: null,
-        timestamp: null,
-        updated: null,
-        user: null,
-        filter: null);
     return Scaffold(
         bottomSheet: Container(
           width: double.infinity,
@@ -60,7 +37,7 @@ class CartTab extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: provider.cartProducts.length,
                     itemBuilder: (ctxx,index){
-                      return ProductCard(scWidth: scWidth,addedToCart:2,data:provider.cartProducts[index]);
+                      return ProductCard(scWidth: scWidth,addedToCart:2,dataVariation:provider.cartProducts[index].variations[0]);
                     },
                   );
                   },

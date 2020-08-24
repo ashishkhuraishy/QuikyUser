@@ -1,10 +1,18 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 
-class Cart {
+part 'cart.g.dart';
+
+@HiveType(typeId: 14)
+class Cart extends Equatable {
+  @HiveField(0)
   final int storeId;
+  @HiveField(1)
   final List<Offer> offers;
+  @HiveField(2)
   final List<CartItem> cartItems;
 
   Cart({
@@ -12,4 +20,11 @@ class Cart {
     @required this.offers,
     @required this.cartItems,
   });
+
+  @override
+  List<Object> get props => [
+        storeId,
+        offers,
+        cartItems,
+      ];
 }

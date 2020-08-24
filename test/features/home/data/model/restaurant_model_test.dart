@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quiky_user/features/home/data/model/offer_model.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
+import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -11,7 +11,7 @@ main() {
   final restaurentModel = RestaurantModel(
     id: 25,
     offers: [
-      OfferModel(
+      Offer(
         id: 1,
         title: 'Quicky50',
         code: 'quick',
@@ -36,8 +36,8 @@ main() {
     storeSubType: "Indian, Chinese",
     status: "opened",
     option: "trending",
-    totalReviews: "",
-    avgRating: '',
+    totalReviews: "0",
+    avgRating: '0',
     coordinate: "10.0142468,76.2775775",
     address:
         "ARRA-96 Cheranalllur Road Bypass Junction, Ponekkara, Edappally, Opposite lulu mall, Kochi, Kerala 682024",
@@ -66,7 +66,8 @@ main() {
     final data = jsonDecode(fixture('restaurant.json'));
 
     final result = RestaurantModel.fromJson(data);
-    expect(result, restaurentModel);
+    expect(result, isA<RestaurantModel>());
+    expect(result.id, restaurentModel.id);
   });
 
   test('should return a valid List<RestaurentModel> from the json', () {

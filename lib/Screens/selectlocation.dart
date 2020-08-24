@@ -22,7 +22,10 @@ class _SelectLocationState extends State<SelectLocation> {
           Flexible(
             flex: 1,
             child: Container(
-              child: Placeholder(),
+              child: Image.asset('assets/img/locationintro.png',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Flexible(
