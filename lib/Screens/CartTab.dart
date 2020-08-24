@@ -19,7 +19,9 @@ class CartTab extends StatelessWidget {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             padding: EdgeInsets.all(15),
             color: primary,
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<CartProvider>(context,listen: false).clear;
+            },
             child: Text("asdads"),
           ),
         ),
