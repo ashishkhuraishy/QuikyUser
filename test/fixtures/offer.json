@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "title": "Quicky50",
+    "code": "quick",
+    "text": null,
+    "offer": {
+        "id": 3,
+        "percentage": "40"
+    }
+}

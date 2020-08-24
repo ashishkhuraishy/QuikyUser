@@ -29,7 +29,9 @@
 .packages
 .pub-cache/
 .pub/
+pubspec.lock
 /build/
+/coverage/
 
 # Web related
 lib/generated_plugin_registrant.dart

@@ -25,6 +25,7 @@ class AddressProvider extends ChangeNotifier {
       (failure) => _catchError(failure),
       (address) {
         _addressModel = address;
+        print(_addressModel.shortAddress);
         notifyListeners();
       },
     );
