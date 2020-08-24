@@ -49,7 +49,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   /// Function to check if a given variation Id is already inside
-  /// the [CART] if there is an elemnt it wi;; return [CARTITEM.QUANTITY]
+  /// the [CART] if there is an element it will return [CARTITEM.QUANTITY]
   /// else will return -1
 
   int getQuantity(int id) {
