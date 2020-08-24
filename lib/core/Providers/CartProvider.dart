@@ -14,7 +14,11 @@ class CartProvider extends ChangeNotifier {
   AddItem _addItem = AddItem(repository: sl());
   ClearCart _clearCart = ClearCart(repository: sl());
 
-  Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
+  Cart _currentCart = Cart(
+    storeId: -1,
+    offers: [],
+    cartItems: [],
+  );
 
   List<Variation> cartProducts = [];
 
