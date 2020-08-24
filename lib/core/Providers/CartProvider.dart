@@ -18,7 +18,7 @@ class CartProvider extends ChangeNotifier {
 
   Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
 
-  List<Product> cartProducts = [];
+  List<Variation> cartProducts = [];
 
   // List<Product> get currentProducts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
@@ -71,49 +71,24 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
 
-  Future<List<Product>> getProductsFromCart() async {
+  Future<List<Variation>> getProductsFromCart() async {
     final res = await _getCart.call();
-    List<Product> products = List<Product>();
+    List<Variation> products = List<Variation>();
 
     res.cartItems.forEach((element) {
-      products.add(Product(
-        id: null,
-        productImages: null,
-        variations: [
-          Variation(
-            id: element.id,
-            image: null,
-            title: element.name,
-            color: null,
-            weight: null,
-            size: null,
-            isStock: element.inStock,
-            price: element.price,
-            quantity: null,
-            updated: null,
-            active: null,
-            productId: null,
-          )
-        ],
-        productReviews: null,
-        productViews: null,
-        category: null,
+      products.add(Variation(
+        id: element.id,
         image: null,
-        title: null,
-        sku: null,
-        tax: null,
-        description: null,
+        title: element.name,
+        color: null,
+        weight: null,
+        size: null,
+        isStock: element.inStock,
+        price: element.price,
         quantity: null,
-        discount: null,
-        isStock: null,
-        isFeatured: null,
-        isDiscount: null,
-        vegNvEgg: null,
-        active: null,
-        timestamp: null,
         updated: null,
-        user: null,
-        filter: null,
+        active: null,
+        productId: null,
       ));
     });
 
