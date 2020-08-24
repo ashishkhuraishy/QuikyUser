@@ -1,3 +1,6 @@
+import 'package:quiky_user/features/cart/domain/entity/cart.dart';
+import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
+
 import '../../../home/domain/entity/offer.dart';
 import '../../../products/domain/entity/variation.dart';
 import '../../domain/repository/cart_repository.dart';
@@ -16,13 +19,13 @@ class CartRepositoryImpl extends CartRepository {
       int quantity,
       int storeId,
       List<Offer> offers}) async {
-    CartModel currentCart = await localDataSource.getCart();
+    Cart currentCart = await localDataSource.getCart();
 
     if (currentCart.storeId == storeId) {
       currentCart.cartItems
           .removeWhere((element) => element.id == variation.id);
       if (quantity != 0) {
-        CartItemModel cartItemModel = CartItemModel(
+        CartItem cartItemModel = CartItem(
           id: variation.id,
           inStock: variation.isStock,
           name: variation.title,
@@ -32,11 +35,11 @@ class CartRepositoryImpl extends CartRepository {
         currentCart.cartItems.add(cartItemModel);
       }
     } else {
-      currentCart = CartModel(
+      currentCart = Cart(
         storeId: storeId,
         offers: offers,
         cartItems: [
-          CartItemModel(
+          CartItem(
             id: variation.id,
             name: variation.title,
             price: variation.price,

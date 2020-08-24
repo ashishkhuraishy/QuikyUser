@@ -1,24 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 
-part 'user_model.g.dart';
-
-@HiveType(typeId: 1)
 class UserModel extends User {
-  @HiveField(4)
   final int id;
-  @HiveField(5)
   final int userId;
-  @HiveField(6)
   final String userName;
-  @HiveField(7)
   final String name;
-  @HiveField(8)
   final String token;
-  @HiveField(9)
   final String email;
-  @HiveField(10)
   final String mobile;
 
   UserModel({
