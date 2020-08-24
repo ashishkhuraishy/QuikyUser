@@ -3,6 +3,7 @@ import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/cart/domain/usecase/add_item.dart';
+import 'package:quiky_user/features/cart/domain/usecase/clear_cart.dart';
 import 'package:quiky_user/features/cart/domain/usecase/get_cart.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/products/data/models/product_model.dart';
@@ -15,6 +16,7 @@ import '../../injection_container.dart';
 class CartProvider extends ChangeNotifier {
   GetCart _getCart = GetCart(repository: sl());
   AddItem _addItem = AddItem(repository: sl());
+  ClearCart _clearCart = ClearCart(repository: sl());
 
   Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
 
@@ -25,6 +27,7 @@ class CartProvider extends ChangeNotifier {
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
+  void get clear => _clearCart.call();
 
   /// function used to add an Item into the cart
   /// @requires [VARIATION], quantity for cartItem and
