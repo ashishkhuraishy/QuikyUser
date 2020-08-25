@@ -25,6 +25,9 @@ class CartProvider extends ChangeNotifier {
 
   List<Variation> cartProducts = [];
   
+  int get totalprice => _cartTotalPrice();
+
+  
 
   // List<Product> get currentProducts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
