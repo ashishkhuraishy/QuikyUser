@@ -36,8 +36,9 @@ class ProductCard extends StatelessWidget {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (ctxx, val) {
+            int count = 0;
             return SingleChildScrollView(
-                          child: Container(
+              child: Container(
                 padding: EdgeInsets.only(bottom: 5.0),
                 child: ListView.builder(
                   padding: EdgeInsets.only(top: 10),
@@ -45,12 +46,14 @@ class ProductCard extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (ctx, index) {
-                    print(data.variations);
+                    count = Provider.of<CartProvider>(context, listen: false)
+                        .getQuantity(data.variations[index].id);
                     return ProductCard(
                       scWidth: scWidth,
                       dataVariation: data.variations[index],
                       storeid: data.id,
                       offer: [],
+                      addedToCart: count,
                     );
                   },
                 ),
@@ -93,7 +96,7 @@ class ProductCard extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   data != null
-                      ? data.image != "" && data.image !=null
+                      ? data.image != "" && data.image != null
                           ? Image.network(
                               "$BASE_URL${data.image}",
                               width: 90,
@@ -104,7 +107,7 @@ class ProductCard extends StatelessWidget {
                               width: 30,
                               height: 30,
                             )
-                      : dataVariation.image != "" && dataVariation.image !=null
+                      : dataVariation.image != "" && dataVariation.image != null
                           ? Image.network(
                               "$BASE_URL${dataVariation.image}",
                               width: 90,
@@ -122,8 +125,12 @@ class ProductCard extends StatelessWidget {
           Container(
             constraints: BoxConstraints(
               maxWidth: data != null
-                  ? scWidth - (data.image != "" && data.image !=null? 120 : 60)
-                  : scWidth - (dataVariation.image != "" && dataVariation.image !=null ? 120 : 60),
+                  ? scWidth -
+                      (data.image != "" && data.image != null ? 120 : 60)
+                  : scWidth -
+                      (dataVariation.image != "" && dataVariation.image != null
+                          ? 120
+                          : 60),
               // maxWidth: scWidth - 70,
             ),
             height: 112,
@@ -152,65 +159,90 @@ class ProductCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 dataVariation != null
-                    ? addedToCart != null && addedToCart > 0
-                        ? Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: primary)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 40,
-                                    height: 30,
-                                    child: FlatButton(
-                                      padding: EdgeInsets.all(2),
-                                      onPressed: () {},
-                                      child: Icon(Icons.remove, color: primary),
+                    ? Consumer<CartProvider>(
+                        builder: (ctx, provider, _) {
+                          int addedToCart =
+                              provider.getQuantity(dataVariation.id);
+                          if (addedToCart > -1) {
+                            print("${addedToCart} in increment box");
+                            return Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: primary)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 40,
+                                      height: 30,
+                                      child: FlatButton(
+                                        padding: EdgeInsets.all(2),
+                                        onPressed: () {
+                                          provider.addProducts(
+                                            variation: dataVariation,
+                                            offers: [],
+                                            quantity: addedToCart-1,
+                                            storeId: storeid,
+                                          );
+                                        },
+                                        child:addedToCart==1?
+                                            Icon(Icons.delete, color: primary):Icon(Icons.remove, color: primary),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text("1"),
-                                  ),
-                                  SizedBox(
-                                    width: 40,
-                                    height: 30,
-                                    child: FlatButton(
-                                      padding: EdgeInsets.all(2),
-                                      onPressed: () {},
-                                      child: Icon(Icons.add, color: primary),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text("${addedToCart}"),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 40,
+                                      height: 30,
+                                      child: FlatButton(
+                                        padding: EdgeInsets.all(2),
+                                        onPressed: () {
+                                          provider.addProducts(
+                                            variation: dataVariation,
+                                            offers: [],
+                                            quantity: addedToCart+1,
+                                            storeId: storeid,
+                                          );
+                                        },
+                                        child: Icon(Icons.add, color: primary),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        : Align(
-                            alignment: Alignment.bottomRight,
-                            child: CustomBorderedButton(
-                              onTap: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .addProducts(
-                                  variation: dataVariation,
-                                  offers: [],
-                                  quantity: 1,
-                                  storeId: storeid,
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text("Add"),
-                                  Icon(Icons.add, color: primary)
-                                ],
+                            );
+                          } else {
+                            return Align(
+                              alignment: Alignment.bottomRight,
+                              child: CustomBorderedButton(
+                                onTap: () {
+                                  print("${addedToCart} in add box");
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .addProducts(
+                                    variation: dataVariation,
+                                    offers: [],
+                                    quantity: 1,
+                                    storeId: storeid,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text("Add"),
+                                    Icon(Icons.add, color: primary)
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
+                            );
+                          }
+                        },
+                      )
                     : Align(
                         alignment: Alignment.bottomRight,
                         child: CustomBorderedButton(

@@ -86,7 +86,7 @@ main() {
     test('should return List<RestaurentModel> when status 200', () async {
       final result = await dataSourceImpl.getFeatured(lat: lat, long: long);
       verify(mockClient.get(
-          url + '?lat=$lat&long=$long&featured_brand=true&store_type=food'));
+          url + '?lat=$lat&lon=$long&highlight_status=true&store_type=food'));
 
       expect(result, isA<List<Restaurant>>());
     });
@@ -100,7 +100,7 @@ main() {
       expect(
           () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
       verify(mockClient.get(
-        url + '?lat=$lat&long=$long&featured_brand=true&store_type=food',
+        url + '?lat=$lat&lon=$long&highlight_status=true&store_type=food',
       ));
     });
   });
@@ -121,7 +121,7 @@ main() {
 
     test('should return List<RestaurentModel> when status 200', () async {
       final result = await dataSourceImpl.getPopular(lat: lat, long: long);
-      verify(mockClient.get(url + '?lat=$lat&long=$long&popular_brand=true'));
+      verify(mockClient.get(url + '?lat=$lat&lon=$long&featured_brand=true'));
 
       expect(result, isA<List<Restaurant>>());
     });
@@ -135,7 +135,7 @@ main() {
       expect(
           () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
       verify(mockClient.get(
-        url + '?lat=$lat&long=$long&popular_brand=true',
+        url + '?lat=$lat&lon=$long&featured_brand=true',
       ));
     });
   });
@@ -158,7 +158,7 @@ main() {
       final result =
           await dataSourceImpl.getTrendingRestaurents(lat: lat, long: long);
       verify(mockClient
-          .get(url + '?lat=$lat&long=$long&option=trending&store_type=food'));
+          .get(url + '?lat=$lat&lon=$long&option=trending&store_type=food'));
 
       expect(result, isA<List<Restaurant>>());
     });
@@ -172,7 +172,7 @@ main() {
       expect(
           () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
       verify(mockClient.get(
-        url + '?lat=$lat&long=$long&option=trending&store_type=food',
+        url + '?lat=$lat&lon=$long&option=trending&store_type=food',
       ));
     });
   });
@@ -194,8 +194,8 @@ main() {
     test('should return List<RestaurentModel> when status 200', () async {
       final result =
           await dataSourceImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(mockClient.get(
-          url + '?lat=$lat&long=$long&option=trending&store_type=grocery'));
+      verify(mockClient
+          .get(url + '?lat=$lat&lon=$long&option=trending&store_type=grocery'));
 
       expect(result, isA<List<Restaurant>>());
     });
@@ -209,7 +209,7 @@ main() {
       expect(
           () => result(lat: lat, long: long), throwsA(isA<ServerException>()));
       verify(mockClient.get(
-        url + '?lat=$lat&long=$long&option=trending&store_type=grocery',
+        url + '?lat=$lat&lon=$long&option=trending&store_type=grocery',
       ));
     });
   });

@@ -3,9 +3,7 @@ name:  Test, build and deploy
 # Trigger the workflow on push or pull request
 on:
   push:
-    branches: 
-  pull_request:
-    branches: 
+    branches:
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
 

@@ -19,6 +19,8 @@ main() {
   final tCartModel = CartModel(
     storeId: 5,
     offers: [],
+    storeName: "Test Name",
+    storeAddress: "Test Address",
     cartItems: [
       CartItemModel(
         id: 45,
@@ -32,6 +34,8 @@ main() {
 
   final tEmptyCart = CartModel(
     storeId: -1,
+    storeAddress: "",
+    storeName: "",
     offers: [],
     cartItems: [],
   );

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
-import 'package:quiky_user/features/cart/data/model/cart_model.dart';
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
-import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
+
+import '../../../user/data/datasource/user_local_data_source.dart';
+import '../../domain/entity/cart.dart';
 
 const String CART = "CART";
 
@@ -25,6 +25,8 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
           CART,
           defaultValue: Cart(
             storeId: -1,
+            storeName: "",
+            storeAddress: "",
             cartItems: [],
             offers: [],
           ),

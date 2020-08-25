@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../../features/cart/domain/entity/cart.dart';
 import '../../features/cart/domain/entity/cart_item.dart';
@@ -14,21 +15,36 @@ class CartProvider extends ChangeNotifier {
   AddItem _addItem = AddItem(repository: sl());
   ClearCart _clearCart = ClearCart(repository: sl());
 
-  Cart _currentCart = Cart(storeId: null, offers: null, cartItems: null);
+  Cart _currentCart = Cart(
+    storeId: -1,
+    storeName: "",
+    storeAddress: "",
+    offers: [],
+    cartItems: [],
+  );
 
   List<Variation> cartProducts = [];
+  
 
   // List<Product> get currentProducts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
+  
   Future<void> get clear async {
     _clearCart.call();
     cartProducts=await getProductsFromCart();
     notifyListeners();
   }
 
+  _cartTotalPrice(){
+    int tprice=0;
+    cartProducts.forEach((element) {
+      tprice += int.tryParse(element.price);
+    });
+    return tprice;
+  }
   /// function used to add an Item into the cart
   /// @requires [VARIATION], quantity for cartItem and
   /// offerDetails and storeId for making things easier
@@ -36,22 +52,24 @@ class CartProvider extends ChangeNotifier {
 
   addProducts({
     Variation variation,
-    List<Offer> offers,
     int quantity,
+    Restaurant restaurant,
+
+    // TODO : Remove this two lines
+    List<Offer> offers,
     int storeId,
   }) {
     _addItem.call(
-      offers: offers,
       quantity: quantity,
-      storeId: storeId,
       variation: variation,
+      restaurant: restaurant,
     );
-
+    print("${quantity} ----");
     _updateCart();
   }
 
   /// Function to check if a given variation Id is already inside
-  /// the [CART] if there is an elemnt it wi;; return [CARTITEM.QUANTITY]
+  /// the [CART] if there is an element it will return [CARTITEM.QUANTITY]
   /// else will return -1
 
   int getQuantity(int id) {
@@ -68,6 +86,7 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function Invoked to update the cart
   _updateCart() async {
     _currentCart = await _getCart();
+    cartProducts=await getProductsFromCart();
     notifyListeners();
   }
 

@@ -1,7 +1,7 @@
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
+import '../../domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
-import '../../../home/domain/entity/offer.dart';
 import '../../../products/domain/entity/variation.dart';
 import '../../domain/repository/cart_repository.dart';
 import '../data_sources/cart_local_data_source.dart';
@@ -12,14 +12,14 @@ class CartRepositoryImpl extends CartRepository {
   CartRepositoryImpl({this.localDataSource});
 
   @override
-  Future<Cart> addItem(
-      {Variation variation,
-      int quantity,
-      int storeId,
-      List<Offer> offers}) async {
+  Future<Cart> addItem({
+    Variation variation,
+    int quantity,
+    Restaurant restaurant,
+  }) async {
     Cart currentCart = await localDataSource.getCart();
 
-    if (currentCart.storeId == storeId) {
+    if (currentCart.storeId == restaurant.id) {
       currentCart.cartItems
           .removeWhere((element) => element.id == variation.id);
       if (quantity != 0) {
@@ -34,8 +34,10 @@ class CartRepositoryImpl extends CartRepository {
       }
     } else {
       currentCart = Cart(
-        storeId: storeId,
-        offers: offers,
+        storeId: restaurant.id,
+        offers: restaurant.offers,
+        storeAddress: restaurant.address,
+        storeName: restaurant.title,
         cartItems: [
           CartItem(
             id: variation.id,
@@ -62,6 +64,8 @@ class CartRepositoryImpl extends CartRepository {
     localDataSource.saveCart(
       Cart(
         storeId: -1,
+        storeName: "",
+        storeAddress: "",
         offers: [],
         cartItems: [],
       ),

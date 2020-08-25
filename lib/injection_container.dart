@@ -95,26 +95,11 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerLazySingleton<UserRemoteDataSource>(
-    () => UserRemoteDataSourceImpl(
-      client: sl(),
-    ),
-  );
-
-  sl.registerLazySingleton<UserLocalDataSource>(
-    () => UserLocalDataSourceImpl(
-      hive: sl(),
-    ),
-  );
 
   sl.registerLazySingleton<CartLocalDataSource>(
     () => CartLocalDataSourceImpl(
       hive: sl(),
     ),
-  );
-
-  sl.registerLazySingleton<ProductsRemoteDataSource>(
-    () => ProductsRemoteDataSourceImpl(client: sl()),
   );
 
   sl.registerLazySingleton<UserRemoteDataSource>(
@@ -123,10 +108,6 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UserLocalDataSource>(
     () => UserLocalDataSourceImpl(hive: sl()),
-  );
-
-  sl.registerLazySingleton<CartLocalDataSource>(
-    () => CartLocalDataSourceImpl(hive: sl()),
   );
 
   //! Core
