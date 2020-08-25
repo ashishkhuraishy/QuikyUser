@@ -1,7 +1,7 @@
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
-import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
-import 'package:quiky_user/features/products/domain/entity/variation.dart';
+import '../entity/cart.dart';
+import '../repository/cart_repository.dart';
+import '../../../home/domain/entity/restaurents.dart';
+import '../../../products/domain/entity/variation.dart';
 
 class AddItem {
   final CartRepository repository;
@@ -11,13 +11,11 @@ class AddItem {
   Future<Cart> call({
     Variation variation,
     int quantity,
-    int storeId,
-    List<Offer> offers,
+    Restaurant restaurant,
   }) async {
     return await repository.addItem(
-      offers: offers,
       quantity: quantity,
-      storeId: storeId,
+      restaurant: restaurant,
       variation: variation,
     );
   }

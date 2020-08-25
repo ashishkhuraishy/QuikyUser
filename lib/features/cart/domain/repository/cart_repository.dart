@@ -1,13 +1,12 @@
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
-import 'package:quiky_user/features/products/domain/entity/variation.dart';
+import '../../../home/domain/entity/restaurents.dart';
+import '../../../products/domain/entity/variation.dart';
+import '../entity/cart.dart';
 
 abstract class CartRepository {
   Future<Cart> addItem({
     Variation variation,
     int quantity,
-    int storeId,
-    List<Offer> offers,
+    Restaurant restaurant,
   });
 
   Future<Cart> getCart();

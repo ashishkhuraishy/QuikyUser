@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../../features/cart/domain/entity/cart.dart';
 import '../../features/cart/domain/entity/cart_item.dart';
@@ -16,6 +17,8 @@ class CartProvider extends ChangeNotifier {
 
   Cart _currentCart = Cart(
     storeId: -1,
+    storeName: "",
+    storeAddress: "",
     offers: [],
     cartItems: [],
   );
@@ -36,15 +39,17 @@ class CartProvider extends ChangeNotifier {
 
   addProducts({
     Variation variation,
-    List<Offer> offers,
     int quantity,
+    Restaurant restaurant,
+
+    // TODO : Remove this two lines
+    List<Offer> offers,
     int storeId,
   }) {
     _addItem.call(
-      offers: offers,
       quantity: quantity,
-      storeId: storeId,
       variation: variation,
+      restaurant: restaurant,
     );
 
     _updateCart();

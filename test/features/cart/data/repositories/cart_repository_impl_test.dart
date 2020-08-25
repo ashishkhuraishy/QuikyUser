@@ -5,6 +5,7 @@ import 'package:quiky_user/features/cart/data/repository/cart_repository_impl.da
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
 class MockCartLocalDataSource extends Mock implements CartLocalDataSource {}
@@ -51,6 +52,8 @@ main() {
   final tQuantity = 5;
   final tNewQuantity = 9;
   final tSToreId = 3;
+  final tStoreName = "Test Store";
+  final tStoreAddress = "Test Address";
   final tOffers = [
     Offer(
       id: 56,
@@ -61,6 +64,46 @@ main() {
       percentage: "40%",
     )
   ];
+
+  final tRestaurant = Restaurant(
+    id: tSToreId,
+    offers: tOffers,
+    employeeId: null,
+    title: tStoreName,
+    mobile: null,
+    gst: null,
+    tinTan: null,
+    typeGoods: null,
+    delivery: null,
+    vendor: null,
+    customer: null,
+    popularBrand: null,
+    brandLogo: null,
+    profilePicture: null,
+    fssai: null,
+    storeSubType: null,
+    status: null,
+    option: null,
+    totalReviews: null,
+    avgRating: null,
+    coordinate: null,
+    address: tStoreAddress,
+    recommendationCount: null,
+    minimumCostTwo: null,
+    avgDeliveryTime: null,
+    active: null,
+    inOrder: null,
+    bulkOrder: null,
+    opening: null,
+    closing: null,
+    highlightStatus: null,
+    featuredBrand: null,
+    commisionPercentage: null,
+    user: null,
+    city: null,
+    zone: null,
+    vendorLocation: null,
+  );
 
   final tCartItem = CartItem(
     id: tVariation.id,
@@ -81,6 +124,8 @@ main() {
   final tCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeAddress: tStoreAddress,
+    storeName: tStoreName,
     cartItems: [
       tCartItem,
     ],
@@ -89,6 +134,8 @@ main() {
   final tAddedCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeAddress: tStoreAddress,
+    storeName: tStoreName,
     cartItems: [
       tAddedCartItem,
     ],
@@ -97,11 +144,15 @@ main() {
   final tRemovedItemCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeAddress: tStoreAddress,
+    storeName: tStoreName,
     cartItems: [],
   );
 
   final tEmptyCart = Cart(
     storeId: -1,
+    storeAddress: "",
+    storeName: "",
     offers: [],
     cartItems: [],
   );
@@ -114,9 +165,8 @@ main() {
 
       final result = await repositoryImpl.addItem(
         variation: tVariation,
-        offers: tOffers,
         quantity: tQuantity,
-        storeId: tSToreId,
+        restaurant: tRestaurant,
       );
 
       verify(mockCartLocalDataSource.saveCart(tCart));
@@ -128,9 +178,8 @@ main() {
           .thenAnswer((realInvocation) async => tCart);
       final result = await repositoryImpl.addItem(
         variation: tVariation,
-        offers: tOffers,
         quantity: 0,
-        storeId: tSToreId,
+        restaurant: tRestaurant,
       );
 
       verify(mockCartLocalDataSource.saveCart(tRemovedItemCart));
@@ -144,9 +193,8 @@ main() {
 
       final result = await repositoryImpl.addItem(
         variation: tVariation,
-        offers: tOffers,
         quantity: tNewQuantity,
-        storeId: tSToreId,
+        restaurant: tRestaurant,
       );
 
       verify(mockCartLocalDataSource.saveCart(tAddedCart));
@@ -162,9 +210,8 @@ main() {
 
       final result = await repositoryImpl.addItem(
         variation: tVariation2,
-        offers: tOffers,
         quantity: tQuantity,
-        storeId: tSToreId,
+        restaurant: tRestaurant,
       );
 
       verify(mockCartLocalDataSource.saveCart(tCart));

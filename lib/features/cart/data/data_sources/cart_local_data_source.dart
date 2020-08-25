@@ -25,6 +25,8 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
           CART,
           defaultValue: Cart(
             storeId: -1,
+            storeName: "",
+            storeAddress: "",
             cartItems: [],
             offers: [],
           ),
