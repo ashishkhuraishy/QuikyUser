@@ -1,6 +1,5 @@
-
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quiky_user/theme/themedata.dart';
 
 class DividerLight extends StatelessWidget {
   const DividerLight({
@@ -15,7 +14,7 @@ class DividerLight extends StatelessWidget {
     return Container(
       width: scWidth,
       height: 8,
-      color: bgSecondary,
+      color: Theme.of(context).secondaryHeaderColor,
     );
   }
 }

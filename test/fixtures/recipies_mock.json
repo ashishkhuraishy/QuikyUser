@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "test filter",
+        "image": "http://3.7.65.63/media/1_BitcONx.jpg",
+        "stores": [
+            1,
+            5
+        ]
+    },{
+        "id": 2,
+        "title": "test filter",
+        "image": "http://3.7.65.63/media/1_BitcONx.jpg",
+        "stores": [
+            1,9
+        ]
+    }
+]
