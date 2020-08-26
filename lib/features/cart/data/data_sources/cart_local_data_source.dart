@@ -5,10 +5,12 @@ import '../../../user/data/datasource/user_local_data_source.dart';
 import '../../domain/entity/cart.dart';
 
 const String CART = "CART";
+const String ORDER_ID = "ORDER_ID";
 
 abstract class CartLocalDataSource {
   Future<Cart> getCart();
   Future<bool> saveCart(Cart cart);
+  void setOrderId(int id);
 }
 
 class CartLocalDataSourceImpl extends CartLocalDataSource {
@@ -39,5 +41,12 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
     Box box = hive.box(CORE_BOX);
     await box.put(CART, cart);
     return true;
+  }
+
+  @override
+  void setOrderId(int id) {
+    if (!hive.isBoxOpen(CORE_BOX)) hive.openBox(CORE_BOX);
+    Box box = hive.box(CORE_BOX);
+    box.put(ORDER_ID, id);
   }
 }

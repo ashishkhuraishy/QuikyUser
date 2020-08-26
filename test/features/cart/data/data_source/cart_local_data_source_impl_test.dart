@@ -40,6 +40,8 @@ main() {
     cartItems: [],
   );
 
+  final tOrderId = 5;
+
   group('Save Cart', () {
     setUp(() {
       when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => true);
@@ -95,6 +97,25 @@ main() {
     test('should return a valid [CartModel] when the cart is called', () async {
       final result = await localDataSource.getCart();
       expect(result, tCartModel);
+    });
+  });
+
+  group('Set Order Id', () {
+    setUp(() {
+      when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => true);
+      when(mockHive.box(any)).thenAnswer((realInvocation) => mockBox);
+    });
+
+    test('should open the box if it is closed', () {
+      when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => false);
+
+      localDataSource.setOrderId(tOrderId);
+      verify(mockHive.openBox(CORE_BOX));
+    });
+
+    test('should put the `orderId` into the box ', () {
+      localDataSource.setOrderId(tOrderId);
+      verify(mockBox.put(ORDER_ID, tOrderId));
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/cart/domain/usecase/confirm_order.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../../features/cart/domain/entity/cart.dart';
@@ -14,6 +15,7 @@ class CartProvider extends ChangeNotifier {
   GetCart _getCart = GetCart(repository: sl());
   AddItem _addItem = AddItem(repository: sl());
   ClearCart _clearCart = ClearCart(repository: sl());
+  ConfirmOrder _confirmOrder = ConfirmOrder(repository: sl());
 
   Cart _currentCart = Cart(
     storeId: -1,
@@ -24,6 +26,11 @@ class CartProvider extends ChangeNotifier {
   );
 
   List<Variation> cartProducts = [];
+
+  CartProvider() {
+    // Initialising the Cart
+    _updateCart();
+  }
 
   // List<Product> get currentProducts => _getProductsFromCart();
   Future<Cart> get getCart async => await _getCart.call();
@@ -53,6 +60,26 @@ class CartProvider extends ChangeNotifier {
     );
 
     _updateCart();
+  }
+
+  /// Function to Confirm the current cart which takes in
+  /// `UserLocation` and `Coupon` then on Sucess return an
+  /// [ORDER] which contains total amount and other details
+  ///
+  /// on Failure returns [ConnectionFailure] or [ServerFailure]
+  /// depending on the error
+  confrimOrder({String userLocation, String coupon}) async {
+    final result = await _confirmOrder(
+      userLocation: userLocation,
+      coupon: coupon,
+    );
+
+    // TODO : Change this and PUSH
+
+    result.fold(
+      (failure) => print(failure),
+      (order) => print(order),
+    );
   }
 
   /// Function to check if a given variation Id is already inside
