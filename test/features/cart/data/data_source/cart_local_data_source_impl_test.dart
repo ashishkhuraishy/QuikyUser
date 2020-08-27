@@ -21,6 +21,8 @@ main() {
     offers: [],
     storeName: "Test Name",
     storeAddress: "Test Address",
+    storeImage: "Test Image",
+    storeLogo: "Test Logo",
     cartItems: [
       CartItemModel(
         id: 45,
@@ -36,6 +38,8 @@ main() {
     storeId: -1,
     storeAddress: "",
     storeName: "",
+    storeImage: "",
+    storeLogo: "",
     offers: [],
     cartItems: [],
   );

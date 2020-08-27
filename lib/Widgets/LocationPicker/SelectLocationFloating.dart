@@ -35,6 +35,7 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
       });
     } else {
       if (key.currentState.validate()) {
+        key.currentState.save();
         AddressModel addressModel = AddressModel(
           formattedAddress: finalAddress,
           shortAddress: widget.selectedPlace.addressComponents[0].shortName,
@@ -78,6 +79,7 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
                           key: key,
                           child: TextFormField(
                             onChanged: (value) => finalAddress = value,
+                            onSaved: (newValue) => finalAddress = newValue,
                             textAlign: TextAlign.center,
                             maxLines: 3,
                             initialValue:

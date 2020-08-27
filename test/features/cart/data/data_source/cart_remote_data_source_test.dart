@@ -49,6 +49,8 @@ main() {
     ],
     storeName: "Test store",
     storeAddress: "Test address",
+    storeImage: "Test Image",
+    storeLogo: "Test Logo",
   );
 
   final tOrder = OrderModel(

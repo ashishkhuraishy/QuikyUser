@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../features/home/data/data_source/home_remote_data_source.dart';
@@ -16,7 +17,7 @@ class ProductCard extends StatelessWidget {
     this.addedToCart,
     this.data,
     this.dataVariation,
-    this.storeid,
+    this.store,
     this.offer,
   }) : super(key: key);
 
@@ -24,7 +25,7 @@ class ProductCard extends StatelessWidget {
   final int addedToCart;
   final ProductModel data;
   final Variation dataVariation;
-  final int storeid;
+  final Restaurant store;
   final List<Offer> offer;
 
   void displayBottomSheet(BuildContext context, ProductModel data) {
@@ -49,8 +50,7 @@ class ProductCard extends StatelessWidget {
                     return ProductCard(
                       scWidth: scWidth,
                       dataVariation: data.variations[index],
-                      storeid: data.id,
-                      offer: [],
+                      store: store,
                       addedToCart: count,
                     );
                   },
@@ -180,9 +180,8 @@ class ProductCard extends StatelessWidget {
                                         onPressed: () {
                                           provider.addProducts(
                                             variation: dataVariation,
-                                            offers: [],
                                             quantity: addedToCart - 1,
-                                            storeId: storeid,
+                                            restaurant: store
                                           );
                                         },
                                         child: addedToCart == 1
@@ -204,9 +203,8 @@ class ProductCard extends StatelessWidget {
                                         onPressed: () {
                                           provider.addProducts(
                                             variation: dataVariation,
-                                            offers: [],
                                             quantity: addedToCart + 1,
-                                            storeId: storeid,
+                                            restaurant: store
                                           );
                                         },
                                         child: Icon(Icons.add, color: primary),
@@ -228,7 +226,7 @@ class ProductCard extends StatelessWidget {
                                     variation: dataVariation,
                                     offers: [],
                                     quantity: 1,
-                                    storeId: storeid,
+                                            restaurant: store
                                   );
                                 },
                                 child: Row(
