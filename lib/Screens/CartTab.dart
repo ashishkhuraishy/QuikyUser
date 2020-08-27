@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
@@ -50,7 +51,9 @@ class CartTab extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: provider.currentProducts.length,
                           itemBuilder: (ctxx, index) {
-                            return ProductCard(scWidth: scWidth, dataVariation: provider.currentProducts[index],);
+                            return ProductCard(scWidth: scWidth, dataVariation: provider.currentProducts[index],
+                              store: Restaurant(id: provider.currentStoreId, offers: provider.currentOffers, employeeId: null, title: provider.currentTitle, mobile: null, gst: null, tinTan: null, typeGoods: null, delivery: null, vendor: null, customer: null, popularBrand: null, brandLogo: null, profilePicture: null, fssai: null, storeSubType: null, status: null, option: null, totalReviews: null, avgRating: null, coordinate: null, address: provider.currentStoreAddress, recommendationCount: null, minimumCostTwo: null, avgDeliveryTime: null, active: null, inOrder: null, bulkOrder: null, opening: null, closing: null, highlightStatus: null, featuredBrand: null, commisionPercentage: null, user: null, city: null, zone: null, vendorLocation: null),
+                            );
                           },
                         );
                       },
