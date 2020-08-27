@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import '../core/Providers/CartProvider.dart';
 
 import '../core/Services/products_listing_service.dart';
@@ -128,11 +130,15 @@ class Store extends StatelessWidget {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              "Delivering to Home (A28, Green Acres, Ayyapankavu, Kochi)",
-                              style: Theme.of(context).textTheme.bodyText1,
-                              maxLines: 3,
-                              overflow: TextOverflow.visible,
+                            child: Consumer<AddressProvider>(
+                                builder: (ctx,provider,_){
+                                  return Text(
+                                    "${provider.currentAddress.formattedAddress}",
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.visible,
+                                  );
+                                },
                             ),
                           ),
                         ),
@@ -193,7 +199,7 @@ class Store extends StatelessWidget {
                       itemCount: categories.data.length,
                       itemBuilder: (ctx, index) {
                         return ExpansionTileProducts(
-                            scWidth: scWidth, data: categories.data[index]);
+                            scWidth: scWidth, data: categories.data[index],restaurant: restaurant);
                       },
                     );
                   } else if (categories.hasError) {
@@ -216,11 +222,13 @@ class ExpansionTileProducts extends StatelessWidget {
   const ExpansionTileProducts({
     Key key,
     @required this.scWidth,
+    @required this.restaurant,
     this.data,
   }) : super(key: key);
 
   final double scWidth;
   final CategoryModel data;
+  final Restaurant restaurant;
 
   String productTitles(List products) {
     String a = "";
@@ -230,10 +238,10 @@ class ExpansionTileProducts extends StatelessWidget {
     return a;
   }
 
-  List<Widget> productWidgets(List products, BuildContext context) {
+  List<Widget> productWidgets(List products, BuildContext context,Restaurant store){
     List<Widget> a = [];
     products.forEach((element) {
-      a.add(ProductCard(scWidth: scWidth, data: element));
+      a.add(ProductCard(scWidth: scWidth, data: element,store:store));
     });
     return a;
   }
@@ -248,7 +256,7 @@ class ExpansionTileProducts extends StatelessWidget {
           "${data.products.length} items, ${productTitles(data.products)} ",
           style: Theme.of(context).textTheme.subtitle1,
           overflow: TextOverflow.ellipsis),
-      children: productWidgets(data.products, context),
+      children: productWidgets(data.products, context,restaurant),
     );
   }
 }
