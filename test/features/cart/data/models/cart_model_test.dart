@@ -39,6 +39,7 @@ main() {
       CartItemModel(
         id: 5,
         name: "",
+
         price: "10.0",
         inStock: true,
         quantity: 10,

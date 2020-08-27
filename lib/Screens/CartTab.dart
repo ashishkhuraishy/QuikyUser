@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Widgets/ProductCard.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/features/products/data/models/product_model.dart';
-import 'package:quiky_user/theme/themedata.dart';
+
+import '../Widgets/ProductCard.dart';
+import '../core/Providers/CartProvider.dart';
+import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
@@ -54,7 +54,7 @@ class CartTab extends StatelessWidget {
                           },
                         );
                       },
-                    ),
+
                     Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,

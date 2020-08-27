@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/features/home/data/model/offer_model.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
-import 'package:quiky_user/features/products/data/models/product_model.dart';
-import 'package:quiky_user/features/products/domain/entity/variation.dart';
-import 'package:quiky_user/theme/themedata.dart';
-import 'package:quiky_user/widgets/FoodSafetyDot.dart';
 
+import '../core/Providers/CartProvider.dart';
+import '../features/home/data/data_source/home_remote_data_source.dart';
+import '../features/home/domain/entity/offer.dart';
+import '../features/products/data/models/product_model.dart';
+import '../features/products/domain/entity/variation.dart';
 import '../theme/themedata.dart';
+import 'FoodSafetyDot.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
