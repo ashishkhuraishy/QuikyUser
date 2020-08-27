@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:quiky_user/Widgets/location_picker.dart';
 
-import '../widgets/LocationPicker/location_picker.dart';
 
 class SelectLocation extends StatefulWidget {
   static final kInitialPosition = LatLng(-33.8567844, 151.213108);
