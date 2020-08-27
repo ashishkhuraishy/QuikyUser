@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 class AddressItem extends StatelessWidget {
@@ -35,9 +34,7 @@ class AddressItem extends StatelessWidget {
             ),
           ),
           PopupMenuButton<String>(
-            onSelected: (val){
-              
-            },
+            onSelected: (val) {},
             itemBuilder: (BuildContext context) {
               return Constants.choices.map((String choice) {
                 return PopupMenuItem<String>(

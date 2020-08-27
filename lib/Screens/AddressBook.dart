@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiky_user/features/location_service/data/data_source/address_local_data_sourc.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
+import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import 'package:quiky_user/widgets/AddressItem.dart';
 
 class AddressBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Box addressBox = Hive.box(ADDRESS_BOX);
+    Box addressBox = Hive.box<Address>(ADDRESS_BOX);
     return Scaffold(
       appBar: AppBar(
         title: Text("Address Book"),
@@ -32,21 +32,22 @@ class AddressBook extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               addressBox != null
-                  ? WatchBoxBuilder(
-                      box: addressBox,
-                      builder: (context, box) {
-                        Map<dynamic, dynamic> data = box.toMap();
-                        List Sdata = data.values.toList();
+                  ? ValueListenableBuilder<Box<Address>>(
+                      valueListenable: addressBox.listenable(),
+                      builder: (context, Box<Address> box, _) {
+                        // Map<dynamic, dynamic> data = box.toMap();
+                        // List sData = data.values.toList();
                         return SingleChildScrollView(
                           child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: data.length,
+                              itemCount: box.length,
                               itemBuilder: (context, index) {
-                                print(data[index]);
-                                return AddressItem(data: data[index]);
+                                print(box.getAt(index));
+                                return AddressItem(data: box.getAt(index));
                               }),
                         );
-                      })
+                      },
+                    )
                   : Text("Address is empty")
             ],
           ),
@@ -55,4 +56,3 @@ class AddressBook extends StatelessWidget {
     );
   }
 }
-

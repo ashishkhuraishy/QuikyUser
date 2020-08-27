@@ -162,7 +162,7 @@ class ProductCard extends StatelessWidget {
                           int addedToCart =
                               provider.getQuantity(dataVariation.id);
                           if (addedToCart > -1) {
-                            print("${addedToCart} in increment box");
+                            print("$addedToCart in increment box");
                             return Align(
                               alignment: Alignment.bottomRight,
                               child: Container(
@@ -181,18 +181,20 @@ class ProductCard extends StatelessWidget {
                                           provider.addProducts(
                                             variation: dataVariation,
                                             offers: [],
-                                            quantity: addedToCart-1,
+                                            quantity: addedToCart - 1,
                                             storeId: storeid,
                                           );
                                         },
-                                        child:addedToCart==1?
-                                            Icon(Icons.delete, color: primary):Icon(Icons.remove, color: primary),
+                                        child: addedToCart == 1
+                                            ? Icon(Icons.delete, color: primary)
+                                            : Icon(Icons.remove,
+                                                color: primary),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0),
-                                      child: Text("${addedToCart}"),
+                                      child: Text("$addedToCart"),
                                     ),
                                     SizedBox(
                                       width: 40,
@@ -203,7 +205,7 @@ class ProductCard extends StatelessWidget {
                                           provider.addProducts(
                                             variation: dataVariation,
                                             offers: [],
-                                            quantity: addedToCart+1,
+                                            quantity: addedToCart + 1,
                                             storeId: storeid,
                                           );
                                         },
@@ -219,7 +221,7 @@ class ProductCard extends StatelessWidget {
                               alignment: Alignment.bottomRight,
                               child: CustomBorderedButton(
                                 onTap: () {
-                                  print("${addedToCart} in add box");
+                                  print("$addedToCart in add box");
                                   Provider.of<CartProvider>(context,
                                           listen: false)
                                       .addProducts(
