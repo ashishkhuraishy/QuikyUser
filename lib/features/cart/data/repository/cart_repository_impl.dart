@@ -49,6 +49,8 @@ class CartRepositoryImpl extends CartRepository {
         storeId: restaurant.id,
         offers: restaurant.offers,
         storeAddress: restaurant.address,
+        storeLogo: restaurant.brandLogo,
+        storeImage: restaurant.profilePicture,
         storeName: restaurant.title,
         cartItems: [
           CartItem(
@@ -78,6 +80,8 @@ class CartRepositoryImpl extends CartRepository {
         storeId: -1,
         storeName: "",
         storeAddress: "",
+        storeLogo: "",
+        storeImage: "",
         offers: [],
         cartItems: [],
       ),
