@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Widgets/ProductCard.dart';
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
 
@@ -11,7 +10,7 @@ class CartTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
-    double scWidth = MediaQuery.of(context).size.width;
+    // double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomSheet: Provider.of<CartProvider>(context, listen: false)
                   .cartProducts
@@ -54,7 +53,7 @@ class CartTab extends StatelessWidget {
                           },
                         );
                       },
-
+                    ),
                     Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,

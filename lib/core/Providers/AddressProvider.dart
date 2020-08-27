@@ -19,6 +19,7 @@ class AddressProvider extends ChangeNotifier {
   Address get currentAddress => _addressModel;
 
   getCurrentAddress() async {
+    print('Get Address Called');
     final resultEither = await getAddress.execute();
 
     resultEither.fold(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
+import '../core/Providers/CartProvider.dart';
 
 import '../core/Services/products_listing_service.dart';
 import '../features/home/data/model/restaurant_model.dart';
@@ -39,19 +38,20 @@ class Store extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Consumer<CartProvider>(
-                builder: (ctx,provider,_){
+                builder: (ctx, provider, _) {
                   return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("${provider.cartProducts.length} item", style: white13),
-                    Row(
-                      children: <Widget>[
-                        Text("₹45 ", style: whiteBold13),
-                        Text("plus taxes", style: white13),
-                      ],
-                    ),
-                  ],
-                );
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("${provider.cartProducts.length} item",
+                          style: white13),
+                      Row(
+                        children: <Widget>[
+                          Text("₹45 ", style: whiteBold13),
+                          Text("plus taxes", style: white13),
+                        ],
+                      ),
+                    ],
+                  );
                 },
               ),
               Row(
@@ -230,7 +230,7 @@ class ExpansionTileProducts extends StatelessWidget {
     return a;
   }
 
-  List<Widget> productWidgets(List products,BuildContext context) {
+  List<Widget> productWidgets(List products, BuildContext context) {
     List<Widget> a = [];
     products.forEach((element) {
       a.add(ProductCard(scWidth: scWidth, data: element));
@@ -248,7 +248,7 @@ class ExpansionTileProducts extends StatelessWidget {
           "${data.products.length} items, ${productTitles(data.products)} ",
           style: Theme.of(context).textTheme.subtitle1,
           overflow: TextOverflow.ellipsis),
-      children: productWidgets(data.products,context),
+      children: productWidgets(data.products, context),
     );
   }
 }
