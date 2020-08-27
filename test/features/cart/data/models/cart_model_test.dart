@@ -9,6 +9,8 @@ main() {
     storeId: 15,
     storeName: "Test Store",
     storeAddress: "Test Address",
+    storeImage: "Test Image",
+    storeLogo: "Test Logo",
     offers: [
       OfferModel(
         id: 0,

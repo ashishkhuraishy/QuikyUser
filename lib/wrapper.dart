@@ -19,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
     if (addressBox.isEmpty)
       return SelectLocation();
     else {
-      Provider.of<AddressProvider>(context).getCurrentAddress();
+      Provider.of<AddressProvider>(context, listen: false).getCurrentAddress();
       return Home();
     }
   }

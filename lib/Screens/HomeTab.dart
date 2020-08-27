@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
 import '../core/Providers/HomeProvider.dart';
@@ -30,17 +31,23 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    final currentAddress =
-        Provider.of<AddressProvider>(context, listen: false).currentAddress;
+    // final currentAddress =
+    //     Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
-    final getData = Provider.of<HomeProvider>(context, listen: false)
-        .getData(currentAddress.lat, currentAddress.long);
-    print(getData);
+    // print("asdasdasd ${currentAddress.shortAddress}");
+
+    // // final getData = Provider.of<HomeProvider>(context, listen: false)
+    // //     .getData(currentAddress.lat, currentAddress.long);
+
+    // final getData = Provider.of<HomeProvider>(context, listen: false)
+    //     .getData(10.0261, 76.3125);
+    // // .getData(currentAddress.lat, currentAddress.long);
+    // print(getData);
   }
 
-  // void fetchData(Address currectAddress){
-  //   final getData = Provider.of<HomeProvider>(context,listen:false).getData(currectAddress.lat, currectAddress.long);
-  // }
+  void fetchData(Address currectAddress) {
+    Provider.of<HomeProvider>(context, listen: false).getData(10.0261, 76.3125);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
               Consumer<AddressProvider>(
                 builder: (ctx, val, widget) {
-                  // fetchData(val.currentAddress);
+                  if (val.currentAddress.lat > 0) fetchData(val.currentAddress);
                   return Text(
                     "${val.currentAddress.shortAddress}",
                     textAlign: TextAlign.left,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:quiky_user/Constants/Apikeys.dart';
+import 'package:quiky_user/Screens/selectlocation.dart';
 
-import '../../Constants/Apikeys.dart';
-import '../../Screens/selectlocation.dart';
 import 'SelectLocationFloating.dart';
 
 class LoctionPicker extends StatefulWidget {
