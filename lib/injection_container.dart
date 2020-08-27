@@ -9,6 +9,7 @@ import 'package:quiky_user/features/cart/domain/repository/cart_repository.dart'
 
 import 'core/platform/location_info.dart';
 import 'core/platform/network_info.dart';
+import 'features/cart/data/data_sources/cart_remote_data_source.dart';
 import 'features/home/data/data_source/home_remote_data_source.dart';
 import 'features/home/data/repository/home_repository_impl.dart';
 import 'features/home/domain/repository/home_repository.dart';
@@ -66,7 +67,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<CartRepository>(
     () => CartRepositoryImpl(
+      networkInfo: sl(),
       localDataSource: sl(),
+      remoteDataSource: sl(),
     ),
   );
 
@@ -110,6 +113,12 @@ Future<void> init() async {
   sl.registerLazySingleton<CartLocalDataSource>(
     () => CartLocalDataSourceImpl(
       hive: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<CartRemoteDataSource>(
+    () => CartRemoteDataSourceImpl(
+      client: sl(),
     ),
   );
 

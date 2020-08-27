@@ -11,7 +11,7 @@ class RatingStarIdicator extends StatelessWidget {
   final String totalReview;
 
   IconData ratingShow(int limit) {
-    double ratingD = double.tryParse(rating);
+    double ratingD = double.tryParse(rating)??0;
     if (ratingD >= limit) {
       return Icons.star;
     } else if (ratingD > limit - 1) {

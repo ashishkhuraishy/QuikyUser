@@ -1,90 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/features/products/data/models/product_model.dart';
-import 'package:quiky_user/theme/themedata.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
+
+import '../core/Providers/CartProvider.dart';
+import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CartProvider>(context,listen:false).getProductsFromCart();
+    Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
-    ProductModel p = new ProductModel(
-        id: 1,
-        productimage: null,
-        variations: null,
-        productreviews: null,
-        productviews: null,
-        category: null,
-        image: "",
-        title: "Test",
-        sku: null,
-        tax: null,
-        description: "Test desc",
-        quantity: null,
-        discount: null,
-        isStock: null,
-        isFeatured: null,
-        isDiscount: null,
-        vegNvEgg: null,
-        active: null,
-        timestamp: null,
-        updated: null,
-        user: null,
-        filter: null);
     return Scaffold(
-        bottomSheet: Container(
-          width: double.infinity,
-          child: FlatButton(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: EdgeInsets.all(15),
-            color: primary,
-            onPressed: () {},
-            child: Text("asdads"),
-          ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                StoreDetails(),
-                Consumer<CartProvider>(
-                  builder: (ctx,provider,_){
-                    return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: provider.cartProducts.length,
-                    itemBuilder: (ctxx,index){
-                      return ProductCard(scWidth: scWidth,addedToCart:2,data:provider.cartProducts[index]);
-                    },
-                  );
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  width: double.infinity,
-                  child: FlatButton(
-                    color: primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Apply Coupon",
-                      style: whiteBold13,
-                    ),
-                  ),
-                ),
-                NoContactDeliveryCard(),
-              ],
+      bottomSheet: Provider.of<CartProvider>(context, listen: false)
+                  .cartProducts
+                  .length >
+              0
+          ? Container(
+              width: double.infinity,
+              child: FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: EdgeInsets.all(15),
+                color: primary,
+                onPressed: () {
+                  Provider.of<CartProvider>(context,listen: false).clear; 
+                },
+                child: Text("Continue Checkout"),
+              ),
+            )
+          : Container(
+              height: 0,
             ),
-          ),
-        ));
+      body: SafeArea(
+        child: Provider.of<CartProvider>(context, listen: false)
+                    .cartProducts
+                    .length >
+                0
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    StoreDetails(),
+                    Consumer<CartProvider>(
+                      builder: (ctx, provider, _) {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: provider.currentProducts.length,
+                          itemBuilder: (ctxx, index) {
+                            return ProductCard(scWidth: scWidth, dataVariation: provider.currentProducts[index],
+                              store: Restaurant(id: provider.currentStoreId, offers: provider.currentOffers, employeeId: null, title: provider.currentTitle, mobile: null, gst: null, tinTan: null, typeGoods: null, delivery: null, vendor: null, customer: null, popularBrand: null, brandLogo: null, profilePicture: null, fssai: null, storeSubType: null, status: null, option: null, totalReviews: null, avgRating: null, coordinate: null, address: provider.currentStoreAddress, recommendationCount: null, minimumCostTwo: null, avgDeliveryTime: null, active: null, inOrder: null, bulkOrder: null, opening: null, closing: null, highlightStatus: null, featuredBrand: null, commisionPercentage: null, user: null, city: null, zone: null, vendorLocation: null),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: Consumer<CartProvider>(
+                        builder: (ctx,provider,_){
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Total Price",style: Theme.of(context).textTheme.headline6,),
+                                  Text("₹${provider.totalPrice}",style: Theme.of(context).textTheme.headline6,),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: FlatButton(
+                        color: primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Apply Coupon",
+                          style: whiteBold13,
+                        ),
+                      ),
+                    ),
+                    NoContactDeliveryCard(),
+                  ],
+                ),
+              )
+            : Center(
+                child: Text("Empty Cart"),
+              ),
+      ),
+    );
   }
 }
 

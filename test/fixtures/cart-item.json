@@ -1,0 +1,19 @@
+{
+    "id": 370,
+    "variation": {
+        "id": 669,
+        "title": "Wheat Paratha",
+        "price": "20.00",
+        "product": {
+            "title": "Wheat Paratha",
+            "productimage": []
+        },
+        "image": null
+    },
+    "quantity": 2,
+    "notes": "nill",
+    "line_total": "40.00",
+    "timestamp": "2020-08-25T15:55:43.145791+05:30",
+    "updated": "2020-08-25T15:55:43.163965+05:30",
+    "cart": 80
+}
