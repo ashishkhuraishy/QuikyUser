@@ -1,0 +1,65 @@
+{
+    "cart": {
+        "id": 80,
+        "cartitem": [
+            {
+                "id": 370,
+                "variation": {
+                    "id": 669,
+                    "title": "Wheat Paratha",
+                    "price": "20.00",
+                    "product": {
+                        "title": "Wheat Paratha",
+                        "productimage": []
+                    },
+                    "image": null
+                },
+                "quantity": 2,
+                "notes": "nill",
+                "line_total": "40.00",
+                "timestamp": "2020-08-25T15:55:43.145791+05:30",
+                "updated": "2020-08-25T15:55:43.163965+05:30",
+                "cart": 80
+            },
+            {
+                "id": 371,
+                "variation": {
+                    "id": 668,
+                    "title": "Kerala Paratha",
+                    "price": "20.00",
+                    "product": {
+                        "title": "Kerala Paratha",
+                        "productimage": []
+                    },
+                    "image": null
+                },
+                "quantity": 2,
+                "notes": "nill",
+                "line_total": "40.00",
+                "timestamp": "2020-08-25T15:55:43.151784+05:30",
+                "updated": "2020-08-25T15:55:43.170866+05:30",
+                "cart": 80
+            }
+        ],
+        "store_id": "133",
+        "total": "184.00",
+        "tax_total": "4.00",
+        "coupon": "nill",
+        "user_location": "10.365581,77.970657",
+        "discount_total": "0.00",
+        "sub_total": "80.00",
+        "delivery_charges": "100.00",
+        "timestamp": "2020-08-25T00:29:11.392580+05:30",
+        "updated": "2020-08-25T15:55:43.182556+05:30",
+        "active": true,
+        "bulk_order": false,
+        "delivery_date": "2020-08-25T00:29:11.392649+05:30",
+        "delivery_incentative": 300,
+        "other_charges": "12.00",
+        "user": 137
+    },
+    "username": "Diwahar",
+    "mobile_number": "4444564669",
+    "store_title": "Paragon Restaurant",
+    "vendor_location": "10.030205,76.310474"
+}

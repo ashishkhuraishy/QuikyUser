@@ -21,4 +21,14 @@ class CartItemModel extends CartItem {
           inStock: inStock,
           quantity: quantity,
         );
+
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      id: json['variation']['id'],
+      name: json['variation']['title'],
+      price: json['variation']['price'],
+      inStock: true,
+      quantity: json['quantity'],
+    );
+  }
 }

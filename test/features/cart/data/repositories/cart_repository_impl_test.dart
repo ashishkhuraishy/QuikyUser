@@ -1,6 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:quiky_user/core/error/exception.dart';
+import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
+import 'package:quiky_user/features/cart/data/data_sources/cart_remote_data_source.dart';
+import 'package:quiky_user/features/cart/data/model/order_model.dart';
 import 'package:quiky_user/features/cart/data/repository/cart_repository_impl.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
@@ -8,16 +13,29 @@ import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
+import '../../../location_service/data/repository/address_repository_impl_test.dart';
+
 class MockCartLocalDataSource extends Mock implements CartLocalDataSource {}
 
+class MockRemoteDataSource extends Mock implements CartRemoteDataSource {}
+
 MockCartLocalDataSource mockCartLocalDataSource;
+MockRemoteDataSource remoteDataSource;
+MockNetworkInfo networkInfo;
 CartRepositoryImpl repositoryImpl;
 
 main() {
   mockCartLocalDataSource = MockCartLocalDataSource();
+  remoteDataSource = MockRemoteDataSource();
+  networkInfo = MockNetworkInfo();
   repositoryImpl = CartRepositoryImpl(
     localDataSource: mockCartLocalDataSource,
+    remoteDataSource: remoteDataSource,
+    networkInfo: networkInfo,
   );
+
+  final tUserLocation = "10.789,89.255";
+  final tCoupon = "quicky50";
 
   final tVariation = Variation(
     id: 2,
@@ -157,6 +175,20 @@ main() {
     cartItems: [],
   );
 
+  final tOrder = OrderModel(
+    id: 80,
+    items: [
+      tCartItem,
+      tCartItem,
+    ],
+    total: "184.00",
+    subTotal: "80.00",
+    delCharges: "100.00",
+    taxtotal: "4.00",
+    discountAmount: "0.00",
+    coupon: "nill",
+  );
+
   group('Add Item', () {
     test('should create and save a new [CART] when the `storeId` dont match',
         () async {
@@ -236,6 +268,76 @@ main() {
       repositoryImpl.clear();
 
       verify(mockCartLocalDataSource.saveCart(tEmptyCart));
+    });
+  });
+
+  group('Confirm Order', () {
+    setUp(() {
+      when(networkInfo.isConnected).thenAnswer((realInvocation) async => true);
+      when(mockCartLocalDataSource.getCart()).thenAnswer(
+        (realInvocation) async => tCart,
+      );
+      when(
+        remoteDataSource.confirmOrder(
+          any,
+          userLocation: anyNamed('userLocation'),
+          coupon: anyNamed('coupon'),
+        ),
+      ).thenAnswer(
+        (realInvocation) async => tOrder,
+      );
+    });
+
+    test('should return [CONNECTION FAILURE] if not connected', () async {
+      when(networkInfo.isConnected).thenAnswer((realInvocation) async => false);
+
+      final result =
+          await repositoryImpl.confirmorder(userlocation: tUserLocation);
+
+      verify(networkInfo.isConnected);
+      expect(result, Left(ConnectionFailure()));
+    });
+
+    test('should get the cart from local and use that to call remote api',
+        () async {
+      final result = await repositoryImpl.confirmorder(
+          userlocation: tUserLocation, coupon: tCoupon);
+
+      verify(mockCartLocalDataSource.getCart());
+      verify(
+        remoteDataSource.confirmOrder(
+          tCart,
+          userLocation: tUserLocation,
+          coupon: tCoupon,
+        ),
+      );
+      verify(mockCartLocalDataSource.setOrderId(tOrder.id));
+      expect(result, Right(tOrder));
+    });
+
+    test('should return a [SERVER FAILURE] on [SERVER EXCEPTION]', () async {
+      when(
+        remoteDataSource.confirmOrder(
+          any,
+          userLocation: anyNamed('userLocation'),
+          coupon: anyNamed('coupon'),
+        ),
+      ).thenThrow(ServerException());
+
+      final result = await repositoryImpl.confirmorder(
+        userlocation: tUserLocation,
+      );
+
+      verify(mockCartLocalDataSource.getCart());
+      verify(
+        remoteDataSource.confirmOrder(
+          tCart,
+          userLocation: tUserLocation,
+          coupon: null,
+        ),
+      );
+      verifyNever(mockCartLocalDataSource.setOrderId(tOrder.id));
+      expect(result, Left(ServerFailure()));
     });
   });
 }
