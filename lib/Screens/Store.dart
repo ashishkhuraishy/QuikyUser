@@ -131,14 +131,14 @@ class Store extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Consumer<AddressProvider>(
-                                builder: (ctx,provider,_){
-                                  return Text(
-                                    "${provider.currentAddress.formattedAddress}",
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.visible,
-                                  );
-                                },
+                              builder: (ctx, provider, _) {
+                                return Text(
+                                  "${provider.currentAddress.formattedAddress}",
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.visible,
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -199,7 +199,9 @@ class Store extends StatelessWidget {
                       itemCount: categories.data.length,
                       itemBuilder: (ctx, index) {
                         return ExpansionTileProducts(
-                            scWidth: scWidth, data: categories.data[index],restaurant: restaurant);
+                            scWidth: scWidth,
+                            data: categories.data[index],
+                            restaurant: restaurant);
                       },
                     );
                   } else if (categories.hasError) {
@@ -238,10 +240,11 @@ class ExpansionTileProducts extends StatelessWidget {
     return a;
   }
 
-  List<Widget> productWidgets(List products, BuildContext context,Restaurant store){
+  List<Widget> productWidgets(
+      List products, BuildContext context, Restaurant store) {
     List<Widget> a = [];
     products.forEach((element) {
-      a.add(ProductCard(scWidth: scWidth, data: element,store:store));
+      a.add(ProductCard(scWidth: scWidth, data: element, store: store));
     });
     return a;
   }
@@ -256,7 +259,7 @@ class ExpansionTileProducts extends StatelessWidget {
           "${data.products.length} items, ${productTitles(data.products)} ",
           style: Theme.of(context).textTheme.subtitle1,
           overflow: TextOverflow.ellipsis),
-      children: productWidgets(data.products, context,restaurant),
+      children: productWidgets(data.products, context, restaurant),
     );
   }
 }
