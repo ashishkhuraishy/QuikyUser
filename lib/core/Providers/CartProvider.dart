@@ -37,7 +37,10 @@ class CartProvider extends ChangeNotifier {
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
-  void get clear => _clearCart.call();
+  void get clear{ 
+    _clearCart.call();
+    notifyListeners();
+  }
 
   /// function used to add an Item into the cart
   /// @requires [VARIATION], quantity for cartItem and
@@ -100,6 +103,7 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function Invoked to update the cart
   _updateCart() async {
     _currentCart = await _getCart();
+    cartProducts = await getProductsFromCart();
     notifyListeners();
   }
 

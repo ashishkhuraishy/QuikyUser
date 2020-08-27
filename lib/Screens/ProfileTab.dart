@@ -108,7 +108,9 @@ class ProfileTab extends StatelessWidget {
                   title: "Favorite Orders",
                 ),
                 CustomRowButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/address-book');
+                  },
                   icon: Icon(Icons.book),
                   title: "Address Book",
                 ),

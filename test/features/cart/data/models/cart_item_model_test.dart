@@ -25,4 +25,8 @@ main() {
 
     expect(result, tCartItem);
   });
+
+  test('should calculate the Inline total', () {
+    expect(tCartItem.inlineTotal, 40.0);
+  });
 }

@@ -33,8 +33,14 @@ class _HomeTabState extends State<HomeTab> {
     final currentAddress =
         Provider.of<AddressProvider>(context, listen: false).currentAddress;
 
+        print("asdasdasd ${currentAddress.long}");
+
+    // final getData = Provider.of<HomeProvider>(context, listen: false)
+    //     .getData(currentAddress.lat, currentAddress.long);
+        
     final getData = Provider.of<HomeProvider>(context, listen: false)
-        .getData(currentAddress.lat, currentAddress.long);
+        .getData(10.0261, 76.3125);
+       // .getData(currentAddress.lat, currentAddress.long);
     print(getData);
   }
 

@@ -13,58 +13,72 @@ class CartTab extends StatelessWidget {
     Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        bottomSheet: Container(
-          width: double.infinity,
-          child: FlatButton(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: EdgeInsets.all(15),
-            color: primary,
-            onPressed: () {},
-            child: Text("asdads"),
-          ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                StoreDetails(),
-                Consumer<CartProvider>(
-                  builder: (ctx, provider, _) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: provider.cartProducts.length,
-                      itemBuilder: (ctxx, index) {
-                        return ProductCard(
-                            scWidth: scWidth,
-                            addedToCart: 2,
-                            dataVariation: provider.cartProducts[index]);
-                      },
-                    );
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  width: double.infinity,
-                  child: FlatButton(
-                    color: primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Apply Coupon",
-                      style: whiteBold13,
-                    ),
-                  ),
-                ),
-                NoContactDeliveryCard(),
-              ],
+      bottomSheet: Provider.of<CartProvider>(context, listen: false)
+                  .cartProducts
+                  .length >
+              0
+          ? Container(
+              width: double.infinity,
+              child: FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: EdgeInsets.all(15),
+                color: primary,
+                onPressed: () {
+                  // Provider.of<CartProvider>(context,listen: false).clear;
+                },
+                child: Text("Continue Checkout"),
+              ),
+            )
+          : Container(
+              height: 0,
             ),
-          ),
-        ));
+      body: SafeArea(
+        child: Provider.of<CartProvider>(context, listen: false)
+                    .cartProducts
+                    .length >
+                0
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    StoreDetails(),
+                    Consumer<CartProvider>(
+                      builder: (ctx, provider, _) {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: provider.cartProducts.length,
+                          itemBuilder: (ctxx, index) {
+                            return Text("asd");
+                          },
+                        );
+                      },
+
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: FlatButton(
+                        color: primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Apply Coupon",
+                          style: whiteBold13,
+                        ),
+                      ),
+                    ),
+                    NoContactDeliveryCard(),
+                  ],
+                ),
+              )
+            : Center(
+                child: Text("Empty Cart"),
+              ),
+      ),
+    );
   }
 }
 

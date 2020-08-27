@@ -35,4 +35,13 @@ class Cart extends Equatable {
         offers,
         cartItems,
       ];
+
+  double get total {
+    double result = 0.0;
+    cartItems.forEach((element) {
+      result += element.inlineTotal;
+    });
+
+    return result;
+  }
 }
