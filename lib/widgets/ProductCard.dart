@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../features/home/data/data_source/home_remote_data_source.dart';
@@ -16,7 +17,7 @@ class ProductCard extends StatelessWidget {
     this.addedToCart,
     this.data,
     this.dataVariation,
-    this.storeid,
+    this.store,
     this.offer,
   }) : super(key: key);
 
@@ -24,7 +25,7 @@ class ProductCard extends StatelessWidget {
   final int addedToCart;
   final ProductModel data;
   final Variation dataVariation;
-  final int storeid;
+  final Restaurant store;
   final List<Offer> offer;
 
   void displayBottomSheet(BuildContext context, ProductModel data) {
@@ -34,6 +35,7 @@ class ProductCard extends StatelessWidget {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (ctxx, val) {
+            int count = 0;
             return SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(bottom: 5.0),
@@ -43,12 +45,13 @@ class ProductCard extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (ctx, index) {
-                    print(data.variations);
+                    count = Provider.of<CartProvider>(context, listen: false)
+                        .getQuantity(data.variations[index].id);
                     return ProductCard(
                       scWidth: scWidth,
                       dataVariation: data.variations[index],
-                      storeid: data.id,
-                      offer: [],
+                      store: store,
+                      addedToCart: count,
                     );
                   },
                 ),
@@ -154,65 +157,90 @@ class ProductCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 dataVariation != null
-                    ? addedToCart != null && addedToCart > 0
-                        ? Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: primary)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 40,
-                                    height: 30,
-                                    child: FlatButton(
-                                      padding: EdgeInsets.all(2),
-                                      onPressed: () {},
-                                      child: Icon(Icons.remove, color: primary),
+                    ? Consumer<CartProvider>(
+                        builder: (ctx, provider, _) {
+                          int addedToCart =
+                              provider.getQuantity(dataVariation.id);
+                          if (addedToCart > -1) {
+                            print("$addedToCart in increment box");
+                            return Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: primary)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 40,
+                                      height: 30,
+                                      child: FlatButton(
+                                        padding: EdgeInsets.all(2),
+                                        onPressed: () {
+                                          provider.addProducts(
+                                            variation: dataVariation,
+                                            quantity: addedToCart - 1,
+                                            restaurant: store
+                                          );
+                                        },
+                                        child: addedToCart == 1
+                                            ? Icon(Icons.delete, color: primary)
+                                            : Icon(Icons.remove,
+                                                color: primary),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text("1"),
-                                  ),
-                                  SizedBox(
-                                    width: 40,
-                                    height: 30,
-                                    child: FlatButton(
-                                      padding: EdgeInsets.all(2),
-                                      onPressed: () {},
-                                      child: Icon(Icons.add, color: primary),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text("$addedToCart"),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 40,
+                                      height: 30,
+                                      child: FlatButton(
+                                        padding: EdgeInsets.all(2),
+                                        onPressed: () {
+                                          provider.addProducts(
+                                            variation: dataVariation,
+                                            quantity: addedToCart + 1,
+                                            restaurant: store
+                                          );
+                                        },
+                                        child: Icon(Icons.add, color: primary),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        : Align(
-                            alignment: Alignment.bottomRight,
-                            child: CustomBorderedButton(
-                              onTap: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .addProducts(
-                                  variation: dataVariation,
-                                  offers: [],
-                                  quantity: 1,
-                                  storeId: storeid,
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text("Add"),
-                                  Icon(Icons.add, color: primary)
-                                ],
+                            );
+                          } else {
+                            return Align(
+                              alignment: Alignment.bottomRight,
+                              child: CustomBorderedButton(
+                                onTap: () {
+                                  print("$addedToCart in add box");
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .addProducts(
+                                    variation: dataVariation,
+                                    offers: [],
+                                    quantity: 1,
+                                            restaurant: store
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text("Add"),
+                                    Icon(Icons.add, color: primary)
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
+                            );
+                          }
+                        },
+                      )
                     : Align(
                         alignment: Alignment.bottomRight,
                         child: CustomBorderedButton(
