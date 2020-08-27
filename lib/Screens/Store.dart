@@ -48,7 +48,7 @@ class Store extends StatelessWidget {
                           style: white13),
                       Row(
                         children: <Widget>[
-                          Text("₹45 ", style: whiteBold13),
+                          Text("₹${provider.totalPrice} ", style: whiteBold13),
                           Text("plus taxes", style: white13),
                         ],
                       ),
