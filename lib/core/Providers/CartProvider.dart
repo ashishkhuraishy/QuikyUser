@@ -32,10 +32,13 @@ class CartProvider extends ChangeNotifier {
     _updateCart();
   }
 
-  // List<Product> get currentProducts => _getProductsFromCart();
+  List<Variation> get currentProducts => cartProducts;
   Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;
+  String get currentTitle => _currentCart.storeName;
+  String get currentStoreAddress => _currentCart.storeAddress;
+  double get totalPrice => _currentCart.total;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
   void get clear{ 
     _clearCart.call();
@@ -55,14 +58,14 @@ class CartProvider extends ChangeNotifier {
     // TODO : Remove this two lines
     List<Offer> offers,
     int storeId,
-  }) {
+  }) async {
     _addItem.call(
       quantity: quantity,
       variation: variation,
       restaurant: restaurant,
     );
-
-    _updateCart();
+  
+    cartProducts = await getProductsFromCart();
   }
 
   /// Function to Confirm the current cart which takes in

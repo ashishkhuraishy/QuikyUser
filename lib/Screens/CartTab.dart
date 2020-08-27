@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
@@ -10,7 +12,7 @@ class CartTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
-    // double scWidth = MediaQuery.of(context).size.width;
+    double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomSheet: Provider.of<CartProvider>(context, listen: false)
                   .cartProducts
@@ -23,7 +25,7 @@ class CartTab extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 color: primary,
                 onPressed: () {
-                  // Provider.of<CartProvider>(context,listen: false).clear;
+                  Provider.of<CartProvider>(context,listen: false).clear; 
                 },
                 child: Text("Continue Checkout"),
               ),
@@ -47,12 +49,33 @@ class CartTab extends StatelessWidget {
                           scrollDirection: Axis.vertical,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: provider.cartProducts.length,
+                          itemCount: provider.currentProducts.length,
                           itemBuilder: (ctxx, index) {
-                            return Text("asd");
+                            return ProductCard(scWidth: scWidth, dataVariation: provider.currentProducts[index],
+                              store: Restaurant(id: provider.currentStoreId, offers: provider.currentOffers, employeeId: null, title: provider.currentTitle, mobile: null, gst: null, tinTan: null, typeGoods: null, delivery: null, vendor: null, customer: null, popularBrand: null, brandLogo: null, profilePicture: null, fssai: null, storeSubType: null, status: null, option: null, totalReviews: null, avgRating: null, coordinate: null, address: provider.currentStoreAddress, recommendationCount: null, minimumCostTwo: null, avgDeliveryTime: null, active: null, inOrder: null, bulkOrder: null, opening: null, closing: null, highlightStatus: null, featuredBrand: null, commisionPercentage: null, user: null, city: null, zone: null, vendorLocation: null),
+                            );
                           },
                         );
                       },
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: Consumer<CartProvider>(
+                        builder: (ctx,provider,_){
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Total Price",style: Theme.of(context).textTheme.headline6,),
+                                  Text("₹${provider.totalPrice}",style: Theme.of(context).textTheme.headline6,),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      ),
                     ),
                     Container(
                       padding: EdgeInsets.all(20),
