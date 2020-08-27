@@ -103,7 +103,7 @@ class CartProvider extends ChangeNotifier {
   /// Helper Function Invoked to update the cart
   _updateCart() async {
     _currentCart = await _getCart();
-    cartProducts = await getProductsFromCart();
+    // cartProducts = await getProductsFromCart();
     notifyListeners();
   }
 
