@@ -72,6 +72,8 @@ main() {
   final tSToreId = 3;
   final tStoreName = "Test Store";
   final tStoreAddress = "Test Address";
+  final tStorelogo = "Test logo";
+  final tImage = "Test Image";
   final tOffers = [
     Offer(
       id: 56,
@@ -96,8 +98,8 @@ main() {
     vendor: null,
     customer: null,
     popularBrand: null,
-    brandLogo: null,
-    profilePicture: null,
+    brandLogo: tStorelogo,
+    profilePicture: tImage,
     fssai: null,
     storeSubType: null,
     status: null,
@@ -142,7 +144,9 @@ main() {
   final tCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeImage: tImage,
     storeAddress: tStoreAddress,
+    storeLogo: tStorelogo,
     storeName: tStoreName,
     cartItems: [
       tCartItem,
@@ -152,6 +156,8 @@ main() {
   final tAddedCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeImage: tImage,
+    storeLogo: tStorelogo,
     storeAddress: tStoreAddress,
     storeName: tStoreName,
     cartItems: [
@@ -162,6 +168,8 @@ main() {
   final tRemovedItemCart = Cart(
     storeId: tSToreId,
     offers: tOffers,
+    storeImage: tImage,
+    storeLogo: tStorelogo,
     storeAddress: tStoreAddress,
     storeName: tStoreName,
     cartItems: [],
@@ -171,6 +179,8 @@ main() {
     storeId: -1,
     storeAddress: "",
     storeName: "",
+    storeImage: "",
+    storeLogo: "",
     offers: [],
     cartItems: [],
   );

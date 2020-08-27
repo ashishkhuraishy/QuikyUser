@@ -21,6 +21,8 @@ class CartProvider extends ChangeNotifier {
     storeId: -1,
     storeName: "",
     storeAddress: "",
+    storeImage: "",
+    storeLogo: "",
     offers: [],
     cartItems: [],
   );
@@ -40,7 +42,7 @@ class CartProvider extends ChangeNotifier {
   String get currentStoreAddress => _currentCart.storeAddress;
   double get totalPrice => _currentCart.total;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
-  void get clear{ 
+  void get clear {
     _clearCart.call();
     notifyListeners();
   }
@@ -64,7 +66,7 @@ class CartProvider extends ChangeNotifier {
       variation: variation,
       restaurant: restaurant,
     );
-  
+
     cartProducts = await getProductsFromCart();
   }
 

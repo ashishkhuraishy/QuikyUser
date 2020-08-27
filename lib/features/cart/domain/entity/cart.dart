@@ -14,6 +14,10 @@ class Cart extends Equatable {
   final String storeName;
   @HiveField(4)
   final String storeAddress;
+  @HiveField(5)
+  final String storeImage;
+  @HiveField(6)
+  final String storeLogo;
   @HiveField(1)
   final List<Offer> offers;
   @HiveField(2)
@@ -25,6 +29,8 @@ class Cart extends Equatable {
     @required this.cartItems,
     @required this.storeName,
     @required this.storeAddress,
+    @required this.storeImage,
+    @required this.storeLogo,
   });
 
   @override
@@ -34,6 +40,8 @@ class Cart extends Equatable {
         storeAddress,
         offers,
         cartItems,
+        storeImage,
+        storeLogo,
       ];
 
   double get total {

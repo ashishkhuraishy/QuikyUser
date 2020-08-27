@@ -9,6 +9,8 @@ main() {
     storeId: 15,
     storeName: "Test Store",
     storeAddress: "Test Address",
+    storeImage: "Test Image",
+    storeLogo: "Test Logo",
     offers: [
       OfferModel(
         id: 0,
@@ -39,7 +41,6 @@ main() {
       CartItemModel(
         id: 5,
         name: "",
-
         price: "10.0",
         inStock: true,
         quantity: 10,
