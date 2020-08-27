@@ -38,6 +38,7 @@ class CartProvider extends ChangeNotifier {
   List<Offer> get currentOffers => _currentCart.offers;
   String get currentTitle => _currentCart.storeName;
   String get currentStoreAddress => _currentCart.storeAddress;
+  double get totalPrice => _currentCart.total;
   List<CartItem> get currentCartItems => _currentCart.cartItems;
   void get clear{ 
     _clearCart.call();

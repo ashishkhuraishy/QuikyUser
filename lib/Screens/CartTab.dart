@@ -61,6 +61,25 @@ class CartTab extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,
+                      child: Consumer<CartProvider>(
+                        builder: (ctx,provider,_){
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Total Price",style: Theme.of(context).textTheme.headline6,),
+                                  Text("₹${provider.totalPrice}",style: Theme.of(context).textTheme.headline6,),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
                       child: FlatButton(
                         color: primary,
                         shape: RoundedRectangleBorder(
