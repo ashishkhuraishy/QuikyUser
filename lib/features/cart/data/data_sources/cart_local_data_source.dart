@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:quiky_user/core/error/exception.dart';
+import 'package:quiky_user/features/user/domain/entity/user.dart';
 
 import '../../../user/data/datasource/user_local_data_source.dart';
 import '../../domain/entity/cart.dart';
@@ -56,10 +57,24 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
 
   @override
   String getToken() {
+    User emptyUser = User(
+      id: -1,
+      userId: -1,
+      userName: "",
+      name: "",
+      token: "",
+      email: "",
+      mobile: "",
+    );
+
     if (!hive.isBoxOpen(CORE_BOX)) hive.openBox(CORE_BOX);
     Box box = hive.box(CORE_BOX);
-    String res = box.get(USER);
-    if (res != null || res.length < 1) return res;
+    User res = box.get(
+          USER,
+          defaultValue: emptyUser,
+        ) ??
+        emptyUser;
+    if (res.id != -1 && res.token.length > 1) return res.token;
     throw UserException();
   }
 }

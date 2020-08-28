@@ -106,10 +106,10 @@ class CartRepositoryImpl extends CartRepository {
       );
       localDataSource.setOrderId(order.id);
       return drtz.Right(order);
-    } on ServerException {
-      return drtz.Left(ServerFailure());
     } on UserException {
       return drtz.Left(UserFailure());
+    } on ServerException {
+      return drtz.Left(ServerFailure());
     }
   }
 }

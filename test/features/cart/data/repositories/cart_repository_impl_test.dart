@@ -36,6 +36,7 @@ main() {
 
   final tUserLocation = "10.789,89.255";
   final tCoupon = "quicky50";
+  final ttoken = "aghasdasdjh";
 
   final tVariation = Variation(
     id: 2,
@@ -287,9 +288,12 @@ main() {
       when(mockCartLocalDataSource.getCart()).thenAnswer(
         (realInvocation) async => tCart,
       );
+      when(mockCartLocalDataSource.getToken())
+          .thenAnswer((realInvocation) => ttoken);
       when(
         remoteDataSource.confirmOrder(
           any,
+          token: anyNamed('token'),
           userLocation: anyNamed('userLocation'),
           coupon: anyNamed('coupon'),
         ),
@@ -314,9 +318,11 @@ main() {
           userlocation: tUserLocation, coupon: tCoupon);
 
       verify(mockCartLocalDataSource.getCart());
+      verify(mockCartLocalDataSource.getToken());
       verify(
         remoteDataSource.confirmOrder(
           tCart,
+          token: ttoken,
           userLocation: tUserLocation,
           coupon: tCoupon,
         ),
@@ -329,6 +335,7 @@ main() {
       when(
         remoteDataSource.confirmOrder(
           any,
+          token: anyNamed('token'),
           userLocation: anyNamed('userLocation'),
           coupon: anyNamed('coupon'),
         ),
@@ -339,15 +346,39 @@ main() {
       );
 
       verify(mockCartLocalDataSource.getCart());
+      verify(mockCartLocalDataSource.getToken());
       verify(
         remoteDataSource.confirmOrder(
           tCart,
+          token: ttoken,
           userLocation: tUserLocation,
           coupon: null,
         ),
       );
-      verifyNever(mockCartLocalDataSource.setOrderId(tOrder.id));
+      verifyNever(mockCartLocalDataSource.setOrderId(any));
       expect(result, Left(ServerFailure()));
+    });
+
+    test('should return a [UserFailure] on [UserException]', () async {
+      when(mockCartLocalDataSource.getToken()).thenThrow(UserException());
+
+      final result = await repositoryImpl.confirmorder(
+        userlocation: tUserLocation,
+        coupon: null,
+      );
+
+      verify(mockCartLocalDataSource.getCart());
+      verify(mockCartLocalDataSource.getToken());
+      verifyNever(
+        remoteDataSource.confirmOrder(
+          any,
+          coupon: anyNamed('coupon'),
+          token: anyNamed('token'),
+          userLocation: anyNamed('userLocation'),
+        ),
+      );
+      verifyNever(mockCartLocalDataSource.setOrderId(any));
+      expect(result, Left(UserFailure()));
     });
   });
 }

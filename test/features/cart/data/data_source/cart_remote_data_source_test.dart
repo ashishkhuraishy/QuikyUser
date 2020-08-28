@@ -23,6 +23,7 @@ main() {
 
   final tUserLocation = "10.365581,77.970657";
   final tCoupon = "quicky50";
+  final tToken = "scghasdjhasd";
 
   final tCartItem1 = CartItemModel(
     id: 669,
@@ -92,6 +93,7 @@ main() {
         () async {
       await remoteDataSourceImpl.confirmOrder(
         tCart,
+        token: tToken,
         userLocation: tUserLocation,
         coupon: tCoupon,
       );
@@ -102,6 +104,7 @@ main() {
           body: jsonEncode(body),
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader: "Token $tToken",
           },
         ),
       );
@@ -110,6 +113,7 @@ main() {
     test('should not contain coupon if there is no code specified', () async {
       await remoteDataSourceImpl.confirmOrder(
         tCart,
+        token: tToken,
         userLocation: tUserLocation,
       );
 
@@ -119,6 +123,7 @@ main() {
           body: jsonEncode(body),
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader: "Token $tToken",
           },
         ),
       );
