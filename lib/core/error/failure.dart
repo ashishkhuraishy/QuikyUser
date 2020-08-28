@@ -12,3 +12,5 @@ class ConnectionFailure extends Failure {}
 class CacheFailure extends Failure {}
 
 class LocationFailure extends Failure {}
+
+class UserFailure extends Failure {}

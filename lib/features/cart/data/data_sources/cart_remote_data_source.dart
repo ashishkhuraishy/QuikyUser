@@ -9,7 +9,12 @@ import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 
 abstract class CartRemoteDataSource {
-  Future<Order> confirmOrder(Cart cart, {String userLocation, String coupon});
+  Future<Order> confirmOrder(
+    Cart cart, {
+    String token,
+    String userLocation,
+    String coupon,
+  });
 }
 
 class CartRemoteDataSourceImpl extends CartRemoteDataSource {
@@ -20,6 +25,7 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
   @override
   Future<Order> confirmOrder(
     Cart cart, {
+    String token,
     String userLocation,
     String coupon,
   }) async {
@@ -46,6 +52,7 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       url,
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Token $token",
       },
       body: jsonEncode(body),
     );
