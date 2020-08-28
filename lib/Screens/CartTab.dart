@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/features/cart/domain/entity/order.dart';
+import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
@@ -8,6 +11,70 @@ import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
+
+  
+
+  void displayOfferBottomSheet(BuildContext context, ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctxx, val) {
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: Consumer<CartProvider>(
+                    builder: (ctx,provider,_){
+
+                      if(provider.currentOffers.length>0 && provider.currentOffers!=null){
+                        return ListView.builder(
+                          padding: EdgeInsets.only(top: 10),
+                          itemCount: provider.currentOffers.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (ctx, index) {
+                            return Text("adasd");
+                          },
+                        );
+                      }else{
+                        return Center(
+                          child: Padding(padding: EdgeInsets.all(20),
+                            child: Text("No Offers Available"),
+                          ),
+                        );
+                      }
+                    },
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  
+
+  void displayConfirmOrderBottomSheet(BuildContext context,Order order ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctxx, val) {
+            print(order);
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: Text("asdasd")
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +91,13 @@ class CartTab extends StatelessWidget {
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: EdgeInsets.all(15),
                 color: primary,
-                onPressed: () {
-                  Provider.of<CartProvider>(context,listen: false).clear; 
+                onPressed: () async {
+                  final currentAddress = Provider.of<AddressProvider>(context,listen:false).currentAddress;
+                  final order = await Provider.of<CartProvider>(context,listen: false).confrimOrder(
+                    userLocation: "${currentAddress.lat},${currentAddress.long}",
+                    coupon: null
+                  );
+                  displayConfirmOrderBottomSheet(context,order);
                 },
                 child: Text("Continue Checkout"),
               ),
@@ -42,7 +114,7 @@ class CartTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    StoreDetails(),
+                    StoreDetails(scWidth:scWidth),
                     Consumer<CartProvider>(
                       builder: (ctx, provider, _) {
                         return ListView.builder(
@@ -85,7 +157,9 @@ class CartTab extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          displayOfferBottomSheet(context);
+                        },
                         child: Text(
                           "Apply Coupon",
                           style: whiteBold13,
@@ -146,32 +220,41 @@ class NoContactDeliveryCard extends StatelessWidget {
 
 class StoreDetails extends StatelessWidget {
   const StoreDetails({
-    Key key,
+    Key key,@required this.scWidth,
   }) : super(key: key);
+
+  final double scWidth;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: scWidth,
       padding: EdgeInsets.all(20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Image.asset(
-            "assets/img/Burger.jpeg",
-            width: 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("Paragon Rstaurant",
-                    style: Theme.of(context).textTheme.headline6),
-                Text("Edappally", style: Theme.of(context).textTheme.subtitle1),
-              ],
-            ),
-          )
-        ],
+      child: Consumer<CartProvider>(
+          builder: (ctx,provider,_){
+            return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Image.asset(
+                    "assets/img/Burger.jpeg",
+                    width: 50,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    width: scWidth-90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("${provider.currentTitle}",
+                            style: Theme.of(context).textTheme.headline6),
+                        Text("${provider.currentStoreAddress.trim()}", style: Theme.of(context).textTheme.subtitle1,overflow: TextOverflow.ellipsis,),
+                      ],
+                    ),
+                  )
+                ],
+              );
+          },
       ),
     );
   }
