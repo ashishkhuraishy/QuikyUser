@@ -169,6 +169,7 @@ class _HomeTabState extends State<HomeTab> {
                             ? ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 // shrinkWrap: true,
+                                physics: PageScrollPhysics(),
                                 itemCount: provider.inTheSpotLight.length > 1
                                     ? provider.inTheSpotLight.length ~/ 2
                                     : provider.inTheSpotLight.length,
@@ -178,7 +179,8 @@ class _HomeTabState extends State<HomeTab> {
                                     return Container();
                                   } else {
                                     return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         StoreCard(
                                           scWidth: widget.scWidth,

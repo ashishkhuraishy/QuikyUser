@@ -97,7 +97,13 @@ class CartTab extends StatelessWidget {
                     userLocation: "${currentAddress.lat},${currentAddress.long}",
                     coupon: null
                   );
-                  displayConfirmOrderBottomSheet(context,order);
+                  if(order.isLeft()){
+                    print("Error Occured");
+                    // print(order);
+                  }else{
+                    print("Corder placed");
+                    displayConfirmOrderBottomSheet(context,order.fold((l)=>l,(r)=>r));
+                  }
                 },
                 child: Text("Continue Checkout"),
               ),
