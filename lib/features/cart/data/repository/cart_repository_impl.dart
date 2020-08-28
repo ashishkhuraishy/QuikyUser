@@ -97,8 +97,10 @@ class CartRepositoryImpl extends CartRepository {
     Cart currentCart = await localDataSource.getCart();
 
     try {
+      final token = localDataSource.getToken();
       Order order = await remoteDataSource.confirmOrder(
         currentCart,
+        token: token,
         userLocation: userlocation,
         coupon: coupon,
       );
@@ -106,6 +108,8 @@ class CartRepositoryImpl extends CartRepository {
       return drtz.Right(order);
     } on ServerException {
       return drtz.Left(ServerFailure());
+    } on UserException {
+      return drtz.Left(UserFailure());
     }
   }
 }
