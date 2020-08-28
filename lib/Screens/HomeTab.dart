@@ -178,6 +178,7 @@ class _HomeTabState extends State<HomeTab> {
                                     return Container();
                                   } else {
                                     return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         StoreCard(
                                           scWidth: widget.scWidth,
