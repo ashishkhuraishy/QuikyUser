@@ -12,9 +12,9 @@ import '../theme/themedata.dart';
 class CartTab extends StatelessWidget {
   const CartTab({Key key}) : super(key: key);
 
-  
-
-  void displayOfferBottomSheet(BuildContext context, ) {
+  void displayOfferBottomSheet(
+    BuildContext context,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -25,26 +25,27 @@ class CartTab extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(bottom: 5.0),
                 child: Consumer<CartProvider>(
-                    builder: (ctx,provider,_){
-
-                      if(provider.currentOffers.length>0 && provider.currentOffers!=null){
-                        return ListView.builder(
-                          padding: EdgeInsets.only(top: 10),
-                          itemCount: provider.currentOffers.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (ctx, index) {
-                            return Text("adasd");
-                          },
-                        );
-                      }else{
-                        return Center(
-                          child: Padding(padding: EdgeInsets.all(20),
-                            child: Text("No Offers Available"),
-                          ),
-                        );
-                      }
-                    },
+                  builder: (ctx, provider, _) {
+                    if (provider.currentOffers.length > 0 &&
+                        provider.currentOffers != null) {
+                      return ListView.builder(
+                        padding: EdgeInsets.only(top: 10),
+                        itemCount: provider.currentOffers.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, index) {
+                          return Text("adasd");
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text("No Offers Available"),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             );
@@ -54,9 +55,7 @@ class CartTab extends StatelessWidget {
     );
   }
 
-  
-
-  void displayConfirmOrderBottomSheet(BuildContext context,Order order ) {
+  void displayConfirmOrderBottomSheet(BuildContext context, Order order) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -66,9 +65,30 @@ class CartTab extends StatelessWidget {
             print(order);
             return SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.only(bottom: 5.0),
-                child: Text("asdasd")
-              ),
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: order.items.length,
+                        itemBuilder: (ctx, index) {
+                          return Column(
+                            children: [
+                              Text(
+                                "${order.items[index].name}",
+                                textAlign: TextAlign.left,
+                              ),
+                              Text("₹${order.items[index].inlineTotal}",
+                                style: primaryBold14,
+                                textAlign: TextAlign.end,
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  )),
             );
           },
         );
@@ -92,17 +112,22 @@ class CartTab extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 color: primary,
                 onPressed: () async {
-                  final currentAddress = Provider.of<AddressProvider>(context,listen:false).currentAddress;
-                  final order = await Provider.of<CartProvider>(context,listen: false).confrimOrder(
-                    userLocation: "${currentAddress.lat},${currentAddress.long}",
-                    coupon: null
-                  );
-                  if(order.isLeft()){
+                  final currentAddress =
+                      Provider.of<AddressProvider>(context, listen: false)
+                          .currentAddress;
+                  final order = await Provider.of<CartProvider>(context,
+                          listen: false)
+                      .confrimOrder(
+                          userLocation:
+                              "${currentAddress.lat},${currentAddress.long}",
+                          coupon: null);
+                  if (order.isLeft()) {
                     print("Error Occured");
                     // print(order);
-                  }else{
+                  } else {
                     print("Corder placed");
-                    displayConfirmOrderBottomSheet(context,order.fold((l)=>l,(r)=>r));
+                    displayConfirmOrderBottomSheet(
+                        context, order.fold((l) => l, (r) => r));
                   }
                 },
                 child: Text("Continue Checkout"),
@@ -120,7 +145,7 @@ class CartTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    StoreDetails(scWidth:scWidth),
+                    StoreDetails(scWidth: scWidth),
                     Consumer<CartProvider>(
                       builder: (ctx, provider, _) {
                         return ListView.builder(
@@ -129,8 +154,47 @@ class CartTab extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: provider.currentProducts.length,
                           itemBuilder: (ctxx, index) {
-                            return ProductCard(scWidth: scWidth, dataVariation: provider.currentProducts[index],
-                              store: Restaurant(id: provider.currentStoreId, offers: provider.currentOffers, employeeId: null, title: provider.currentTitle, mobile: null, gst: null, tinTan: null, typeGoods: null, delivery: null, vendor: null, customer: null, popularBrand: null, brandLogo: null, profilePicture: null, fssai: null, storeSubType: null, status: null, option: null, totalReviews: null, avgRating: null, coordinate: null, address: provider.currentStoreAddress, recommendationCount: null, minimumCostTwo: null, avgDeliveryTime: null, active: null, inOrder: null, bulkOrder: null, opening: null, closing: null, highlightStatus: null, featuredBrand: null, commisionPercentage: null, user: null, city: null, zone: null, vendorLocation: null),
+                            return ProductCard(
+                              scWidth: scWidth,
+                              dataVariation: provider.currentProducts[index],
+                              store: Restaurant(
+                                  id: provider.currentStoreId,
+                                  offers: provider.currentOffers,
+                                  employeeId: null,
+                                  title: provider.currentTitle,
+                                  mobile: null,
+                                  gst: null,
+                                  tinTan: null,
+                                  typeGoods: null,
+                                  delivery: null,
+                                  vendor: null,
+                                  customer: null,
+                                  popularBrand: null,
+                                  brandLogo: null,
+                                  profilePicture: null,
+                                  fssai: null,
+                                  storeSubType: null,
+                                  status: null,
+                                  option: null,
+                                  totalReviews: null,
+                                  avgRating: null,
+                                  coordinate: null,
+                                  address: provider.currentStoreAddress,
+                                  recommendationCount: null,
+                                  minimumCostTwo: null,
+                                  avgDeliveryTime: null,
+                                  active: null,
+                                  inOrder: null,
+                                  bulkOrder: null,
+                                  opening: null,
+                                  closing: null,
+                                  highlightStatus: null,
+                                  featuredBrand: null,
+                                  commisionPercentage: null,
+                                  user: null,
+                                  city: null,
+                                  zone: null,
+                                  vendorLocation: null),
                             );
                           },
                         );
@@ -140,14 +204,23 @@ class CartTab extends StatelessWidget {
                       padding: EdgeInsets.all(20),
                       width: double.infinity,
                       child: Consumer<CartProvider>(
-                        builder: (ctx,provider,_){
+                        builder: (ctx, provider, _) {
                           return Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Total Price",style: Theme.of(context).textTheme.headline6,),
-                                  Text("₹${provider.totalPrice}",style: Theme.of(context).textTheme.headline6,),
+                                  Text(
+                                    "Total Price",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                  Text(
+                                    "₹${provider.totalPrice}",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
                                 ],
                               )
                             ],
@@ -226,7 +299,8 @@ class NoContactDeliveryCard extends StatelessWidget {
 
 class StoreDetails extends StatelessWidget {
   const StoreDetails({
-    Key key,@required this.scWidth,
+    Key key,
+    @required this.scWidth,
   }) : super(key: key);
 
   final double scWidth;
@@ -237,30 +311,34 @@ class StoreDetails extends StatelessWidget {
       width: scWidth,
       padding: EdgeInsets.all(20),
       child: Consumer<CartProvider>(
-          builder: (ctx,provider,_){
-            return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Image.asset(
-                    "assets/img/Burger.jpeg",
-                    width: 50,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    width: scWidth-90,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("${provider.currentTitle}",
-                            style: Theme.of(context).textTheme.headline6),
-                        Text("${provider.currentStoreAddress.trim()}", style: Theme.of(context).textTheme.subtitle1,overflow: TextOverflow.ellipsis,),
-                      ],
+        builder: (ctx, provider, _) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Image.asset(
+                "assets/img/Burger.jpeg",
+                width: 50,
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 10.0),
+                width: scWidth - 90,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("${provider.currentTitle}",
+                        style: Theme.of(context).textTheme.headline6),
+                    Text(
+                      "${provider.currentStoreAddress.trim()}",
+                      style: Theme.of(context).textTheme.subtitle1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  )
-                ],
-              );
-          },
+                  ],
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
