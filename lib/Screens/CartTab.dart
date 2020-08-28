@@ -79,10 +79,11 @@ class CartTab extends StatelessWidget {
                                 "${order.items[index].name}",
                                 textAlign: TextAlign.left,
                               ),
-                              Text("₹${order.items[index].inlineTotal}",
+                              Text(
+                                "₹${order.items[index].inlineTotal}",
                                 style: primaryBold14,
                                 textAlign: TextAlign.end,
-                                ),
+                              ),
                             ],
                           );
                         },
