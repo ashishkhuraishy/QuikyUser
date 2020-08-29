@@ -4,8 +4,8 @@ import 'package:quiky_user/features/search/domain/use_case/get_result.dart';
 import '../../injection_container.dart';
 
 class SearchService {
-  GetResults _getResults = sl();
-  GetQueries _getQueries = sl();
+  GetResults _getResults = GetResults(repository: sl());
+  GetQueries _getQueries = GetQueries(repository: sl());
 
   List<String> get recentQueries => _getQueries();
 
