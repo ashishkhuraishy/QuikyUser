@@ -8,7 +8,8 @@ class SearchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentaddress = Provider.of<AddressProvider>(context,listen:false).currentAddress;
+    final currentaddress =
+        Provider.of<AddressProvider>(context, listen: false).currentAddress;
     SearchService search = new SearchService(currentAddress: currentaddress);
     return Scaffold(
       appBar: AppBar(
@@ -21,17 +22,17 @@ class SearchTab extends StatelessWidget {
             hintText: "Search Restaurants and foods",
           ),
           autofocus: false,
-          onChanged: (val){
+          onChanged: (val) {
             search.getResaturents(query: val);
           },
         ),
       ),
       body: ValueListenableBuilder(
-          valueListenable:  search.,
-          builder: (BuildContext context, dynamic value, Widget child) {
-             return  Text("Asdasd");
-          },
-       ),
+        valueListenable: search.searchValues,
+        builder: (BuildContext context, dynamic value, Widget child) {
+          return Text("Asdasd");
+        },
+      ),
     );
   }
 }
