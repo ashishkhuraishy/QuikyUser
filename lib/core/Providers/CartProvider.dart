@@ -29,12 +29,17 @@ class CartProvider extends ChangeNotifier {
 
   List<Variation> cartProducts = [];
 
+  loadCart(){
+     getProductsFromCart();
+    return cartProducts;
+  }
+
   CartProvider() {
     // Initialising the Cart
     _updateCart();
   }
 
-  List<Variation> get currentProducts => cartProducts;
+  List<Variation> get currentProducts => loadCart();
   Future<Cart> get getCart async => await _getCart.call();
   int get currentStoreId => _currentCart.storeId;
   List<Offer> get currentOffers => _currentCart.offers;

@@ -27,7 +27,7 @@ class SearchTab extends StatelessWidget {
         ),
       ),
       body: ValueListenableBuilder(
-          valueListenable:  search.,
+          valueListenable:  null,
           builder: (BuildContext context, dynamic value, Widget child) {
              return  Text("Asdasd");
           },
