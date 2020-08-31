@@ -9,7 +9,7 @@ import 'package:quiky_user/widgets/AddressItem.dart';
 class AddressBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Box addressBox = Hive.box<Address>(ADDRESS_BOX);
+    Box addressBox = Hive.box(ADDRESS_BOX);
     return Scaffold(
       appBar: AppBar(
         title: Text("Address Book"),
@@ -32,9 +32,9 @@ class AddressBook extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               addressBox != null
-                  ? ValueListenableBuilder<Box<Address>>(
+                  ? ValueListenableBuilder<Box>(
                       valueListenable: addressBox.listenable(),
-                      builder: (context, Box<Address> box, _) {
+                      builder: (context, Box box, _) {
                         // Map<dynamic, dynamic> data = box.toMap();
                         // List sData = data.values.toList();
                         return SingleChildScrollView(
@@ -43,7 +43,9 @@ class AddressBook extends StatelessWidget {
                               itemCount: box.length,
                               itemBuilder: (context, index) {
                                 print(box.getAt(index));
-                                return AddressItem(data: box.getAt(index));
+                                return AddressItem(
+                                  data: box.getAt(index) as Address,
+                                );
                               }),
                         );
                       },

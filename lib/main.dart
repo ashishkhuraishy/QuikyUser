@@ -37,7 +37,7 @@ void main() async {
   Hive.registerAdapter<CartItem>(CartItemAdapter());
   Hive.registerAdapter<User>(UserAdapter());
   await Hive.openBox(CORE_BOX);
-  await Hive.openBox<Address>(ADDRESS_BOX);
+  await Hive.openBox(ADDRESS_BOX);
   runApp(MyApp());
 }
 
