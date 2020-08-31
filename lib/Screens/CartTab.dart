@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
@@ -128,7 +127,11 @@ class CartTab extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 15, bottom: 10),
-                              child: Text("Payment",style: Theme.of(context).textTheme.headline6,textAlign: TextAlign.left,),
+                              child: Text(
+                                "Payment",
+                                style: Theme.of(context).textTheme.headline6,
+                                textAlign: TextAlign.left,
+                              ),
                             ),
                           ],
                         ),
@@ -136,10 +139,12 @@ class CartTab extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              
-                        PaymentMethodItem(title:"COD",img:"assets/img/cod.png"),
-                        PaymentMethodItem(title:"GPAY",img:"assets/img/gpay.png"),
-                        PaymentMethodItem(title:"CARD",img:"assets/img/card.png"),
+                              PaymentMethodItem(
+                                  title: "COD", img: "assets/img/cod.png"),
+                              PaymentMethodItem(
+                                  title: "GPAY", img: "assets/img/gpay.png"),
+                              PaymentMethodItem(
+                                  title: "CARD", img: "assets/img/card.png"),
                             ],
                           ),
                         )
@@ -327,10 +332,12 @@ class CartTab extends StatelessWidget {
 
 class PaymentMethodItem extends StatelessWidget {
   const PaymentMethodItem({
-    Key key, this.img, this.title,
+    Key key,
+    this.img,
+    this.title,
   }) : super(key: key);
 
-  final String img,title;
+  final String img, title;
 
   @override
   Widget build(BuildContext context) {
@@ -339,14 +346,18 @@ class PaymentMethodItem extends StatelessWidget {
       padding: EdgeInsets.all(5),
       // margin: EdgeInsets.only(right:10),
       decoration: BoxDecoration(
-        color: Colors.black12,
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: Colors.black12, borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('${img}',width: 24,height: 24,),
-          Text("${title}", )
+          Image.asset(
+            '$img',
+            width: 24,
+            height: 24,
+          ),
+          Text(
+            "$title",
+          )
         ],
       ),
     );
@@ -369,11 +380,11 @@ class PaymentRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "${title}: ",
+            "$title: ",
             style: style,
           ),
           Text(
-            "${price}",
+            "$price",
             style: style,
           )
         ],

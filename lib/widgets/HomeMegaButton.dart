@@ -18,7 +18,7 @@ class HomeMegaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left:20,top:20,bottom:20),
+      margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -32,24 +32,28 @@ class HomeMegaButton extends StatelessWidget {
           Positioned(
             left: 10,
             top: 10,
-                      child: Text(
-                        "${title}",
-                        style: whiteBold16,
-                      ),
+            child: Text(
+              "$title",
+              style: whiteBold16,
+            ),
           ),
           Positioned(
             bottom: -22,
             right: -22,
-                          child: Container(
-              padding: EdgeInsets.only(top:17,left: 17,bottom: 22,right: 22),
+            child: Container(
+              padding:
+                  EdgeInsets.only(top: 17, left: 17, bottom: 22, right: 22),
               decoration: BoxDecoration(
-              color: Colors.white54,
-              borderRadius: BorderRadius.circular(500)
-              ),
+                  color: Colors.white54,
+                  borderRadius: BorderRadius.circular(500)),
               child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: Image.asset('${image}',width: 100,height: 100,),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                child: Image.asset(
+                  '$image',
+                  width: 100,
+                  height: 100,
                 ),
+              ),
             ),
           ),
         ],
@@ -57,4 +61,3 @@ class HomeMegaButton extends StatelessWidget {
     );
   }
 }
-
