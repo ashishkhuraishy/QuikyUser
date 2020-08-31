@@ -37,7 +37,7 @@ void main() async {
   Hive.registerAdapter<CartItem>(CartItemAdapter());
   Hive.registerAdapter<User>(UserAdapter());
   await Hive.openBox(CORE_BOX);
-  await Hive.openBox(ADDRESS_BOX);
+  await Hive.openBox<Address>(ADDRESS_BOX);
   runApp(MyApp());
 }
 
@@ -103,7 +103,6 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
               color: dark,
             ),
-
           ),
           primaryColorLight: Colors.white,
           // secondaryHeaderColor: bgSecondary,
