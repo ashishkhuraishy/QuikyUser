@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/core/Services/search_service.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 class SearchTab extends StatelessWidget {
   const SearchTab({Key key}) : super(key: key);
@@ -27,9 +28,9 @@ class SearchTab extends StatelessWidget {
           },
         ),
       ),
-      body: ValueListenableBuilder(
+      body: ValueListenableBuilder<List<Restaurant>>(
         valueListenable: search.searchValues,
-        builder: (BuildContext context, dynamic value, Widget child) {
+        builder: (BuildContext context, List<Restaurant> value, Widget child) {
           return Text("Asdasd");
         },
       ),
