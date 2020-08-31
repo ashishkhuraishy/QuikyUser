@@ -97,6 +97,13 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
               color: grey,
             ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: dark,
+            ),
+
           ),
           primaryColorLight: Colors.white,
           // secondaryHeaderColor: bgSecondary,
@@ -160,6 +167,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 11,
               color: Colors.grey,
+            ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: Colors.white,
             ),
           ),
         ),

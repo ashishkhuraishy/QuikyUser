@@ -64,32 +64,99 @@ class CartTab extends StatelessWidget {
           builder: (ctxx, val) {
             print(order);
             return SingleChildScrollView(
-              child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: order.items.length,
-                        itemBuilder: (ctx, index) {
-                          return Column(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: order.items.length,
+                          itemBuilder: (ctx, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${order.items[index].name}",
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  Text(
+                                    "₹${order.items[index].inlineTotal}",
+                                    style: primaryBold14,
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        order.coupon != 'nill'
+                            ? PaymentRow(
+                                title: "Offer Applied",
+                                price: "${order.coupon}",
+                                style: Theme.of(context).textTheme.subtitle1)
+                            : Container(),
+                        PaymentRow(
+                            title: "Sub Total",
+                            price: "₹${order.subTotal}",
+                            style: Theme.of(context).textTheme.subtitle1),
+                        PaymentRow(
+                            title: "Tax Total",
+                            price: "₹${order.taxtotal}",
+                            style: Theme.of(context).textTheme.subtitle1),
+                        PaymentRow(
+                            title: "Delivery Charges",
+                            price: "₹${order.delCharges}",
+                            style: Theme.of(context).textTheme.subtitle1),
+                        order.coupon != 'nill'
+                            ? PaymentRow(
+                                title: "Discount Amount",
+                                price: "₹${order.discountAmount}",
+                                style: primary13)
+                            : Container(),
+                        PaymentRow(
+                            title: "Total",
+                            price: "₹${order.total}",
+                            style: Theme.of(context).textTheme.headline5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 15, bottom: 10),
+                              child: Text("Payment",style: Theme.of(context).textTheme.headline6,textAlign: TextAlign.left,),
+                            ),
+                          ],
+                        ),
+                        SingleChildScrollView(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                "${order.items[index].name}",
-                                textAlign: TextAlign.left,
-                              ),
-                              Text(
-                                "₹${order.items[index].inlineTotal}",
-                                style: primaryBold14,
-                                textAlign: TextAlign.end,
-                              ),
+                              
+                        PaymentMethodItem(title:"COD",img:"assets/img/cod.png"),
+                        PaymentMethodItem(title:"GPAY",img:"assets/img/gpay.png"),
+                        PaymentMethodItem(title:"CARD",img:"assets/img/card.png"),
                             ],
-                          );
-                        },
-                      ),
-                    ],
-                  )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text("Continue Payment"),
+                      color: primary,
+                      padding: EdgeInsets.all(15),
+                    ),
+                  )
+                ],
+              ),
             );
           },
         );
@@ -253,6 +320,63 @@ class CartTab extends StatelessWidget {
             : Center(
                 child: Text("Empty Cart"),
               ),
+      ),
+    );
+  }
+}
+
+class PaymentMethodItem extends StatelessWidget {
+  const PaymentMethodItem({
+    Key key, this.img, this.title,
+  }) : super(key: key);
+
+  final String img,title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 3 - 20,
+      padding: EdgeInsets.all(5),
+      // margin: EdgeInsets.only(right:10),
+      decoration: BoxDecoration(
+        color: Colors.black12,
+        borderRadius: BorderRadius.circular(5)
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset('${img}',width: 24,height: 24,),
+          Text("${title}", )
+        ],
+      ),
+    );
+  }
+}
+
+class PaymentRow extends StatelessWidget {
+  const PaymentRow({Key key, this.price, this.title, this.style})
+      : super(key: key);
+
+  final TextStyle style;
+  final String price;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "${title}: ",
+            style: style,
+          ),
+          Text(
+            "${price}",
+            style: style,
+          )
+        ],
       ),
     );
   }
