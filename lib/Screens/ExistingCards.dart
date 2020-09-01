@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:quiky_user/core/Services/payment-service.dart';
+import 'package:quiky_user/features/payement/domain/Entity/payment_card.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -12,25 +13,28 @@ class ExistingCardsPage extends StatefulWidget {
 }
 
 class ExistingCardsPageState extends State<ExistingCardsPage> {
-  List cards = [{
-    'cardNumber': '4242424242424242',
-    'expiryDate': '04/24',
-    'cardHolderName': 'Muhammad Ahsan Ayaz',
-    'cvvCode': '424',
-    'showBackView': false,
-  }, {
-    'cardNumber': '5555555566554444',
-    'expiryDate': '04/23',
-    'cardHolderName': 'Tracer',
-    'cvvCode': '123',
-    'showBackView': false,
-  }];
+  StripeService stripeService = StripeService();
+
+  List cards = [
+    {
+      'cardNumber': '4242424242424242',
+      'expiryDate': '04/24',
+      'cardHolderName': 'Muhammad Ahsan Ayaz',
+      'cvvCode': '424',
+      'showBackView': false,
+    },
+    {
+      'cardNumber': '5555555566554444',
+      'expiryDate': '04/23',
+      'cardHolderName': 'Tracer',
+      'cvvCode': '123',
+      'showBackView': false,
+    }
+  ];
 
   payViaExistingCard(BuildContext context, card) async {
     ProgressDialog dialog = new ProgressDialog(context);
-    dialog.style(
-      message: 'Please wait...'
-    );
+    dialog.style(message: 'Please wait...');
     await dialog.show();
     var expiryArr = card['expiryDate'].split('/');
     CreditCard stripeCard = CreditCard(
@@ -38,20 +42,21 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
       expMonth: int.parse(expiryArr[0]),
       expYear: int.parse(expiryArr[1]),
     );
-    var response = await StripeService.payViaExistingCard(
+    var response = await stripeService.payViaExistingCard(
       amount: '2500',
       currency: 'USD',
-      card: stripeCard
+      card: PaymentCard.fromCreditCard(stripeCard),
     );
     await dialog.hide();
-    Scaffold.of(context).showSnackBar(
-        SnackBar(
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(
           content: Text(response.message),
           duration: new Duration(milliseconds: 1200),
-        )
-      ).closed.then((_) {
-        Navigator.pop(context);
-      });
+        ))
+        .closed
+        .then((_) {
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -72,7 +77,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               },
               child: CreditCardWidget(
                 cardNumber: card['cardNumber'],
-                expiryDate: card['expiryDate'], 
+                expiryDate: card['expiryDate'],
                 cardHolderName: card['cardHolderName'],
                 cvvCode: card['cvvCode'],
                 showBackView: false,
