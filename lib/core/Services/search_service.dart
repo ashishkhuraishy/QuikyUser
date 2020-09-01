@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 import 'package:quiky_user/features/search/domain/use_case/get_queries.dart';

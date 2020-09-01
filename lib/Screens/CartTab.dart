@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
@@ -391,9 +390,8 @@ class _PaymentMethodItemState extends State<PaymentMethodItem> {
       padding: EdgeInsets.all(5),
       // margin: EdgeInsets.only(right:10),
       decoration: BoxDecoration(
-          color: widget.selected == widget.value
-              ? Colors.orange
-              : Colors.black12,
+          color:
+              widget.selected == widget.value ? Colors.orange : Colors.black12,
           borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -428,11 +426,11 @@ class PaymentRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "${title}: ",
+            "$title: ",
             style: style,
           ),
           Text(
-            "${price}",
+            "$price",
             style: style,
           )
         ],
