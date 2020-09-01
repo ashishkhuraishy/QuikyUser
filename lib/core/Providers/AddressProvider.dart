@@ -7,7 +7,7 @@ import 'package:quiky_user/features/location_service/domain/usecase/get_address.
 import 'package:quiky_user/injection_container.dart';
 
 class AddressProvider extends ChangeNotifier {
-  AddressModel _addressModel = AddressModel(
+  Address _addressModel = Address(
     formattedAddress: '',
     shortAddress: '',
     lat: 0.0,
