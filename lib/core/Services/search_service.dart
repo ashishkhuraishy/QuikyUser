@@ -17,17 +17,21 @@ class SearchService {
 
   List<String> get recentQueries => _getQueries();
 
+  get clearSearch{
+    searchValues.value=[];
+  }
+
   ValueNotifier<List<Restaurant>> searchValues =
       ValueNotifier<List<Restaurant>>([]);
   getResaturents({String query}) async {
     final result = await _getResults(
-        query: query, lat: currentAddress.lat, long: currentAddress.long);
-
+        query: query, lat: 10.0261, long: 76.3125);
     // TODO ; Edit Here
 
     result.fold(
       (failure) => print(failure),
       (restaurants) => searchValues.value = restaurants,
     );
+    print(searchValues.value);
   }
 }
