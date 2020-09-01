@@ -60,8 +60,9 @@ class CartTab extends StatelessWidget {
       isScrollControlled: true,
       builder: (ctx) {
         return StatefulBuilder(
-          builder: (ctxx, val) {
+          builder: (BuildContext ctxx, StateSetter val) {
             print(order);
+            int pay_method = 0;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -139,12 +140,45 @@ class CartTab extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              PaymentMethodItem(
-                                  title: "COD", img: "assets/img/cod.png"),
-                              PaymentMethodItem(
-                                  title: "GPAY", img: "assets/img/gpay.png"),
-                              PaymentMethodItem(
-                                  title: "CARD", img: "assets/img/card.png"),
+                              GestureDetector(
+                                onTap: () {
+                                  val(() {
+                                    pay_method = 1;
+                                  });
+                                },
+                                child: PaymentMethodItem(
+                                  title: "COD",
+                                  img: "assets/img/cod.png",
+                                  selected: pay_method,
+                                  value: 0,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  print("asdasd");
+                                  val(() {
+                                    pay_method = 1;
+                                  });
+                                },
+                                child: PaymentMethodItem(
+                                  title: "$pay_method",
+                                  img: "assets/img/gpay.png",
+                                  selected: pay_method,
+                                  value: 1,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  val(() {
+                                    pay_method = 1;
+                                  });
+                                },
+                                child: PaymentMethodItem(
+                                    title: "CARD",
+                                    img: "assets/img/card.png",
+                                    selected: pay_method,
+                                    value: 2),
+                              ),
                             ],
                           ),
                         )
@@ -330,33 +364,45 @@ class CartTab extends StatelessWidget {
   }
 }
 
-class PaymentMethodItem extends StatelessWidget {
+class PaymentMethodItem extends StatefulWidget {
   const PaymentMethodItem({
     Key key,
     this.img,
     this.title,
+    this.selected,
+    this.value,
   }) : super(key: key);
+
+  final int selected, value;
 
   final String img, title;
 
   @override
+  _PaymentMethodItemState createState() => _PaymentMethodItemState();
+}
+
+class _PaymentMethodItemState extends State<PaymentMethodItem> {
+  @override
   Widget build(BuildContext context) {
+    int selected = widget.selected;
     return Container(
       width: MediaQuery.of(context).size.width / 3 - 20,
       padding: EdgeInsets.all(5),
       // margin: EdgeInsets.only(right:10),
       decoration: BoxDecoration(
-          color: Colors.black12, borderRadius: BorderRadius.circular(5)),
+          color:
+              widget.selected == widget.value ? Colors.orange : Colors.black12,
+          borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            '$img',
+            '${widget.img}',
             width: 24,
             height: 24,
           ),
           Text(
-            "$title",
+            "${widget.title}",
           )
         ],
       ),
