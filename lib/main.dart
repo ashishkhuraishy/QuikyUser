@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/AddressBook.dart';
+import 'package:quiky_user/Screens/AllStore.dart';
 import 'package:quiky_user/Screens/ExistingCards.dart';
 import 'package:quiky_user/features/payement/domain/Entity/payment_card.dart';
 
@@ -187,7 +188,8 @@ class MyApp extends StatelessWidget {
           '/login': (context) => Login(),
           '/home': (context) => Home(),
           '/existing-cards': (context) => ExistingCardsPage(),
-          '/address-book': (context) => AddressBook()
+          '/address-book': (context) => AddressBook(),
+          '/allstore': (context) => AllStore()
         },
         home: Wrapper(),
       ),

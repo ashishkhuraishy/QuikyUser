@@ -95,9 +95,21 @@ class _HomeTabState extends State<HomeTab> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Image.asset('assets/img/slide.png',height: 200,width: 300,),
-                  Image.asset('assets/img/slide.png',height: 200,width: 300,),
-                  Image.asset('assets/img/slide.png',height: 200,width: 300,),
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
                 ],
               ),
             ),
@@ -113,25 +125,37 @@ class _HomeTabState extends State<HomeTab> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       OptionCard2(
-                        title: "MEAT",
-                        image: "assets/img/meat.png",
-                        padding: EdgeInsets.all(20),
-                      ),
+                          title: "MEAT",
+                          image: "assets/img/meat.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.meat);
+                          }),
                       OptionCard2(
-                        title: "FISH",
-                        image: "assets/img/fish.png",
-                        padding: EdgeInsets.all(20),
-                      ),
+                          title: "FISH",
+                          image: "assets/img/fish.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.fish);
+                          }),
                       OptionCard2(
-                        title: "ELECTRONICS",
-                        image: "assets/img/Electronics.png",
-                        padding: EdgeInsets.all(20),
-                      ),
+                          title: "ELECTRONICS",
+                          image: "assets/img/Electronics.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.electronics);
+                          }),
                       OptionCard2(
-                        title: "BULK ORDER",
-                        image: "assets/img/bulk.png",
-                        padding: EdgeInsets.all(20),
-                      ),
+                          title: "BULK ORDER",
+                          image: "assets/img/bulk.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.milk);
+                          }),
                     ],
                   )),
             ),
@@ -141,12 +165,20 @@ class _HomeTabState extends State<HomeTab> {
                     scWidth: widget.scWidth,
                     title: 'Grocery',
                     image: 'assets/img/store.png',
-                    color: Color.fromRGBO(39, 174, 96, 1)),
+                    color: Color.fromRGBO(39, 174, 96, 1),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/allstore',
+                          arguments: StoreType.groceries);
+                    }),
                 HomeMegaButton(
                     scWidth: widget.scWidth,
                     title: 'Restaurant',
                     image: 'assets/img/food.png',
-                    color: Color.fromRGBO(155, 81, 224, 1)),
+                    color: Color.fromRGBO(155, 81, 224, 1),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/allstore',
+                          arguments: StoreType.restaurants);
+                    }),
               ],
             ),
             Divider(

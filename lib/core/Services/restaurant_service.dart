@@ -9,8 +9,8 @@ class RestaurantService {
   GetStores _getStores = GetStores(repository: sl());
 
   ValueNotifier<String> error = ValueNotifier<String>("");
-  ValueNotifier<List<Restaurant>> restaurants =
-      ValueNotifier<List<Restaurant>>([]);
+  ValueNotifier<bool> loading = ValueNotifier<bool>(false);
+  List<Restaurant> restaurants = [];
 
   final double lat, lng;
   final StoreType storeType;
@@ -21,7 +21,7 @@ class RestaurantService {
     @required this.storeType,
   });
 
-  getStores() async {
+  Future<List<Restaurant>>getStores() async {
     final result = await _getStores(
       lat: this.lat,
       lng: this.lng,
@@ -30,7 +30,8 @@ class RestaurantService {
 
     result.fold(
       (failure) => error.value = failure.toString(),
-      (restauantList) => restaurants.value = restauantList,
+      (restauantList) => restaurants = restauantList,
     );
+    return restaurants;
   }
 }
