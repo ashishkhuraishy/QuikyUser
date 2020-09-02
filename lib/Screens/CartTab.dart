@@ -205,6 +205,8 @@ class CartTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
+
     Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -214,30 +216,41 @@ class CartTab extends StatelessWidget {
               0
           ? Container(
               width: double.infinity,
-              child: FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: EdgeInsets.all(15),
-                color: primary,
-                onPressed: () async {
-                  final currentAddress =
-                      Provider.of<AddressProvider>(context, listen: false)
-                          .currentAddress;
-                  final order = await Provider.of<CartProvider>(context,
-                          listen: false)
-                      .confrimOrder(
-                          userLocation:
-                              "${currentAddress.lat},${currentAddress.long}",
-                          coupon: null);
-                  if (order.isLeft()) {
-                    print("Error Occured");
-                    // print(order);
-                  } else {
-                    print("Corder placed");
-                    displayConfirmOrderBottomSheet(
-                        context, order.fold((l) => l, (r) => r));
-                  }
+              child: StatefulBuilder(
+                builder: (ctx, builder) {
+                  return FlatButton(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: EdgeInsets.all(15),
+                    color: primary,
+                    onPressed: () async {
+                      builder(() {
+                        isLoading = !isLoading;
+                      });
+                      final currentAddress =
+                          Provider.of<AddressProvider>(context, listen: false)
+                              .currentAddress;
+                      final order = await Provider.of<CartProvider>(context,
+                              listen: false)
+                          .confrimOrder(
+                              userLocation:
+                                  "${currentAddress.lat},${currentAddress.long}",
+                              coupon: null);
+                      if (order.isLeft()) {
+                        print("Error Occured");
+                        // print(order);
+                      } else {
+                        print("Corder placed");
+                        displayConfirmOrderBottomSheet(
+                            context, order.fold((l) => l, (r) => r));
+                      }
+
+                      builder(() {
+                        isLoading = !isLoading;
+                      });
+                    },
+                    child: isLoading?CircularProgressIndicator(backgroundColor: Colors.white,):Text("Continue Checkout"),
+                  );
                 },
-                child: Text("Continue Checkout"),
               ),
             )
           : Container(

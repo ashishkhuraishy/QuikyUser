@@ -18,10 +18,11 @@ class AllStore extends StatelessWidget {
 
     final currentAddress =
         Provider.of<AddressProvider>(context, listen: false).currentAddress;
+    //TODO: Change Hardcoded lat and long
     RestaurantService rs = new RestaurantService(
         storeType: storeType,
-        lat: currentAddress.lat,
-        lng: currentAddress.long);
+        lat: 10.0261,
+        lng: 76.3125);
     return Scaffold(
       body: SingleChildScrollView(
         child: FutureBuilder(
