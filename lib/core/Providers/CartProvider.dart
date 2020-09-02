@@ -29,8 +29,8 @@ class CartProvider extends ChangeNotifier {
 
   List<Variation> cartProducts = [];
 
-  loadCart(){
-     getProductsFromCart();
+  loadCart() {
+    getProductsFromCart();
   }
 
   CartProvider() {

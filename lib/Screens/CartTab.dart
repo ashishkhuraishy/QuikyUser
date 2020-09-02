@@ -329,7 +329,7 @@ class CartTab extends StatelessWidget {
                                         Theme.of(context).textTheme.headline6,
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           );
                         },

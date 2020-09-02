@@ -30,7 +30,6 @@ class CartRepositoryImpl extends CartRepository {
     Restaurant restaurant,
   }) async {
     Cart currentCart = await localDataSource.getCart();
-
     if (currentCart.storeId == restaurant.id) {
       currentCart.cartItems
           .removeWhere((element) => element.id == variation.id);
