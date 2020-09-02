@@ -3,9 +3,13 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
+import 'package:quiky_user/features/payement/data/data_source/payment_local_data_source.dart';
+import 'package:quiky_user/features/payement/data/repository/payment_repository_impl.dart';
+import 'package:quiky_user/features/payement/domain/repository/payment_repository.dart';
 import 'features/cart/data/data_sources/cart_local_data_source.dart';
 import 'features/cart/data/repository/cart_repository_impl.dart';
 import 'features/cart/domain/repository/cart_repository.dart';
+import 'features/payement/data/data_source/payment_remote_data_source.dart';
 import 'features/search/data/data_source/search_local_data.dart';
 import 'features/search/data/data_source/search_remote_data_source.dart';
 import 'features/search/data/repository/search_repository_impl.dart';
@@ -85,6 +89,14 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<PaymentRepository>(
+    () => PaymentRepositoryImpl(
+      networkInfo: sl(),
+      localDataSource: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<AddressRemoteDataSource>(
     () => AddressRemoteDataSourceImpl(
@@ -142,6 +154,18 @@ Future<void> init() async {
 
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<PaymentLocalDataSource>(
+    () => PaymentLocalDataSourceImpl(
+      hive: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<PaymentRemoteDataSource>(
+    () => PaymentRemoteDataSourceImpl(
       client: sl(),
     ),
   );

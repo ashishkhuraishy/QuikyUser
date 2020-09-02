@@ -162,7 +162,7 @@ class ProductCard extends StatelessWidget {
                           int addedToCart =
                               provider.getQuantity(dataVariation.id);
                           if (addedToCart > -1) {
-                            print("$addedToCart in increment box");
+                            // print("$addedToCart in s increment box");
                             return Align(
                               alignment: Alignment.bottomRight,
                               child: Container(

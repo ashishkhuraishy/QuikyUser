@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/OptionCard2.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
@@ -48,6 +49,7 @@ class _HomeTabState extends State<HomeTab> {
 
   void fetchData(Address currectAddress) {
     Provider.of<HomeProvider>(context, listen: false).getData(10.0261, 76.3125);
+    Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
   @override

@@ -84,10 +84,10 @@ TextStyle textBold11 = new TextStyle(
 Image mapPionter = Image.asset('assets/img/map-pointer.png');
 
 // InputDecoration customInput(String hint) => InputDecoration(
-      // border: OutlineInputBorder(
-      //   borderRadius: BorderRadius.all(Radius.circular(5)),
-      //   borderSide: BorderSide(width: 1, style: BorderStyle.none, color: grey),
-      // ),
+// border: OutlineInputBorder(
+//   borderRadius: BorderRadius.all(Radius.circular(5)),
+//   borderSide: BorderSide(width: 1, style: BorderStyle.none, color: grey),
+// ),
 //       hintText: hint,
 //       contentPadding: EdgeInsets.only(left: 16, bottom: 0),
 //       // fillColor: bglight1,
@@ -97,6 +97,16 @@ Image mapPionter = Image.asset('assets/img/map-pointer.png');
 //         borderSide: BorderSide(width: 1, style: BorderStyle.solid, color: grey),
 //       ),
 //     );
+
+InputDecoration underlined({String hint}) => new InputDecoration(
+  floatingLabelBehavior: FloatingLabelBehavior.auto,
+  labelText: "${hint}",
+  border: UnderlineInputBorder(
+      borderSide: BorderSide(color: primary, style: BorderStyle.solid)),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(color: primary, style: BorderStyle.solid),
+  ),
+);
 
 class CustomBorderedButton extends StatelessWidget {
   const CustomBorderedButton({
