@@ -66,8 +66,9 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetFeatured');
     }, (restaurants) {
-      print('Featured ${restaurants[0].title}');
+      // print('Featured ${restaurants[0].title}');
       _featuredList = restaurants;
+      print(restaurants);
       notifyListeners();
     });
   }

@@ -1,10 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
+import 'package:quiky_user/core/error/exception.dart';
 import 'package:quiky_user/features/cart/data/data_sources/cart_local_data_source.dart';
 import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
 import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
+import 'package:quiky_user/features/user/domain/entity/user.dart';
 
 class MockHive extends Mock implements HiveInterface {}
 
@@ -16,9 +18,25 @@ main() {
 
   MockBox mockBox = MockBox();
 
+  final tToken = "asdfjhdfjhdfjkasf";
+
+  final tUser = User(
+    id: 2,
+    userId: 56,
+    userName: "Test",
+    name: "Test",
+    token: tToken,
+    email: "Test@Test.com",
+    mobile: '4564565',
+  );
+
   final tCartModel = CartModel(
     storeId: 5,
     offers: [],
+    storeName: "Test Name",
+    storeAddress: "Test Address",
+    storeImage: "Test Image",
+    storeLogo: "Test Logo",
     cartItems: [
       CartItemModel(
         id: 45,
@@ -32,9 +50,15 @@ main() {
 
   final tEmptyCart = CartModel(
     storeId: -1,
+    storeAddress: "",
+    storeName: "",
+    storeImage: "",
+    storeLogo: "",
     offers: [],
     cartItems: [],
   );
+
+  final tOrderId = 5;
 
   group('Save Cart', () {
     setUp(() {
@@ -91,6 +115,60 @@ main() {
     test('should return a valid [CartModel] when the cart is called', () async {
       final result = await localDataSource.getCart();
       expect(result, tCartModel);
+    });
+  });
+
+  group('Set Order Id', () {
+    setUp(() {
+      when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => true);
+      when(mockHive.box(any)).thenAnswer((realInvocation) => mockBox);
+    });
+
+    test('should open the box if it is closed', () {
+      when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => false);
+
+      localDataSource.setOrderId(tOrderId);
+      verify(mockHive.openBox(CORE_BOX));
+    });
+
+    test('should put the `orderId` into the box ', () {
+      localDataSource.setOrderId(tOrderId);
+      verify(mockBox.put(ORDER_ID, tOrderId));
+    });
+  });
+
+  group('Get Cart', () {
+    setUp(() {
+      when(mockHive.isBoxOpen(any)).thenAnswer((realInvocation) => true);
+      when(mockHive.box(any)).thenAnswer((realInvocation) => mockBox);
+      when(mockBox.get(
+        any,
+        defaultValue: anyNamed('defaultValue'),
+      )).thenAnswer((realInvocation) => tUser);
+    });
+
+    test('should open the box if it is closed', () async {
+      when(mockHive.isBoxOpen(CORE_BOX)).thenAnswer((realInvocation) => false);
+
+      final result = await localDataSource.saveCart(tCartModel);
+      verify(mockHive.openBox(CORE_BOX));
+      expect(result, true);
+    });
+
+    test('should throw UserException when User is Empty', () async {
+      when(
+        mockBox.get(
+          any,
+          defaultValue: anyNamed('defaultValue'),
+        ),
+      ).thenAnswer((realInvocation) => null);
+      final result = localDataSource.getToken;
+      expect(() => result(), throwsA(isA<UserException>()));
+    });
+
+    test('should return a valid `token` when [User] is valid', () {
+      final result = localDataSource.getToken();
+      expect(result, tToken);
     });
   });
 }

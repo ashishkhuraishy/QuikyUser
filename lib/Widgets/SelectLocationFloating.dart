@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../../Screens/home.dart';
-import '../../core/Providers/AddressProvider.dart';
-import '../../features/location_service/data/model/address_model.dart';
+import 'package:quiky_user/Screens/home.dart';
+import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 
 class SetAddressFloatingButton extends StatefulWidget {
   final PickResult selectedPlace;
@@ -35,6 +34,7 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
       });
     } else {
       if (key.currentState.validate()) {
+        key.currentState.save();
         AddressModel addressModel = AddressModel(
           formattedAddress: finalAddress,
           shortAddress: widget.selectedPlace.addressComponents[0].shortName,
@@ -78,6 +78,7 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
                           key: key,
                           child: TextFormField(
                             onChanged: (value) => finalAddress = value,
+                            onSaved: (newValue) => finalAddress = newValue,
                             textAlign: TextAlign.center,
                             maxLines: 3,
                             initialValue:

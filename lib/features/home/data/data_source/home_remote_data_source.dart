@@ -53,15 +53,14 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   @override
   Future<List<RestaurantModel>> getFeatured({double lat, double long}) async {
     final url = BASE_URL +
-        '/store_list/' +
-        '?lat=$lat&long=$long&featured_brand=true&store_type=food';
+        '/store_list/?lat=$lat&lon=$long&store_type=food&highlight_status=True';
     return _getRestaurants(url);
   }
 
   @override
   Future<List<RestaurantModel>> getPopular({double lat, double long}) async {
     final url =
-        BASE_URL + '/store_list/' + '?lat=$lat&long=$long&popular_brand=true';
+        BASE_URL + '/store_list/?lat=$lat&lon=$long&featured_brand=True';
     return _getRestaurants(url);
   }
 
@@ -70,7 +69,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-        '?lat=$lat&long=$long&option=trending&store_type=grocery';
+        '?lat=$lat&lon=$long&filter=trending&store_type=grocery';
     return _getRestaurants(url);
   }
 
@@ -79,7 +78,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
       {double lat, double long}) async {
     final url = BASE_URL +
         '/store_list/' +
-        '?lat=$lat&long=$long&option=trending&store_type=food';
+        '?lat=$lat&lon=$long&filter=trending&store_type=food';
     return _getRestaurants(url);
   }
 
@@ -91,7 +90,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
           .map<RestaurantModel>((e) => RestaurantModel.fromJson(e))
           .toList();
     } else {
-      //_debug(response);
+      // _debug(response);
       throw ServerException();
     }
   }

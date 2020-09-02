@@ -33,4 +33,11 @@ class CartItem extends Equatable {
         inStock,
         quantity,
       ];
+
+  double get inlineTotal {
+    double total = 0.0;
+    double p = double.tryParse(this.price) ?? 0.0;
+    total = p * this.quantity;
+    return total;
+  }
 }

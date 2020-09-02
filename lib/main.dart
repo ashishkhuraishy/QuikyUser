@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Screens/AddressBook.dart';
+import 'package:quiky_user/Screens/ExistingCards.dart';
 
 import 'Screens/Login.dart';
 import 'Screens/Signup.dart';
@@ -95,6 +97,12 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
               color: grey,
             ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: dark,
+            ),
           ),
           primaryColorLight: Colors.white,
           // secondaryHeaderColor: bgSecondary,
@@ -159,6 +167,12 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
               color: Colors.grey,
             ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: Colors.white,
+            ),
           ),
         ),
         themeMode: ThemeMode.system,
@@ -168,6 +182,8 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => Signup(),
           '/login': (context) => Login(),
           '/home': (context) => Home(),
+          '/existing-cards': (context) => ExistingCardsPage(),
+          '/address-book': (context) => AddressBook()
         },
         home: Wrapper(),
       ),

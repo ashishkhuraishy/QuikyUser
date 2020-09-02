@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Services/search_service.dart';
+import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 class SearchTab extends StatelessWidget {
   const SearchTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final currentaddress =
+        Provider.of<AddressProvider>(context, listen: false).currentAddress;
+    SearchService search = new SearchService(currentAddress: currentaddress);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -16,7 +23,16 @@ class SearchTab extends StatelessWidget {
             hintText: "Search Restaurants and foods",
           ),
           autofocus: false,
+          onChanged: (val) {
+            search.getResaturents(query: val);
+          },
         ),
+      ),
+      body: ValueListenableBuilder<List<Restaurant>>(
+        valueListenable: search.searchValues,
+        builder: (BuildContext context, List<Restaurant> value, Widget child) {
+          return Text("Asdasd");
+        },
       ),
     );
   }
