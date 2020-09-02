@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Screens/home.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import '../core/Providers/CartProvider.dart';
@@ -21,50 +23,56 @@ class Store extends StatelessWidget {
     return await p.getCategories;
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     final RestaurantModel restaurant =
         ModalRoute.of(context).settings.arguments;
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        bottomNavigationBar: Container(
-          margin: EdgeInsets.all(0),
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          width: scWidth - 30,
-          height: 60,
-          decoration: BoxDecoration(
-            color: primary,
-            // borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Consumer<CartProvider>(
-                builder: (ctx, provider, _) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("${provider.cartProducts.length} item",
-                          style: white13),
-                      Row(
-                        children: <Widget>[
-                          Text("₹${provider.totalPrice} ", style: whiteBold13),
-                          Text("plus taxes", style: white13),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    "View Cart ►",
-                    style: whiteBold13,
-                  )
-                ],
-              )
-            ],
+        bottomNavigationBar: InkWell(
+          onTap: (){
+            Navigator.pushReplacementNamed(context,'/home',arguments: 2);
+            // Provider.of<Home>(context,listen: false).navigate();
+          },
+                  child: Container(
+            margin: EdgeInsets.all(0),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            width: scWidth - 30,
+            height: 60,
+            decoration: BoxDecoration(
+              color: primary,
+              // borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Consumer<CartProvider>(
+                  builder: (ctx, provider, _) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("${provider.cartProducts.length} item",
+                            style: white13),
+                        Row(
+                          children: <Widget>[
+                            Text("₹${provider.totalPrice} ", style: whiteBold13),
+                            Text("plus taxes", style: white13),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "View Cart ►",
+                      style: whiteBold13,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
         // floatingActionButton: Column(

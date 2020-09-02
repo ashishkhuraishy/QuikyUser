@@ -179,10 +179,10 @@ class ProductCard extends StatelessWidget {
                                         padding: EdgeInsets.all(2),
                                         onPressed: () {
                                           provider.addProducts(
-                                            variation: dataVariation,
-                                            quantity: addedToCart - 1,
-                                            restaurant: store
-                                          );
+                                              variation: dataVariation,
+                                              quantity: addedToCart - 1,
+                                              offers: store.offers,
+                                              restaurant: store);
                                         },
                                         child: addedToCart == 1
                                             ? Icon(Icons.delete, color: primary)
@@ -202,10 +202,10 @@ class ProductCard extends StatelessWidget {
                                         padding: EdgeInsets.all(2),
                                         onPressed: () {
                                           provider.addProducts(
-                                            variation: dataVariation,
-                                            quantity: addedToCart + 1,
-                                            restaurant: store
-                                          );
+                                              variation: dataVariation,
+                                              quantity: addedToCart + 1,
+                                              offers: store.offers,
+                                              restaurant: store);
                                         },
                                         child: Icon(Icons.add, color: primary),
                                       ),
@@ -223,11 +223,10 @@ class ProductCard extends StatelessWidget {
                                   Provider.of<CartProvider>(context,
                                           listen: false)
                                       .addProducts(
-                                    variation: dataVariation,
-                                    offers: [],
-                                    quantity: 1,
-                                            restaurant: store
-                                  );
+                                          variation: dataVariation,
+                                          offers: store.offers,
+                                          quantity: 1,
+                                          restaurant: store);
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,

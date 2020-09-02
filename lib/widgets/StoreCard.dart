@@ -72,6 +72,7 @@ class StoreCard extends StatelessWidget {
             Container(
               constraints: BoxConstraints(
                 maxWidth: scWidth - 130,
+                minWidth: scWidth-130
               ),
               height: 110,
               padding: const EdgeInsets.only(left: 10.0),
@@ -92,13 +93,14 @@ class StoreCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "${restaurantModel.vendorLocation}",
+                    "${restaurantModel.address.split(' ')[0]}",
+                    // "${restaurantModel.address}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   // Spacer(flex:8),
                   Text(
-                    "★${restaurantModel.avgRating} • ${int.tryParse(restaurantModel.avgDeliveryTime)+25} mins • ₹${restaurantModel.minimumCostTwo} for two",
+                    "★${restaurantModel.avgRating} • ${int.tryParse(restaurantModel.avgDeliveryTime)!=null?int.tryParse(restaurantModel.avgDeliveryTime)+25:25} mins • ₹${restaurantModel.minimumCostTwo} for two",
                     style: Theme.of(context).textTheme.bodyText1,
                     overflow: TextOverflow.ellipsis,
                   ),
