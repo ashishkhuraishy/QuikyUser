@@ -21,7 +21,7 @@ class _SearchTabState extends State<SearchTab> {
 
   Address currentaddress;
   SearchService search;
-  bool loading=false;
+  bool loading = false;
 
   @override
   void initState() {
@@ -76,11 +76,11 @@ class _SearchTabState extends State<SearchTab> {
           valueListenable: search.searchValues,
           builder:
               (BuildContext context, List<Restaurant> value, Widget child) {
-            if(loading){
+            if (loading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            }else if (value.length > 0) {
+            } else if (value.length > 0) {
               return ListView.builder(
                 itemCount: value.length,
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -100,9 +100,11 @@ class _SearchTabState extends State<SearchTab> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: search.recentQueries.length,
                       itemBuilder: (ctx, index) {
-                        return RecentSearchItem(data:search.recentQueries[index],onTap:(){
-                          searchHandler(search.recentQueries[index]);
-                        });
+                        return RecentSearchItem(
+                            data: search.recentQueries[index],
+                            onTap: () {
+                              searchHandler(search.recentQueries[index]);
+                            });
                       },
                     ),
                     Container(
@@ -162,9 +164,8 @@ class _SearchTabState extends State<SearchTab> {
 }
 
 class RecentSearchItem extends StatelessWidget {
-  const RecentSearchItem({
-    Key key,@required this.data, this.onTap
-  }) : super(key: key);
+  const RecentSearchItem({Key key, @required this.data, this.onTap})
+      : super(key: key);
 
   final String data;
   final Function onTap;
@@ -172,19 +173,19 @@ class RecentSearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap();
       },
-        child: Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(horizontal:10),
-          child: Row(
-            children: [
-              Icon(Icons.search),
-              Text("${data}"),
-            ],
-          ),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          children: [
+            Icon(Icons.search),
+            Text("$data"),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

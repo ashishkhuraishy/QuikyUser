@@ -96,6 +96,8 @@ main() {
     restaurentModel,
   ];
 
+  final tStoreType = StoreType.inTheSpotlight;
+
   final lat = 0.0, long = 0.0;
 
   group('Get Recipies', () {
@@ -141,196 +143,68 @@ main() {
       expect(result, Left(ServerFailure()));
     });
   });
-
-  group('get Featured', () {
+  group('get Stores', () {
     setUp(() {
       when(networkInfo.isConnected).thenAnswer((realInvocation) async => true);
     });
 
     test('should check the network status', () async {
-      await repositoryImpl.getFeatured(lat: lat, long: long);
+      await repositoryImpl.getStores(
+          lat: lat, long: long, storeType: tStoreType);
       verify(networkInfo.isConnected);
     });
 
     test('should return Connection failure if not connected', () async {
       when(networkInfo.isConnected).thenAnswer((realInvocation) async => false);
 
-      final result = await repositoryImpl.getFeatured(lat: lat, long: long);
+      final result = await repositoryImpl.getStores(
+          lat: lat, long: long, storeType: tStoreType);
       verify(networkInfo.isConnected);
       verifyZeroInteractions(remoteDataSource);
       expect(result, Left(ConnectionFailure()));
     });
 
     test('should get the restaurents from the remote source', () async {
-      await repositoryImpl.getFeatured(lat: lat, long: long);
-      verify(remoteDataSource.getFeatured(lat: lat, long: long));
+      await repositoryImpl.getStores(
+          lat: lat, long: long, storeType: tStoreType);
+      verify(remoteDataSource.getStores(
+        lat: lat,
+        long: long,
+        storeType: tStoreType,
+      ));
     });
 
     test('should return [List<restaurent>] on sucess', () async {
-      when(remoteDataSource.getFeatured(lat: lat, long: long))
-          .thenAnswer((realInvocation) async => restaurants);
+      when(
+        remoteDataSource.getStores(
+          lat: anyNamed('lat'),
+          long: anyNamed('long'),
+          storeType: anyNamed('storeType'),
+        ),
+      ).thenAnswer((realInvocation) async => restaurants);
 
-      final result = await repositoryImpl.getFeatured(lat: lat, long: long);
-      verify(remoteDataSource.getFeatured(lat: lat, long: long));
+      final result = await repositoryImpl.getStores(
+        lat: lat,
+        long: long,
+        storeType: tStoreType,
+      );
+      verify(remoteDataSource.getStores(
+          lat: lat, long: long, storeType: tStoreType));
 
       expect(result, Right(restaurants));
     });
 
     test('should return [ServerFailure] on ServerException', () async {
-      when(remoteDataSource.getFeatured(
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-      )).thenThrow(ServerException());
+      when(remoteDataSource.getStores(
+              lat: anyNamed('lat'),
+              long: anyNamed('long'),
+              storeType: anyNamed('storeType')))
+          .thenThrow(ServerException());
 
-      final result = await repositoryImpl.getFeatured(lat: lat, long: long);
-      verify(remoteDataSource.getFeatured(lat: lat, long: long));
-
-      expect(result, Left(ServerFailure()));
-    });
-  });
-
-  group('get Popular', () {
-    setUp(() {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => true);
-    });
-
-    test('should check the network status', () async {
-      await repositoryImpl.getPopular(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-    });
-
-    test('should return Connection failure if not connected', () async {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => false);
-
-      final result = await repositoryImpl.getPopular(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-      verifyZeroInteractions(remoteDataSource);
-      expect(result, Left(ConnectionFailure()));
-    });
-
-    test('should get the restaurents from the remote source', () async {
-      await repositoryImpl.getPopular(lat: lat, long: long);
-      verify(remoteDataSource.getPopular(lat: lat, long: long));
-    });
-
-    test('should return [List<restaurent>] on sucess', () async {
-      when(remoteDataSource.getPopular(lat: lat, long: long))
-          .thenAnswer((realInvocation) async => restaurants);
-
-      final result = await repositoryImpl.getPopular(lat: lat, long: long);
-      verify(remoteDataSource.getPopular(lat: lat, long: long));
-
-      expect(result, Right(restaurants));
-    });
-
-    test('should return [ServerFailure] on ServerException', () async {
-      when(remoteDataSource.getPopular(
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-      )).thenThrow(ServerException());
-
-      final result = await repositoryImpl.getPopular(lat: lat, long: long);
-      verify(remoteDataSource.getPopular(lat: lat, long: long));
-
-      expect(result, Left(ServerFailure()));
-    });
-  });
-
-  group('get Trending Restaurents', () {
-    setUp(() {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => true);
-    });
-
-    test('should check the network status', () async {
-      await repositoryImpl.getTrendingRestaurents(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-    });
-
-    test('should return Connection failure if not connected', () async {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => false);
-
-      final result =
-          await repositoryImpl.getTrendingRestaurents(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-      verifyZeroInteractions(remoteDataSource);
-      expect(result, Left(ConnectionFailure()));
-    });
-
-    test('should get the restaurents from the remote source', () async {
-      await repositoryImpl.getTrendingRestaurents(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingRestaurents(lat: lat, long: long));
-    });
-
-    test('should return [List<restaurent>] on sucess', () async {
-      when(remoteDataSource.getTrendingRestaurents(lat: lat, long: long))
-          .thenAnswer((realInvocation) async => restaurants);
-
-      final result =
-          await repositoryImpl.getTrendingRestaurents(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingRestaurents(lat: lat, long: long));
-
-      expect(result, Right(restaurants));
-    });
-
-    test('should return [ServerFailure] on ServerException', () async {
-      when(remoteDataSource.getTrendingRestaurents(
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-      )).thenThrow(ServerException());
-
-      final result =
-          await repositoryImpl.getTrendingRestaurents(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingRestaurents(lat: lat, long: long));
-
-      expect(result, Left(ServerFailure()));
-    });
-  });
-
-  group('get Trending Groceries', () {
-    setUp(() {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => true);
-    });
-
-    test('should check the network status', () async {
-      await repositoryImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-    });
-
-    test('should return Connection failure if not connected', () async {
-      when(networkInfo.isConnected).thenAnswer((realInvocation) async => false);
-
-      final result =
-          await repositoryImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(networkInfo.isConnected);
-      verifyZeroInteractions(remoteDataSource);
-      expect(result, Left(ConnectionFailure()));
-    });
-
-    test('should get the restaurents from the remote source', () async {
-      await repositoryImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingGrocery(lat: lat, long: long));
-    });
-
-    test('should return [List<restaurent>] on sucess', () async {
-      when(remoteDataSource.getTrendingGrocery(lat: lat, long: long))
-          .thenAnswer((realInvocation) async => restaurants);
-
-      final result =
-          await repositoryImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingGrocery(lat: lat, long: long));
-
-      expect(result, Right(restaurants));
-    });
-
-    test('should return [ServerFailure] on ServerException', () async {
-      when(remoteDataSource.getTrendingGrocery(
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-      )).thenThrow(ServerException());
-
-      final result =
-          await repositoryImpl.getTrendingGrocery(lat: lat, long: long);
-      verify(remoteDataSource.getTrendingGrocery(lat: lat, long: long));
+      final result = await repositoryImpl.getStores(
+          lat: lat, long: long, storeType: tStoreType);
+      verify(remoteDataSource.getStores(
+          lat: lat, long: long, storeType: tStoreType));
 
       expect(result, Left(ServerFailure()));
     });

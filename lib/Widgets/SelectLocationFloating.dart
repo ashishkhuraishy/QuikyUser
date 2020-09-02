@@ -3,7 +3,6 @@ import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/home.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
