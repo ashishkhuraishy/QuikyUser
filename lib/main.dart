@@ -189,7 +189,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           '/existing-cards': (context) => ExistingCardsPage(),
           '/address-book': (context) => AddressBook(),
-          '/allstore': (context) => AllStore()
+          '/allstore': (context) => AllStore(),
+          '/existingcard':(context)=>ExistingCardsPage(),
         },
         home: Wrapper(),
       ),

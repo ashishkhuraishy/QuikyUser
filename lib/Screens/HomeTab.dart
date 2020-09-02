@@ -60,9 +60,9 @@ class _HomeTabState extends State<HomeTab> {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () {
-            final address = Provider.of<AddressProvider>(context, listen: false)
-                .currentAddress;
-            print(address);
+            // final address = Provider.of<AddressProvider>(context, listen: false)
+            //     .currentAddress;
+            // print(address);
             // Navigator.of(context).popAndPushNamed('/selectlocation');
           },
           child: Row(
@@ -85,7 +85,7 @@ class _HomeTabState extends State<HomeTab> {
             ],
           ),
         ),
-        elevation: 1.0,
+        elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Column(
