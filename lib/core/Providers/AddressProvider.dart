@@ -7,7 +7,7 @@ import 'package:quiky_user/features/location_service/domain/usecase/get_address.
 import 'package:quiky_user/injection_container.dart';
 
 class AddressProvider extends ChangeNotifier {
-  AddressModel _addressModel = AddressModel(
+  Address _addressModel = Address(
     formattedAddress: '',
     shortAddress: '',
     lat: 0.0,
@@ -32,7 +32,7 @@ class AddressProvider extends ChangeNotifier {
     );
   }
 
-  cacheCurrentAddress(AddressModel address) async {
+  cacheCurrentAddress(Address address) async {
     final resultEither = await cacheAddress(address);
 
     resultEither.fold(
@@ -44,6 +44,11 @@ class AddressProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  
+  makeCurrentAddress(Address address) async {
+    _addressModel = address;
   }
 
   _catchError(Failure failure) {
