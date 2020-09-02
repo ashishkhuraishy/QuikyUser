@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
@@ -10,9 +11,9 @@ class GetStores {
   GetStores({this.repository});
 
   Future<Either<Failure, List<Restaurant>>> call({
-    StoreType storeType,
-    double lat,
-    double lng,
+    @required StoreType storeType,
+    @required double lat,
+    @required double lng,
   }) async {
     return await repository.getStores(
       lat: lat,
