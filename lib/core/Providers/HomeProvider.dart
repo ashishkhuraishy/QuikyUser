@@ -61,14 +61,14 @@ class HomeProvider extends ChangeNotifier {
     }, (restaurants) {
       // print('Featured ${restaurants[0].title}');
       _featuredList = restaurants;
-      print(restaurants);
+      // print(restaurants);
       notifyListeners();
     });
   }
 
   _getPopularData(double lat, double long) async {
     final result = await _getStores(
-        lat: lat, lng: long, storeType: StoreType.inTheSpotlight);
+        lat: lat, lng: long, storeType: StoreType.popularBrand);
     result.fold((failure) {
       _checkeroor(failure, 'GetPopular');
     }, (restaurants) {
@@ -79,7 +79,7 @@ class HomeProvider extends ChangeNotifier {
 
   _getTrendingRestaurantData(double lat, double long) async {
     final result = await _getStores(
-        lat: lat, lng: long, storeType: StoreType.inTheSpotlight);
+        lat: lat, lng: long, storeType: StoreType.trendingRestaurants);
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingRestaurant');
     }, (restaurants) {
@@ -90,7 +90,7 @@ class HomeProvider extends ChangeNotifier {
 
   _getTrendingGeroceryData(double lat, double long) async {
     final result = await _getStores(
-        lat: lat, lng: long, storeType: StoreType.inTheSpotlight);
+        lat: lat, lng: long, storeType: StoreType.trendingGroceries);
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingGrocery');
     }, (restaurants) {
