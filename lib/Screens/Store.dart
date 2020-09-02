@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Screens/home.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import '../core/Providers/CartProvider.dart';
@@ -23,18 +22,18 @@ class Store extends StatelessWidget {
     return await p.getCategories;
   }
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     final RestaurantModel restaurant =
         ModalRoute.of(context).settings.arguments;
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         bottomNavigationBar: InkWell(
-          onTap: (){
-            Navigator.pushReplacementNamed(context,'/home',arguments: 2);
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/home', arguments: 2);
             // Provider.of<Home>(context,listen: false).navigate();
           },
-                  child: Container(
+          child: Container(
             margin: EdgeInsets.all(0),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             width: scWidth - 30,
@@ -55,7 +54,8 @@ class Store extends StatelessWidget {
                             style: white13),
                         Row(
                           children: <Widget>[
-                            Text("₹${provider.totalPrice} ", style: whiteBold13),
+                            Text("₹${provider.totalPrice} ",
+                                style: whiteBold13),
                             Text("plus taxes", style: white13),
                           ],
                         ),

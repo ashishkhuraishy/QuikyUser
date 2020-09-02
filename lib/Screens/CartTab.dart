@@ -384,7 +384,7 @@ class PaymentMethodItem extends StatefulWidget {
 class _PaymentMethodItemState extends State<PaymentMethodItem> {
   @override
   Widget build(BuildContext context) {
-    int selected = widget.selected;
+    // int selected = widget.selected;
     return Container(
       width: MediaQuery.of(context).size.width / 3 - 20,
       padding: EdgeInsets.all(5),
