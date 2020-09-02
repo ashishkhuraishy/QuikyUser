@@ -99,14 +99,14 @@ Image mapPionter = Image.asset('assets/img/map-pointer.png');
 //     );
 
 InputDecoration underlined({String hint}) => new InputDecoration(
-  floatingLabelBehavior: FloatingLabelBehavior.auto,
-  labelText: "${hint}",
-  border: UnderlineInputBorder(
-      borderSide: BorderSide(color: primary, style: BorderStyle.solid)),
-  focusedBorder: UnderlineInputBorder(
-    borderSide: BorderSide(color: primary, style: BorderStyle.solid),
-  ),
-);
+      floatingLabelBehavior: FloatingLabelBehavior.auto,
+      labelText: "$hint",
+      border: UnderlineInputBorder(
+          borderSide: BorderSide(color: primary, style: BorderStyle.solid)),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: primary, style: BorderStyle.solid),
+      ),
+    );
 
 class CustomBorderedButton extends StatelessWidget {
   const CustomBorderedButton({

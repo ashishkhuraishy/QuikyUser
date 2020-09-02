@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 class AddressItem extends StatelessWidget {
   const AddressItem({
     Key key,
-    this.data, this.delete,this.edit,
+    this.data,
+    this.delete,
+    this.edit,
   }) : super(key: key);
   final Address data;
   final Function delete;
@@ -15,7 +16,7 @@ class AddressItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top:3,bottom: 10),
+      margin: EdgeInsets.only(top: 3, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +27,7 @@ class AddressItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom:5.0),
+                  padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
                     "${data.shortAddress}",
                     style: Theme.of(context).textTheme.headline6,
@@ -44,12 +45,13 @@ class AddressItem extends StatelessWidget {
           ),
           PopupMenuButton<String>(
             onSelected: (val) {
-              if(val=='Select'){
+              if (val == 'Select') {
                 // AddressModel add = data;
-                Provider.of<AddressProvider>(context,listen:false).makeCurrentAddress(data);
-              }else if(val=='Delete'){
+                Provider.of<AddressProvider>(context, listen: false)
+                    .makeCurrentAddress(data);
+              } else if (val == 'Delete') {
                 delete();
-              }else if(val=='Edit'){
+              } else if (val == 'Edit') {
                 edit();
               }
             },

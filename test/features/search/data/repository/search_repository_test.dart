@@ -117,7 +117,7 @@ main() {
       final result =
           await repositoryImpl.getResult(query: tQuery, lat: tLat, lng: tLong);
       verify(remoteDataSource.getResults(tQuery, tLat, tLong));
-      expect(result, Right(ServerFailure()));
+      expect(result, Left(ServerFailure()));
     });
   });
 }
