@@ -14,6 +14,13 @@ enum StoreType {
   popularBrand,
   trendingRestaurants,
   trendingGroceries,
+  restaurants,
+  groceries,
+  books,
+  fish,
+  meat,
+  electronics,
+  milk,
 }
 
 abstract class HomeRemoteDataSource {
@@ -45,10 +52,8 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     if (response.statusCode == 200) {
       List body = jsonDecode(response.body);
       return body.map<RecipieModel>((e) => RecipieModel.fromJson(e)).toList();
-    } else {
-      // _debug(response);
-      throw ServerException();
     }
+    throw ServerException();
   }
 
   @override
@@ -64,26 +69,48 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     }
 
     /// `Un-comment these lines for debugging`
-    // print(response.statusCode);
-    // print(response.body);
+    /// print(response.statusCode);
+    /// print(response.body);
     throw ServerException();
   }
 
+  /// Helper fn to generate a Url based on the [StoreType]
   String _generateUrl(StoreType storeType, double lat, double lng) {
-    String url = BASE_URL + '/store_list/?lat=$lat&lon=$lng';
+    String url = BASE_URL + '/store_list/?lat=$lat&lon=$lng&';
 
     switch (storeType) {
       case StoreType.inTheSpotlight:
-        url += '&store_type=food&highlight_status=True';
+        url += 'store_type=food&highlight_status=True';
         break;
       case StoreType.popularBrand:
-        url += '&featured_brand=True';
+        url += 'featured_brand=True';
         break;
       case StoreType.trendingRestaurants:
-        url += '&filter=trending&store_type=food';
+        url += 'filter=trending&store_type=food';
         break;
       case StoreType.trendingGroceries:
-        url += '&filter=trending&store_type=grocery';
+        url += 'filter=trending&store_type=grocery';
+        break;
+      case StoreType.restaurants:
+        url += 'store_type=food';
+        break;
+      case StoreType.groceries:
+        url += 'store_type=grocery';
+        break;
+      case StoreType.books:
+        url += 'store_type=books';
+        break;
+      case StoreType.fish:
+        url += 'store_type=fish';
+        break;
+      case StoreType.meat:
+        url += 'store_type=meat';
+        break;
+      case StoreType.electronics:
+        url += 'store_type=electronics';
+        break;
+      case StoreType.milk:
+        url += 'store_type=milk';
         break;
       default:
         break;
