@@ -62,7 +62,7 @@ class CartTab extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext ctxx, StateSetter val) {
             print(order);
-            int pay_method = 0;
+            int payMethod = 0;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -143,13 +143,13 @@ class CartTab extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   val(() {
-                                    pay_method = 1;
+                                    payMethod = 1;
                                   });
                                 },
                                 child: PaymentMethodItem(
                                   title: "COD",
                                   img: "assets/img/cod.png",
-                                  selected: pay_method,
+                                  selected: payMethod,
                                   value: 0,
                                 ),
                               ),
@@ -157,26 +157,26 @@ class CartTab extends StatelessWidget {
                                 onTap: () {
                                   print("asdasd");
                                   val(() {
-                                    pay_method = 1;
+                                    payMethod = 1;
                                   });
                                 },
                                 child: PaymentMethodItem(
-                                  title: "$pay_method",
+                                  title: "$payMethod",
                                   img: "assets/img/gpay.png",
-                                  selected: pay_method,
+                                  selected: payMethod,
                                   value: 1,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
                                   val(() {
-                                    pay_method = 1;
+                                    payMethod = 1;
                                   });
                                 },
                                 child: PaymentMethodItem(
                                     title: "CARD",
                                     img: "assets/img/card.png",
-                                    selected: pay_method,
+                                    selected: payMethod,
                                     value: 2),
                               ),
                             ],

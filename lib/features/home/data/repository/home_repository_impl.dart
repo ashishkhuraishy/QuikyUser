@@ -8,8 +8,6 @@ import 'package:quiky_user/features/home/domain/entity/recipie.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import 'package:quiky_user/features/home/domain/repository/home_repository.dart';
 
-typedef Future<List<Restaurant>> _GetRestaurantsOrError();
-
 class HomeRepositoryImpl extends HomeRepository {
   final HomeRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;

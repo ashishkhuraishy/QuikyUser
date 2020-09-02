@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/core/error/failure.dart';
-import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 import 'package:quiky_user/features/location_service/domain/usecase/cache_address.dart';
 import 'package:quiky_user/features/location_service/domain/usecase/get_address.dart';
@@ -46,7 +45,6 @@ class AddressProvider extends ChangeNotifier {
     );
   }
 
-  
   makeCurrentAddress(Address address) async {
     _addressModel = address;
   }
