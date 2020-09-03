@@ -21,7 +21,7 @@ class RestaurantService {
     @required this.storeType,
   });
 
-  Future<List<Restaurant>>getStores() async {
+  Future<List<Restaurant>> getStores() async {
     final result = await _getStores(
       lat: this.lat,
       lng: this.lng,
@@ -33,5 +33,25 @@ class RestaurantService {
       (restauantList) => restaurants = restauantList,
     );
     return restaurants;
+  }
+
+  List<Restaurant> get trending {
+    return restaurants
+        .where((element) => element.option == "trending")
+        .toList();
+  }
+
+  List<Restaurant> get nearby {
+    List<Restaurant> temp = restaurants;
+    temp.sort((a, b) => double.parse(a.avgDeliveryTime)
+        .compareTo(double.parse(b.avgDeliveryTime)));
+    return temp;
+  }
+
+  List<Restaurant> get rating {
+    List<Restaurant> temp = restaurants;
+    temp.sort((a, b) =>
+        double.parse(a.avgRating).compareTo(double.parse(b.avgRating)));
+    return temp;
   }
 }
