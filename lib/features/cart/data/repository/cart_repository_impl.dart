@@ -42,6 +42,7 @@ class CartRepositoryImpl extends CartRepository {
           quantity: quantity,
         );
         currentCart.cartItems.add(cartItemModel);
+        currentCart.cartItems.sort((a, b) => a.id.compareTo(b.id));
       }
     } else {
       currentCart = Cart(
