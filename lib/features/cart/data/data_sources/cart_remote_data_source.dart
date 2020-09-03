@@ -62,6 +62,8 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       return OrderModel.fromJson(reponseBody);
     }
 
+    print("body ----------------- ${response.body}");
+
     throw ServerException();
   }
 }

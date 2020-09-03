@@ -252,7 +252,7 @@ class CartTab extends StatelessWidget {
                               coupon: null);
                       if (order.isLeft()) {
                         print("Error Occured");
-                        // print(order);
+                        print(order.fold((l) => l, (r) => r).toString());
                       } else {
                         print("Corder placed");
                         displayConfirmOrderBottomSheet(
@@ -530,6 +530,7 @@ class StoreDetails extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Consumer<CartProvider>(
         builder: (ctx, provider, _) {
+          print("${provider.currentStoreId}");
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,

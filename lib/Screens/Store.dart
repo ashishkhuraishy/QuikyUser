@@ -213,8 +213,22 @@ class Store extends StatelessWidget {
                       },
                     );
                   } else if (categories.hasError) {
-                    return Text(
-                        "${categories.error} ${categories.connectionState} ");
+                    return Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Something went wrong"),
+                            RaisedButton(
+                              onPressed: () {
+                                loadProducts(restaurant);
+                              },
+                              child: Text("Retry"),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
                   } else {
                     return Center(
                       child: CircularProgressIndicator(),
