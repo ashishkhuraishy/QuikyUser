@@ -50,8 +50,9 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     );
 
     if (response.statusCode == 200) {
-      Map respBody = jsonDecode(response.body);
-      return respBody["payment_status"].toString().contains("succeeded");
+      List respBody = jsonDecode(response.body);
+      print(respBody.toString());
+      return respBody[0]["payment_status"].toString().contains("succeeded");
     }
 
     throw ServerException();

@@ -48,11 +48,13 @@ class StripeService {
     PaymentCard card,
   }) async {
     StripeTransactionResponse transactionResponse = StripeTransactionResponse();
-
+    print('Pay with existing card called');
+    int amnt = num.parse(amount).toInt();
     try {
       var paymentMethod = await StripePayment.createPaymentMethod(
           PaymentMethodRequest(card: card.toCreditCard()));
-      var paymentIntent = await _createPaymentIntent(amount, currency);
+      var paymentIntent = await _createPaymentIntent(amnt.toString(), currency);
+      print(paymentIntent['id']);
       transactionResponse =
           await _confirmPayment(paymentMethod, paymentIntent, orderId);
     } on PlatformException catch (err) {
@@ -61,6 +63,8 @@ class StripeService {
       transactionResponse = StripeTransactionResponse(
           message: 'Transaction failed: ${err.toString()}', success: false);
     }
+    print(transactionResponse.message);
+    print(transactionResponse.success);
     return transactionResponse;
   }
 
@@ -128,11 +132,17 @@ class StripeService {
         paymentMethodId: paymentMethod.id,
       ),
     );
+
+    print(paymentIntent['id']);
+    print(paymentMethod.id);
+    print(paymentMethod.customerId);
     final result = await _getPaymentStatus(
       orderId: orderId,
-      paymentId: paymentMethod.id,
+      paymentId: paymentIntent['id'],
       paymentType: PaymentType.CARD,
     );
+
+    print("Result : ${result}");
 
     result.fold((failure) {
       print("Error Occured at $failure");
@@ -151,9 +161,18 @@ class StripeService {
         transactionResponse = StripeTransactionResponse(
             message: 'Transaction successful', success: true);
       }
+      print("Response Status :  ${response.status}");
       transactionResponse = StripeTransactionResponse(
           message: 'Transaction failed', success: false);
     });
+
+    if (response.status == 'succeeded') {
+      transactionResponse = StripeTransactionResponse(
+          message: 'Transaction successful', success: true);
+    } else {
+      transactionResponse = StripeTransactionResponse(
+          message: 'Transaction failed', success: false);
+    }
 
     return transactionResponse;
   }

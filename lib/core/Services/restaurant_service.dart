@@ -54,4 +54,8 @@ class RestaurantService {
         double.parse(a.avgRating).compareTo(double.parse(b.avgRating)));
     return temp;
   }
+
+  List<Restaurant> get newArrivals {
+    return restaurants.where((element) => element.highlightStatus).toList();
+  }
 }

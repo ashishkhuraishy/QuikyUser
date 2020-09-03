@@ -33,6 +33,8 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
     }
+    print(response.statusCode);
+    print(response);
     throw ServerException();
   }
 
@@ -57,6 +59,8 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
     }
+    print(response.statusCode);
+    print(response.body);
     throw ServerException();
   }
 }

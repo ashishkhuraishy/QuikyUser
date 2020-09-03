@@ -91,7 +91,7 @@ class CartProvider extends ChangeNotifier {
       coupon: coupon,
     );
 
-    // TODO : Change this and PUSH
+    result.fold((l) => print(l.toString()), (r) => print(r.total));
 
     return result;
   }
