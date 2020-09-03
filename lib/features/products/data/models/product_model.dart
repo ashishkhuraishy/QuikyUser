@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/cart/domain/entity/cart_item.dart';
 import 'package:quiky_user/features/products/data/models/category_model.dart';
 import 'package:quiky_user/features/products/data/models/variation_model.dart';
 import 'package:quiky_user/features/products/domain/entity/product.dart';
+import 'package:quiky_user/features/products/domain/entity/variation.dart';
 
 class ProductModel extends Product {
   final int id;
@@ -112,6 +114,48 @@ class ProductModel extends Product {
       updated: json['updated'] ?? '',
       user: json['user'] ?? -1,
       filter: json['filter'] ?? '',
+    );
+  }
+
+  factory ProductModel.fromCartItem(CartItem cartItem) {
+    Variation variation = Variation(
+      id: cartItem.id,
+      image: null,
+      title: cartItem.name,
+      color: null,
+      weight: null,
+      size: null,
+      isStock: cartItem.inStock,
+      price: cartItem.price,
+      quantity: cartItem.quantity.toString(),
+      updated: null,
+      active: null,
+      productId: null,
+    );
+
+    return ProductModel(
+      id: null,
+      productimage: null,
+      variations: [variation],
+      productreviews: null,
+      productviews: null,
+      category: null,
+      image: null,
+      title: null,
+      sku: null,
+      tax: null,
+      description: null,
+      quantity: null,
+      discount: null,
+      isStock: null,
+      isFeatured: null,
+      isDiscount: null,
+      vegNvEgg: null,
+      active: null,
+      timestamp: null,
+      updated: null,
+      user: null,
+      filter: null,
     );
   }
 }

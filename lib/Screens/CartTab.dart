@@ -61,7 +61,7 @@ class CartTab extends StatelessWidget {
       isScrollControlled: true,
       builder: (ctx) {
         return BottomSheet(
-          onClosing: (){
+          onClosing: () {
             onClose();
           },
           builder: (ctx) {
@@ -200,7 +200,8 @@ class CartTab extends StatelessWidget {
                         child: FlatButton(
                           onPressed: () {
                             print(order.id);
-                            Navigator.of(context).pushNamed('/existingcard',arguments: order);
+                            Navigator.of(context)
+                                .pushNamed('/existingcard', arguments: order);
                           },
                           child: Text("Continue Payment"),
                           color: primary,
@@ -247,9 +248,11 @@ class CartTab extends StatelessWidget {
                       final order = await Provider.of<CartProvider>(context,
                               listen: false)
                           .confrimOrder(
-                              userLocation:
-                                  "${currentAddress.lat},${currentAddress.long}",
-                              coupon: null);
+                        userLocation:
+                            "${currentAddress.lat},${currentAddress.long}",
+                        shippingAddress: "${currentAddress.formattedAddress}",
+                        coupon: null,
+                      );
                       if (order.isLeft()) {
                         print("Error Occured");
                         // print(order);
