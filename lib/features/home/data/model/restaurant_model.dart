@@ -147,7 +147,7 @@ class RestaurantModel extends Restaurant {
       address: json['address'] ?? '',
       recommendationCount: json['recommendation_count'] ?? '',
       minimumCostTwo: json['minimum_cost_two'] ?? '',
-      avgDeliveryTime: json['avg_delivery_time'] ?? '',
+      avgDeliveryTime: json['avg_delivery_time'] ?? '0.0',
       active: json['active'] ?? false,
       inOrder: json['in_order'] ?? false,
       bulkOrder: json['bulk_order'] ?? false,

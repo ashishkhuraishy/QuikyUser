@@ -200,6 +200,8 @@ main() {
     coupon: "nill",
   );
 
+  final tAddress = "Test Address";
+
   group('Add Item', () {
     test('should create and save a new [CART] when the `storeId` dont match',
         () async {
@@ -295,6 +297,7 @@ main() {
           any,
           token: anyNamed('token'),
           userLocation: anyNamed('userLocation'),
+          shippingAddress: anyNamed('shippingAddress'),
           coupon: anyNamed('coupon'),
         ),
       ).thenAnswer(
@@ -315,7 +318,10 @@ main() {
     test('should get the cart from local and use that to call remote api',
         () async {
       final result = await repositoryImpl.confirmorder(
-          userlocation: tUserLocation, coupon: tCoupon);
+        userlocation: tUserLocation,
+        coupon: tCoupon,
+        shippingAddress: tAddress,
+      );
 
       verify(mockCartLocalDataSource.getCart());
       verify(mockCartLocalDataSource.getToken());
@@ -324,6 +330,7 @@ main() {
           tCart,
           token: ttoken,
           userLocation: tUserLocation,
+          shippingAddress: tAddress,
           coupon: tCoupon,
         ),
       );
@@ -337,12 +344,14 @@ main() {
           any,
           token: anyNamed('token'),
           userLocation: anyNamed('userLocation'),
+          shippingAddress: anyNamed('shippingAddress'),
           coupon: anyNamed('coupon'),
         ),
       ).thenThrow(ServerException());
 
       final result = await repositoryImpl.confirmorder(
         userlocation: tUserLocation,
+        shippingAddress: tAddress,
       );
 
       verify(mockCartLocalDataSource.getCart());
@@ -352,6 +361,7 @@ main() {
           tCart,
           token: ttoken,
           userLocation: tUserLocation,
+          shippingAddress: tAddress,
           coupon: null,
         ),
       );
@@ -364,6 +374,7 @@ main() {
 
       final result = await repositoryImpl.confirmorder(
         userlocation: tUserLocation,
+        shippingAddress: tAddress,
         coupon: null,
       );
 
@@ -375,6 +386,7 @@ main() {
           coupon: anyNamed('coupon'),
           token: anyNamed('token'),
           userLocation: anyNamed('userLocation'),
+          shippingAddress: anyNamed('shippingAddress'),
         ),
       );
       verifyNever(mockCartLocalDataSource.setOrderId(any));
