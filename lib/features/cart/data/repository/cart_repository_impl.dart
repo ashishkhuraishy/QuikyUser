@@ -92,6 +92,7 @@ class CartRepositoryImpl extends CartRepository {
   Future<drtz.Either<Failure, Order>> confirmorder({
     String userlocation,
     String coupon,
+    String shippingAddress,
   }) async {
     if (!(await networkInfo.isConnected)) return drtz.Left(ConnectionFailure());
     Cart currentCart = await localDataSource.getCart();
@@ -102,6 +103,7 @@ class CartRepositoryImpl extends CartRepository {
         currentCart,
         token: token,
         userLocation: userlocation,
+        shippingAddress: shippingAddress,
         coupon: coupon,
       );
       localDataSource.setOrderId(order.id);

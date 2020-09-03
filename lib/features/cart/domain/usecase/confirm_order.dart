@@ -9,11 +9,15 @@ class ConfirmOrder {
 
   ConfirmOrder({this.repository});
 
-  Future<dz.Either<Failure, Order>> call(
-      {String userLocation, String coupon}) async {
+  Future<dz.Either<Failure, Order>> call({
+    String userLocation,
+    String coupon,
+    String shippingAddress,
+  }) async {
     return await repository.confirmorder(
       userlocation: userLocation,
       coupon: coupon,
+      shippingAddress: shippingAddress,
     );
   }
 }
