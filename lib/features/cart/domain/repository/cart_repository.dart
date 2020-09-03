@@ -17,6 +17,7 @@ abstract class CartRepository {
   Future<Either<Failure, order.Order>> confirmorder({
     String userlocation,
     String coupon,
+    String shippingAddress,
   });
 
   void clear();

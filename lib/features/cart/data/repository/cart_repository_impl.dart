@@ -30,7 +30,6 @@ class CartRepositoryImpl extends CartRepository {
     Restaurant restaurant,
   }) async {
     Cart currentCart = await localDataSource.getCart();
-
     if (currentCart.storeId == restaurant.id) {
       currentCart.cartItems
           .removeWhere((element) => element.id == variation.id);
@@ -43,6 +42,7 @@ class CartRepositoryImpl extends CartRepository {
           quantity: quantity,
         );
         currentCart.cartItems.add(cartItemModel);
+        currentCart.cartItems.sort((a, b) => a.id.compareTo(b.id));
       }
     } else {
       currentCart = Cart(
@@ -92,6 +92,7 @@ class CartRepositoryImpl extends CartRepository {
   Future<drtz.Either<Failure, Order>> confirmorder({
     String userlocation,
     String coupon,
+    String shippingAddress,
   }) async {
     if (!(await networkInfo.isConnected)) return drtz.Left(ConnectionFailure());
     Cart currentCart = await localDataSource.getCart();
@@ -102,6 +103,7 @@ class CartRepositoryImpl extends CartRepository {
         currentCart,
         token: token,
         userLocation: userlocation,
+        shippingAddress: shippingAddress,
         coupon: coupon,
       );
       localDataSource.setOrderId(order.id);

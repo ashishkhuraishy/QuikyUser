@@ -29,6 +29,10 @@ class CartProvider extends ChangeNotifier {
 
   List<Variation> cartProducts = [];
 
+  loadCart() {
+    getProductsFromCart();
+  }
+
   CartProvider() {
     // Initialising the Cart
     _updateCart();
@@ -84,10 +88,7 @@ class CartProvider extends ChangeNotifier {
 
     // TODO : Change this and PUSH
 
-    result.fold(
-      (failure) => print(failure),
-      (order) => print(order),
-    );
+    return result;
   }
 
   /// Function to check if a given variation Id is already inside

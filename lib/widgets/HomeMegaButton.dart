@@ -8,41 +8,60 @@ class HomeMegaButton extends StatelessWidget {
     @required this.image,
     @required this.title,
     @required this.color,
+    @required this.onTap,
   }) : super(key: key);
 
   final double scWidth;
   final String image;
   final String title;
   final Color color;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left:20,top:20,bottom:20),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      width: scWidth / 2 - 30,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "Restaurants",
-              style: whiteBold16,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: Image.asset('assets/img/plate-of-food.png'),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+        ),
+        width: scWidth / 2 - 30,
+        height: scWidth / 2 - 50,
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          alignment: Alignment.centerRight,
+          children: <Widget>[
+            Positioned(
+              left: 10,
+              top: 10,
+              child: Text(
+                "$title",
+                style: whiteBold16,
               ),
-            ],
-          )
-        ],
+            ),
+            Positioned(
+              bottom: -22,
+              right: -22,
+              child: Container(
+                padding:
+                    EdgeInsets.only(top: 17, left: 17, bottom: 22, right: 22),
+                decoration: BoxDecoration(
+                    color: Colors.white54,
+                    borderRadius: BorderRadius.circular(500)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  child: Image.asset(
+                    '$image',
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

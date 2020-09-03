@@ -3,7 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/AddressBook.dart';
+import 'package:quiky_user/Screens/AllStore.dart';
 import 'package:quiky_user/Screens/ExistingCards.dart';
+import 'package:quiky_user/features/payement/domain/Entity/payment_card.dart';
 
 import 'Screens/Login.dart';
 import 'Screens/Signup.dart';
@@ -19,6 +21,7 @@ import 'features/cart/domain/entity/cart_item.dart';
 import 'features/home/domain/entity/offer.dart';
 import 'features/location_service/data/data_source/address_local_data_sourc.dart';
 import 'features/location_service/domain/entity/address.dart';
+import 'features/payement/data/data_source/payment_local_data_source.dart';
 import 'features/user/data/datasource/user_local_data_source.dart';
 import 'features/user/domain/entity/user.dart';
 import 'injection_container.dart' as container;
@@ -35,9 +38,11 @@ void main() async {
   Hive.registerAdapter<Cart>(CartAdapter());
   Hive.registerAdapter<Offer>(OfferAdapter());
   Hive.registerAdapter<CartItem>(CartItemAdapter());
+  Hive.registerAdapter<PaymentCard>(PaymentCardAdapter());
   Hive.registerAdapter<User>(UserAdapter());
   await Hive.openBox(CORE_BOX);
   await Hive.openBox(ADDRESS_BOX);
+  await Hive.openBox(CARDS_BOX);
   runApp(MyApp());
 }
 
@@ -96,6 +101,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 11,
               color: grey,
+            ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: dark,
             ),
           ),
           primaryColorLight: Colors.white,
@@ -161,6 +172,12 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
               color: Colors.grey,
             ),
+            headline4: new TextStyle(
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: Colors.white,
+            ),
           ),
         ),
         themeMode: ThemeMode.system,
@@ -171,7 +188,9 @@ class MyApp extends StatelessWidget {
           '/login': (context) => Login(),
           '/home': (context) => Home(),
           '/existing-cards': (context) => ExistingCardsPage(),
-          '/address-book': (context) => AddressBook()
+          '/address-book': (context) => AddressBook(),
+          '/allstore': (context) => AllStore(),
+          '/existingcard':(context)=>ExistingCardsPage(),
         },
         home: Wrapper(),
       ),

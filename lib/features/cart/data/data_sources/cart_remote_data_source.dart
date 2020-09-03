@@ -13,7 +13,9 @@ abstract class CartRemoteDataSource {
     Cart cart, {
     String token,
     String userLocation,
+    String shippingAddress,
     String coupon,
+    DateTime dateTime,
   });
 }
 
@@ -27,7 +29,9 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
     Cart cart, {
     String token,
     String userLocation,
+    String shippingAddress,
     String coupon,
+    DateTime dateTime,
   }) async {
     String url = BASE_URL + '/cart/';
 
@@ -40,9 +44,14 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
 
       variations.add(variation);
     });
+    // TODO : Editi these to implement Bulk & Milk Order
     Map<String, dynamic> body = {
       "store_id": "${cart.storeId}",
       "cart_item": variations,
+      "shipping_address": shippingAddress,
+      "bulk_order": "false",
+      "milk_order": "false",
+      "date_time": "${dateTime ?? DateTime.now().toLocal()}",
     };
 
     url += "?user_location=$userLocation";

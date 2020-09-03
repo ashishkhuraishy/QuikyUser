@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_featured.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_popular.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_trending_grocry.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_trending_restaurants.dart';
+import 'package:quiky_user/features/home/domain/usecase/get_stores.dart';
 
 import '../../features/home/data/model/recipie_model.dart';
 import '../../features/home/domain/usecase/get_recipies.dart';
@@ -13,18 +11,14 @@ import '../error/failure.dart';
 class HomeProvider extends ChangeNotifier {
   /// Initialisations
   GetRecipies _getRecipies = GetRecipies(repository: sl());
-  GetTrendingGrocery _getTrendingGrocery = GetTrendingGrocery(repository: sl());
-  GetTrendingRestaurents _getTrendingRestaurents =
-      GetTrendingRestaurents(repository: sl());
-  GetFeatured _getFeatured = GetFeatured(repository: sl());
-  GetPopular _getPopular = GetPopular(repository: sl());
+  GetStores _getStores = GetStores(repository: sl());
 
   /// Local declarations
-  List<RecipieModel> _recipies;
-  List<RestaurantModel> _trendingResList;
-  List<RestaurantModel> _trendingGrosList;
-  List<RestaurantModel> _populatList;
-  List<RestaurantModel> _featuredList;
+  List<RecipieModel> _recipies = [];
+  List<RestaurantModel> _trendingResList = [];
+  List<RestaurantModel> _trendingGrosList = [];
+  List<RestaurantModel> _populatList = [];
+  List<RestaurantModel> _featuredList = [];
 
   // Getter methods
   List<RecipieModel> get getRecipies => _recipies;
@@ -54,53 +48,52 @@ class HomeProvider extends ChangeNotifier {
     result.fold((failure) {
       _checkeroor(failure, 'GetRecipie');
     }, (recipies) {
-      print('Recipies $recipies');
       _recipies = recipies;
       notifyListeners();
     });
   }
 
   _getFeaturedData(double lat, double long) async {
-    print("Called featured with Lat : $lat Long : $long");
-    final result = await _getFeatured(lat: lat, long: long);
+    final result = await _getStores(
+        lat: lat, lng: long, storeType: StoreType.inTheSpotlight);
     result.fold((failure) {
       _checkeroor(failure, 'GetFeatured');
     }, (restaurants) {
       // print('Featured ${restaurants[0].title}');
       _featuredList = restaurants;
-      print(restaurants);
+      // print(restaurants);
       notifyListeners();
     });
   }
 
   _getPopularData(double lat, double long) async {
-    final result = await _getPopular(lat: lat, long: long);
+    final result = await _getStores(
+        lat: lat, lng: long, storeType: StoreType.popularBrand);
     result.fold((failure) {
       _checkeroor(failure, 'GetPopular');
     }, (restaurants) {
-      print('Popular ${restaurants[0].title}');
       _populatList = restaurants;
       notifyListeners();
     });
   }
 
   _getTrendingRestaurantData(double lat, double long) async {
-    final result = await _getTrendingRestaurents(lat: lat, long: long);
+    final result = await _getStores(
+        lat: lat, lng: long, storeType: StoreType.trendingRestaurants);
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingRestaurant');
     }, (restaurants) {
-      print('Trending Restaurants ${restaurants[0].title}');
       _trendingResList = restaurants;
       notifyListeners();
     });
   }
 
   _getTrendingGeroceryData(double lat, double long) async {
-    final result = await _getTrendingGrocery(lat: lat, long: long);
+    final result = await _getStores(
+        lat: lat, lng: long, storeType: StoreType.trendingGroceries);
     result.fold((failure) {
       _checkeroor(failure, 'GetTrendingGrocery');
     }, (restaurants) {
-      print('Trending Grocery ${restaurants[0].title}');
       _trendingGrosList = restaurants;
       notifyListeners();
     });

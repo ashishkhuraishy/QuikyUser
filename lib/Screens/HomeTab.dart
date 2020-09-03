@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/Widgets/OptionCard2.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
@@ -47,6 +49,7 @@ class _HomeTabState extends State<HomeTab> {
 
   void fetchData(Address currectAddress) {
     Provider.of<HomeProvider>(context, listen: false).getData(10.0261, 76.3125);
+    Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
   @override
@@ -57,9 +60,9 @@ class _HomeTabState extends State<HomeTab> {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () {
-            final address = Provider.of<AddressProvider>(context, listen: false)
-                .currentAddress;
-            print(address);
+            // final address = Provider.of<AddressProvider>(context, listen: false)
+            //     .currentAddress;
+            // print(address);
             // Navigator.of(context).popAndPushNamed('/selectlocation');
           },
           child: Row(
@@ -82,25 +85,33 @@ class _HomeTabState extends State<HomeTab> {
             ],
           ),
         ),
-        elevation: 1.0,
+        elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                HomeMegaButton(
-                    scWidth: widget.scWidth,
-                    title: 'Restaurant',
-                    image: 'assets/img/plate-of-food.png',
-                    color: primary),
-                HomeMegaButton(
-                    scWidth: widget.scWidth,
-                    title: 'Grocery',
-                    image: 'assets/img/plate-of-food.png',
-                    color: Colors.brown),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
+                  Image.asset(
+                    'assets/img/slide.png',
+                    height: 200,
+                    width: 300,
+                  ),
+                ],
+              ),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -113,19 +124,62 @@ class _HomeTabState extends State<HomeTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      OptionCard(title: "MILK", image: "assets/img/milk.png"),
-                      OptionCard(title: "Fish", image: "assets/img/fish.png"),
-                      OptionCard(
-                          title: "Electronics",
-                          image: "assets/img/Electronics.png"),
-                      // OptionCard(
-                      //     title: "Quiky Specials",
-                      //     image: "assets/img/Quiky-Specials.png"),
-                      OptionCard(
-                          title: "Bulk Order",
-                          image: "assets/img/bulk_order.png"),
+                      OptionCard2(
+                          title: "MEAT",
+                          image: "assets/img/meat.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.meat);
+                          }),
+                      OptionCard2(
+                          title: "FISH",
+                          image: "assets/img/fish.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.fish);
+                          }),
+                      OptionCard2(
+                          title: "ELECTRONICS",
+                          image: "assets/img/Electronics.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.electronics);
+                          }),
+                      OptionCard2(
+                          title: "BULK ORDER",
+                          image: "assets/img/bulk.png",
+                          padding: EdgeInsets.all(20),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allstore',
+                                arguments: StoreType.milk);
+                          }),
                     ],
                   )),
+            ),
+            Row(
+              children: <Widget>[
+                HomeMegaButton(
+                    scWidth: widget.scWidth,
+                    title: 'Grocery',
+                    image: 'assets/img/store.png',
+                    color: Color.fromRGBO(39, 174, 96, 1),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/allstore',
+                          arguments: StoreType.groceries);
+                    }),
+                HomeMegaButton(
+                    scWidth: widget.scWidth,
+                    title: 'Restaurant',
+                    image: 'assets/img/food.png',
+                    color: Color.fromRGBO(155, 81, 224, 1),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/allstore',
+                          arguments: StoreType.restaurants);
+                    }),
+              ],
             ),
             Divider(
               thickness: 2,
@@ -169,6 +223,7 @@ class _HomeTabState extends State<HomeTab> {
                             ? ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 // shrinkWrap: true,
+                                physics: PageScrollPhysics(),
                                 itemCount: provider.inTheSpotLight.length > 1
                                     ? provider.inTheSpotLight.length ~/ 2
                                     : provider.inTheSpotLight.length,
@@ -178,7 +233,8 @@ class _HomeTabState extends State<HomeTab> {
                                     return Container();
                                   } else {
                                     return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         StoreCard(
                                           scWidth: widget.scWidth,

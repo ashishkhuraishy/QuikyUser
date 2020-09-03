@@ -34,6 +34,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
+  navigateToCart(){
+    controller.index=2;
+  }
+
   @override
   Widget build(BuildContext context) {
     double scWidth = MediaQuery.of(context).size.width;

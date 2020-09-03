@@ -68,12 +68,19 @@ main() {
     coupon: "nill",
   );
 
+  final tAddress = "Test Address";
+  final tDateTime = DateTime.now().toLocal();
+
   Map<String, dynamic> body = {
     "store_id": "80",
     "cart_item": [
       {"variation": "669", "quantity": "2"},
       {"variation": "668", "quantity": "2"},
     ],
+    "shipping_address": "$tAddress",
+    "bulk_order": "false",
+    "milk_order": "false",
+    "date_time": "$tDateTime",
   };
 
   group('Confirm Order', () {
@@ -94,8 +101,10 @@ main() {
       await remoteDataSourceImpl.confirmOrder(
         tCart,
         token: tToken,
+        shippingAddress: tAddress,
         userLocation: tUserLocation,
         coupon: tCoupon,
+        dateTime: tDateTime,
       );
 
       verify(
@@ -114,6 +123,8 @@ main() {
       await remoteDataSourceImpl.confirmOrder(
         tCart,
         token: tToken,
+        shippingAddress: tAddress,
+        dateTime: tDateTime,
         userLocation: tUserLocation,
       );
 
@@ -132,6 +143,8 @@ main() {
     test('should return a valid [Order] if status code 200', () async {
       final result = await remoteDataSourceImpl.confirmOrder(
         tCart,
+        shippingAddress: tAddress,
+        dateTime: tDateTime,
         userLocation: tUserLocation,
       );
 
@@ -152,7 +165,12 @@ main() {
       final result = remoteDataSourceImpl.confirmOrder;
 
       expect(
-        () => result(tCart, userLocation: tUserLocation),
+        () => result(
+          tCart,
+          dateTime: tDateTime,
+          userLocation: tUserLocation,
+          shippingAddress: tAddress,
+        ),
         throwsA(isA<ServerException>()),
       );
     });
