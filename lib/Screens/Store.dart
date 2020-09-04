@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import '../core/Providers/CartProvider.dart';
 
@@ -229,9 +230,27 @@ class Store extends StatelessWidget {
                         ),
                       ),
                     );
-                  } else {
+                  } else if (categories.connectionState ==
+                      ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Something went wrong, Try again later"),
+                            // RaisedButton(
+                            //   onPressed: () {
+                            //     loadProducts(restaurant);
+                            //   },
+                            //   child: Text("Retry"),
+                            // )
+                          ],
+                        ),
+                      ),
                     );
                   }
                 },

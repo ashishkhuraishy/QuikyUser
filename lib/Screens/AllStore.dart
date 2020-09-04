@@ -76,6 +76,7 @@ class AllStore extends StatelessWidget {
                     ),
                   ),
                   SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.all(10),
                     child: Row(
                       children: [

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/core/Services/payment-service.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/payement/domain/Entity/payment_card.dart';
@@ -25,7 +27,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
       'showBackView': false,
     },
     {
-      'cardNumber': '5555555566554444',
+      'cardNumber': '4000002500003155',
       'expiryDate': '04/23',
       'cardHolderName': 'Tracer',
       'cvvCode': '123',
@@ -43,6 +45,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
       expMonth: int.parse(expiryArr[0]),
       expYear: int.parse(expiryArr[1]),
     );
+    // print("Aaaaaaaaaaaa ${order.id}");
     var response = await stripeService.payViaExistingCard(
       amount: order.total,
       currency: 'INR',
@@ -50,6 +53,11 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
       orderId: order.id,
     );
     await dialog.hide();
+
+    if(response.success){
+      Provider.of<CartProvider>(context,listen: false).clear;
+    }
+
     Scaffold.of(context)
         .showSnackBar(SnackBar(
           content: Text(response.message),
