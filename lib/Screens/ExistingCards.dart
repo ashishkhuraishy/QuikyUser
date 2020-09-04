@@ -35,7 +35,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
     }
   ];
 
-  payViaExistingCard(BuildContext context, card,Order order) async {
+  payViaExistingCard(BuildContext context, card, Order order) async {
     ProgressDialog dialog = new ProgressDialog(context);
     dialog.style(message: 'Please wait...');
     await dialog.show();
@@ -54,8 +54,8 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
     );
     await dialog.hide();
 
-    if(response.success){
-      Provider.of<CartProvider>(context,listen: false).clear;
+    if (response.success) {
+      Provider.of<CartProvider>(context, listen: false).clear;
     }
 
     Scaffold.of(context)
@@ -99,7 +99,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
             var card = cards[index];
             return InkWell(
               onTap: () {
-                payViaExistingCard(context, card,order);
+                payViaExistingCard(context, card, order);
               },
               child: CreditCardWidget(
                 cardNumber: card['cardNumber'],
