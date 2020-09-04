@@ -152,7 +152,9 @@ class Store extends StatelessWidget {
                           ),
                         ),
                         CustomBorderedButton(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, '/address-book');
+                          },
                           child: Text(
                             "Change",
                             style: Theme.of(context).textTheme.bodyText1,

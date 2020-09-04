@@ -156,17 +156,20 @@ class FilterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        color: selected ? primary : Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: primary),
-      ),
-      padding: EdgeInsets.all(5),
-      child: Text(
-        "$name",
-        style: selected ? white13 : Theme.of(context).textTheme.bodyText2,
+    return InkWell(
+      onTap: (){},
+          child: Container(
+        margin: EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+          color: selected ? primary : Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: primary),
+        ),
+        padding: EdgeInsets.all(5),
+        child: Text(
+          "$name",
+          style: selected ? white13 : Theme.of(context).textTheme.bodyText2,
+        ),
       ),
     );
   }
