@@ -73,6 +73,8 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
     print(response.statusCode);
     print(response.body);
 
+    print("body ----------------- ${response.body}");
+
     throw ServerException();
   }
 }

@@ -48,6 +48,7 @@ class CartProvider extends ChangeNotifier {
   List<CartItem> get currentCartItems => _currentCart.cartItems;
   void get clear {
     _clearCart.call();
+    cartProducts=[];
     notifyListeners();
   }
 

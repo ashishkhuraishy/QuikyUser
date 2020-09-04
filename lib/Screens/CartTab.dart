@@ -67,7 +67,7 @@ class CartTab extends StatelessWidget {
           builder: (ctx) {
             return StatefulBuilder(
               builder: (BuildContext ctxx, StateSetter val) {
-                print(order);
+                // print(order);
                 int payMethod = 0;
                 return SingleChildScrollView(
                   child: Column(
@@ -165,7 +165,7 @@ class CartTab extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      print("asdasd");
+                                      // print("asdasd");
                                       val(() {
                                         payMethod = 1;
                                       });
@@ -199,7 +199,7 @@ class CartTab extends StatelessWidget {
                         width: double.infinity,
                         child: FlatButton(
                           onPressed: () {
-                            print(order.id);
+                            // print(order.id);
                             Navigator.of(context)
                                 .pushNamed('/existingcard', arguments: order);
                           },
@@ -255,7 +255,7 @@ class CartTab extends StatelessWidget {
                       );
                       if (order.isLeft()) {
                         print("Error Occured");
-                        // print(order);
+                        print(order.fold((l) => l, (r) => r).toString());
                       } else {
                         print("Corder placed");
                         displayConfirmOrderBottomSheet(
@@ -533,6 +533,7 @@ class StoreDetails extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Consumer<CartProvider>(
         builder: (ctx, provider, _) {
+          print("${provider.currentStoreId}");
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
