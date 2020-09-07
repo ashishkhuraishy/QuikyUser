@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/features/user/domain/usecase/order_status.dart';
 
@@ -11,7 +10,6 @@ class TrackOrder {
   final int id;
 
   TrackOrder({this.id});
-  StreamSink subscription;
 
   Stream<OrderDetails> timedCounter() async* {
     OrderDetails orderDetails = OrderDetails(
