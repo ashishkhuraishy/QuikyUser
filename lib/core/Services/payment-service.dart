@@ -57,7 +57,7 @@ class StripeService {
   }) async {
     StripeTransactionResponse transactionResponse = StripeTransactionResponse();
     print('Pay with existing card called');
-    var amnt = num.parse(amount).toInt() * 100;
+    int amnt = num.parse(amount).toInt() * 100;
     try {
       var paymentMethod = await StripePayment.createPaymentMethod(
           PaymentMethodRequest(card: card.toCreditCard()));

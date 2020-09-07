@@ -70,6 +70,10 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       Map<String, dynamic> reponseBody = jsonDecode(response.body);
       return OrderModel.fromJson(reponseBody);
     }
+    print(response.statusCode);
+    print(response.body);
+
+    print("body ----------------- ${response.body}");
 
     throw ServerException();
   }
