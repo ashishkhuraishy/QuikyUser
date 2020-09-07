@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 import '../core/Providers/CartProvider.dart';
 

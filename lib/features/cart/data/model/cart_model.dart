@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/features/cart/data/model/cart_item_model.dart';
 
 import '../../../home/domain/entity/offer.dart';
 import '../../domain/entity/cart.dart';
@@ -30,4 +31,17 @@ class CartModel extends Cart {
           storeImage: storeImage,
           storeLogo: storeLogo,
         );
+
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    return CartModel(
+      storeId: json['store_id'],
+      storeName: json['store_name'] ?? '',
+      storeAddress: json['store_address'] ?? '',
+      storeImage: json['store_image'] ?? '',
+      offers: json['offers'] ?? [],
+      cartItems:
+          json['cartitem'].map((e) => CartItemModel.fromJson(e)).toList(),
+      storeLogo: json['store_logo'] ?? '',
+    );
+  }
 }

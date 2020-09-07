@@ -7,6 +7,7 @@ const String USER = 'USER';
 abstract class UserLocalDataSource {
   Future<void> cacheUser(User user);
   Future<void> logout();
+  User getUser();
 }
 
 class UserLocalDataSourceImpl extends UserLocalDataSource {
@@ -28,5 +29,13 @@ class UserLocalDataSourceImpl extends UserLocalDataSource {
 
     Box box = hive.box(CORE_BOX);
     await box.put(USER, null);
+  }
+
+  @override
+  User getUser() {
+    if (!hive.isBoxOpen(CORE_BOX)) hive.openBox(CORE_BOX);
+    Box box = hive.box(CORE_BOX);
+    User user = box.get(USER, defaultValue: null);
+    return user;
   }
 }

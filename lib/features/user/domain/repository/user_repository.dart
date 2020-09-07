@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/core/error/failure.dart';
+import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 
 abstract class UserRepository {
@@ -16,4 +17,6 @@ abstract class UserRepository {
   });
 
   void logout();
+  Future<Either<Failure, List<OrderDetails>>> getPastOrders();
+  Future<Either<Failure, OrderDetails>> getOrderStatus(int orderId);
 }

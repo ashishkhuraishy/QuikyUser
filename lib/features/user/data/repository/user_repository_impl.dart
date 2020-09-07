@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quiky_user/core/error/exception.dart';
 import 'package:quiky_user/core/platform/network_info.dart';
 import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
 import 'package:quiky_user/features/user/data/datasource/user_remote_data_source.dart';
+import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 import 'package:quiky_user/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -57,6 +59,34 @@ class UserRepositoryImpl extends UserRepository {
       await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, OrderDetails>> getOrderStatus(int orderId) async {
+    if (!await networkInfo.isConnected) return Left(ConnectionFailure());
+
+    final user = localDataSource.getUser();
+    try {
+      final orderDetail =
+          await remoteDataSource.orderStatus(orderId, token: user.token);
+      return Right(orderDetail);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OrderDetails>>> getPastOrders() async {
+    if (!await networkInfo.isConnected) return Left(ConnectionFailure());
+
+    final user = localDataSource.getUser();
+    try {
+      final orderDetails =
+          await remoteDataSource.pastOrders(token: user.token, userId: user.id);
+      return Right(orderDetails);
+    } on ServerException {
       return Left(ServerFailure());
     }
   }

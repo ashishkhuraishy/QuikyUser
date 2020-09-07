@@ -1,9 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
+import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 import 'package:quiky_user/features/user/domain/usecase/login.dart';
 import 'package:quiky_user/features/user/domain/usecase/logout.dart';
+import 'package:quiky_user/features/user/domain/usecase/past_orders.dart';
 import 'package:quiky_user/features/user/domain/usecase/signup.dart';
 
 import '../../injection_container.dart';
@@ -12,6 +15,7 @@ class UserProvider extends ChangeNotifier {
   Login _login = Login(sl());
   SignUp _signUp = SignUp(sl());
   LogOut _logOut = LogOut(sl());
+  PastOrders _pastOrders = PastOrders(sl());
   bool loading = false;
   String error = "";
 
@@ -58,5 +62,17 @@ class UserProvider extends ChangeNotifier {
 
   logOut() {
     _logOut.call();
+  }
+
+  Future<List<OrderDetails>> getPastOrders() async {
+    final result = await _pastOrders();
+    List<OrderDetails> orderDetails = [];
+
+    result.fold(
+      (failure) => print(failure),
+      (orders) => orderDetails = orders,
+    );
+
+    return orderDetails;
   }
 }
