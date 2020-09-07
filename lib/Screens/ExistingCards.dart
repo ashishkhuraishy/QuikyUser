@@ -25,7 +25,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
       'showBackView': false,
     },
     {
-      'cardNumber': '5555555566554444',
+      'cardNumber': '4000002500003155',
       'expiryDate': '04/23',
       'cardHolderName': 'Tracer',
       'cvvCode': '123',
@@ -33,7 +33,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
     }
   ];
 
-  payViaExistingCard(BuildContext context, card,Order order) async {
+  payViaExistingCard(BuildContext context, card, Order order) async {
     ProgressDialog dialog = new ProgressDialog(context);
     dialog.style(message: 'Please wait...');
     await dialog.show();
@@ -91,7 +91,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
             var card = cards[index];
             return InkWell(
               onTap: () {
-                payViaExistingCard(context, card,order);
+                payViaExistingCard(context, card, order);
               },
               child: CreditCardWidget(
                 cardNumber: card['cardNumber'],

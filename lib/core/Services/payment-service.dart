@@ -40,6 +40,14 @@ class StripeService {
 
   // Public Classes
 
+  payAsCod(int orderId, String amount) async {
+    final result = await _getPaymentStatus(
+      orderId: orderId,
+      paymentId: '',
+      paymentType: PaymentType.COD,
+    );
+  }
+
   // PayWithExisting Card
   Future<StripeTransactionResponse> payViaExistingCard({
     int orderId,
@@ -49,11 +57,11 @@ class StripeService {
   }) async {
     StripeTransactionResponse transactionResponse = StripeTransactionResponse();
     print('Pay with existing card called');
-    int amnt = num.parse(amount).toInt();
+    var amnt = num.parse(amount).toInt() * 100;
     try {
       var paymentMethod = await StripePayment.createPaymentMethod(
           PaymentMethodRequest(card: card.toCreditCard()));
-      var paymentIntent = await _createPaymentIntent(amnt.toString(), currency);
+      var paymentIntent = await _createPaymentIntent(amnt.toString(), "INR");
       print(paymentIntent['id']);
       transactionResponse =
           await _confirmPayment(paymentMethod, paymentIntent, orderId);
