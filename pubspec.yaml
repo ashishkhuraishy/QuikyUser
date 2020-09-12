@@ -54,6 +54,7 @@ dependencies:
   flutter_credit_card: ^0.1.3
   stripe_payment: ^1.0.7
   progress_dialog: ^1.2.2
+  firebase_messaging: ^7.0.0
 
 dev_dependencies:
   flutter_test:

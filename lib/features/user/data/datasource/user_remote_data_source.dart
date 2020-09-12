@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:quiky_user/core/error/exception.dart';
@@ -27,13 +28,18 @@ abstract class UserRemoteDataSource {
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   final Client client;
+  final _fireBaseMessaging = FirebaseMessaging();
 
   UserRemoteDataSourceImpl({this.client});
 
   @override
   Future<UserModel> login({String username, String password}) async {
-    final String url = BASE_URL + '/login/$username/$password/?user=customer';
+    String _token = await _fireBaseMessaging.getToken();
+    String platform = Platform.isAndroid ? "android" : "ios";
+    final String url = BASE_URL +
+        '/login/$username/$password/?user=customer&registration_id=$_token&device_type=$platform';
     Response response = await client.get(url);
+    initMessaging();
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
@@ -46,7 +52,10 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   @override
   Future<UserModel> signUp(
       {String username, String name, String password}) async {
-    final String url = BASE_URL + '/signup/?customer=true';
+    String _token = await _fireBaseMessaging.getToken();
+    String platform = Platform.isAndroid ? "android" : "ios";
+    final String url = BASE_URL +
+        '/signup/?customer=true&registration_id=$_token&device_type=$platform';
     Map body = {
       "username": username,
       "password": password,
@@ -54,7 +63,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       "first_name": name,
       "last_name": ""
     };
-
+    initMessaging();
     Response response = await client.post(url,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
@@ -103,5 +112,16 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     print(response.statusCode);
     print(response);
     throw ServerException();
+  }
+
+  initMessaging() {
+    _fireBaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+      print('on message $message');
+    }, onResume: (Map<String, dynamic> message) async {
+      print('on resume $message');
+    }, onLaunch: (Map<String, dynamic> message) async {
+      print('on launch $message');
+    });
   }
 }
