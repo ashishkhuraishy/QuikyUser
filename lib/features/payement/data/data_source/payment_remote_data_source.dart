@@ -9,7 +9,10 @@ enum PaymentType { CARD, COD }
 
 abstract class PaymentRemoteDataSource {
   Future<bool> getPaymentStatus(
-      int orderId, String paymentId, PaymentType paymentType);
+    int orderId,
+    String paymentId,
+    PaymentType paymentType,
+  );
 }
 
 class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
@@ -52,7 +55,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     if (response.statusCode == 200) {
       List respBody = jsonDecode(response.body);
       print(respBody.toString());
-      return respBody[0]["payment_status"].toString().contains("succeeded");
+      return respBody[0]["payment_status"].toString().contains("succeeded") ??
+          false;
     }
 
     throw ServerException();

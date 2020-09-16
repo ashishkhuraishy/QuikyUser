@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import 'package:quiky_user/features/payement/data/data_source/payment_local_data_source.dart';
 import 'package:quiky_user/features/payement/data/repository/payment_repository_impl.dart';
 import 'package:quiky_user/features/payement/domain/repository/payment_repository.dart';
+import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 import 'features/cart/data/data_sources/cart_local_data_source.dart';
 import 'features/cart/data/repository/cart_repository_impl.dart';
 import 'features/cart/domain/repository/cart_repository.dart';
@@ -184,4 +185,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Client());
   sl.registerLazySingleton(() => Location());
   sl.registerLazySingleton(() => DataConnectionChecker());
+
+  PushNotificationService().init();
 }

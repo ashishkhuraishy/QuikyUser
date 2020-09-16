@@ -55,7 +55,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     String _token = await _fireBaseMessaging.getToken();
     String platform = Platform.isAndroid ? "android" : "ios";
     final String url = BASE_URL +
-        '/signup/?customer=true&registration_id=$_token&device_type=$platform';
+        '/signup/?customer=true&registration_id=$_token&type=$platform';
     Map body = {
       "username": username,
       "password": password,
@@ -64,6 +64,8 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       "last_name": ""
     };
     initMessaging();
+    print("Url : $url");
+    print("Body : $body");
     Response response = await client.post(url,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',

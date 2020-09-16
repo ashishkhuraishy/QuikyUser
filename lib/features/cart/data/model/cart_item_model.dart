@@ -26,7 +26,7 @@ class CartItemModel extends CartItem {
     return CartItemModel(
       id: json['variation']['id'],
       name: json['variation']['title'],
-      price: json['variation']['price'],
+      price: json['variation']['price'].toString(),
       inStock: true,
       quantity: json['quantity'],
     );

@@ -55,6 +55,7 @@ dependencies:
   stripe_payment: ^1.0.7
   progress_dialog: ^1.2.2
   firebase_messaging: ^7.0.0
+  flutter_local_notifications: ^1.4.4+4
 
 dev_dependencies:
   flutter_test:

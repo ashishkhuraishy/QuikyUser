@@ -134,12 +134,16 @@ class StripeService {
       Map<String, dynamic> paymentIntent, int orderId) async {
     StripeTransactionResponse transactionResponse;
 
+    print("Confirming Payment...");
+
     var response = await StripePayment.confirmPaymentIntent(
       PaymentIntent(
         clientSecret: paymentIntent['client_secret'],
         paymentMethodId: paymentMethod.id,
       ),
     );
+
+    print("Confirmed Payment");
 
     print(paymentIntent['id']);
     print(paymentMethod.id);
