@@ -1,7 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path/path.dart';
 
 class PushNotificationService {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -14,8 +12,10 @@ class PushNotificationService {
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: () => print(object));
+    flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: (payload) async => print("payLoad : $payload"),
+    );
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         showNotification(
@@ -28,18 +28,6 @@ class PushNotificationService {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-      },
-    );
-  }
-
-  Future onSelectNotification(String payload) async {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return new AlertDialog(
-          title: Text("PayLoad"),
-          content: Text("Payload : $payload"),
-        );
       },
     );
   }
