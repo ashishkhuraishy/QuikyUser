@@ -1,4 +1,4 @@
-const String MapApiKey = 'AIzaSyAYQYA8cs_CWX797aqbXuH08nYxzez-1nk';
+const String MapApiKey = 'AIzaSyB8fpCouWeqnqgRldExqJSiHXMtClPXs3U';
 
 const String GMapURL =
     'https://maps.googleapis.com/maps/api/geocode/json?key=$MapApiKey&latlng=';
