@@ -7,8 +7,7 @@ import 'package:quiky_user/features/home/data/model/recipie_model.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
 import 'package:quiky_user/features/home/domain/entity/recipie.dart';
 
-// const BASE_URL = 'http://3.7.65.63';
-const BASE_URL = 'https://bf0f1c4ddd91.ngrok.io';
+const BASE_URL = 'http://3.7.65.63';
 
 enum StoreType {
   inTheSpotlight,

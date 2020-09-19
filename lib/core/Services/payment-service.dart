@@ -39,7 +39,6 @@ class StripeService {
   };
 
   // Public Classes
-
   payAsCod(int orderId, String amount) async {
     final result = await _getPaymentStatus(
       orderId: orderId,
@@ -76,7 +75,7 @@ class StripeService {
     return transactionResponse;
   }
 
-  // Save and Pay with a new Card
+  /// Pay with a new Card method will open a new rew
   Future<StripeTransactionResponse> payWithNewCard({
     int orderId,
     String amount,

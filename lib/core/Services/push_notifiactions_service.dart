@@ -2,24 +2,34 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
+  // Initialised firebase messaging and local notofications
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      new FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   void init() {
+    // Initialising android and Ios methods for local notification
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(
+      initializationSettingsAndroid,
+      initializationSettingsIOS,
+    );
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (payload) async => print("payLoad : $payload"),
+      onSelectNotification: (payload) async {
+        print(payload);
+      },
     );
+
+    // Configuring Firebase callbacks
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         showNotification(
-            message['notification']['title'], message['notification']['body']);
+          message['notification']['title'],
+          message['notification']['body'],
+        );
         print("onMessage: $message");
       },
       onLaunch: (Map<String, dynamic> message) async {
@@ -33,25 +43,28 @@ class PushNotificationService {
   }
 
   void showNotification(String title, String body) async {
-    await _demoNotification(title, body);
+    print("Showing Notification...");
+    await _orderStatusNotification(title, body);
   }
 
-  Future<void> _demoNotification(String title, String body) async {
+  Future<void> _orderStatusNotification(String title, String body) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'channel_ID',
-      'channel name',
-      'channel description',
-      importance: Importance.Max,
-      playSound: true,
-      showProgress: true,
-      priority: Priority.High,
-      ticker: 'test ticker',
+      'ORDER_STATUS',
+      'Order status channel',
+      'Channel  to revcive notifications for order status',
     );
 
     var iOSChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSChannelSpecifics);
-    await flutterLocalNotificationsPlugin
-        .show(0, title, body, platformChannelSpecifics, payload: 'test');
+      androidPlatformChannelSpecifics,
+      iOSChannelSpecifics,
+    );
+    print("All Initialised");
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+    );
   }
 }

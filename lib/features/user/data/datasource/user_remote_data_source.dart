@@ -40,6 +40,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
         '/login/$username/$password/?user=customer&registration_id=$_token&device_type=$platform';
     Response response = await client.get(url);
     initMessaging();
+    print(url);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return UserModel.fromJson(data);
