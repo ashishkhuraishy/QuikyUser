@@ -14,7 +14,7 @@ import '../../injection_container.dart';
 
 class StripeService {
   // Initialising UseCases
-  GetPaymentStatus _getPaymentStatus = GetPaymentStatus(repository: sl());
+  GetRazorPayId _getPaymentStatus = GetRazorPayId(repository: sl());
   AddCard _addCard = AddCard(repository: sl());
   GetCards _getCards = GetCards(repository: sl());
 
@@ -42,7 +42,6 @@ class StripeService {
   payAsCod(int orderId, String amount) async {
     final result = await _getPaymentStatus(
       orderId: orderId,
-      paymentId: '',
       paymentType: PaymentType.COD,
     );
   }
@@ -102,7 +101,6 @@ class StripeService {
   }
 
   // Helper Methods
-
   _getPlatformExceptionErrorResult(err) {
     String message = 'Something went wrong';
     if (err.code == 'cancelled') {
@@ -149,7 +147,6 @@ class StripeService {
     print(paymentMethod.customerId);
     final result = await _getPaymentStatus(
       orderId: orderId,
-      paymentId: paymentIntent['id'],
       paymentType: PaymentType.CARD,
     );
 

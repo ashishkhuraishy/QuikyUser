@@ -8,6 +8,8 @@ import 'HomeTab.dart';
 import 'ProfileTab.dart';
 import 'SearchTab.dart';
 
+GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -15,6 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // Address currentAddress;
+
   @override
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
@@ -34,14 +37,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  navigateToCart(){
-    controller.index=2;
+  navigateToCart() {
+    controller.index = 2;
   }
 
   @override
   Widget build(BuildContext context) {
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: homeKey,
       body: TabBarView(
         children: <Widget>[
           HomeTab(scWidth: scWidth),

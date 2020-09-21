@@ -1,5 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:quiky_user/Screens/home.dart';
 
 class PushNotificationService {
   // Initialised firebase messaging and local notofications
@@ -33,6 +35,7 @@ class PushNotificationService {
         print("onMessage: $message");
       },
       onLaunch: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(homeKey.currentContext, '/allstore');
         print("onLaunch: $message");
         // Navigator.pushNamed(context, '/notify');
       },

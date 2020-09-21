@@ -29,20 +29,18 @@ class PaymentRepositoryImpl extends PaymentRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> getStatus({
+  Future<Either<Failure, String>> getRazorPayId({
     int orderId,
-    String paymentId,
     PaymentType paymentType,
   }) async {
     if (!(await networkInfo.isConnected)) return Left(ConnectionFailure());
 
     try {
-      final status = await remoteDataSource.getPaymentStatus(
+      final razorPayId = await remoteDataSource.getRazorPayId(
         orderId,
-        paymentId,
         paymentType,
       );
-      return Right(status);
+      return Right(razorPayId);
     } on ServerException {
       return Left(ServerFailure());
     }
