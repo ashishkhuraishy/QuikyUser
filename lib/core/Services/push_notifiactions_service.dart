@@ -54,7 +54,7 @@ class PushNotificationService {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'ORDER_STATUS',
       'Order status channel',
-      'Channel  to revcive notifications for order status',
+      'Channel to revcive notifications for order status',
     );
 
     var iOSChannelSpecifics = IOSNotificationDetails();
