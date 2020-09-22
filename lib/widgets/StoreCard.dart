@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 
 import '../features/home/data/model/restaurant_model.dart';
 import '../theme/themedata.dart';
@@ -15,7 +16,7 @@ class StoreCard extends StatelessWidget {
   final double scWidth;
   final RestaurantModel restaurantModel;
 
-  static String api = "http://3.7.65.63";
+  static String api = BASE_URL;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +72,7 @@ class StoreCard extends StatelessWidget {
             ),
             Container(
               constraints: BoxConstraints(
-                maxWidth: scWidth - 130,
-                minWidth: scWidth-130
-              ),
+                  maxWidth: scWidth - 130, minWidth: scWidth - 130),
               height: 110,
               padding: const EdgeInsets.only(left: 10.0),
               child: Column(
@@ -100,7 +99,7 @@ class StoreCard extends StatelessWidget {
                   ),
                   // Spacer(flex:8),
                   Text(
-                    "★${restaurantModel.avgRating} • ${int.tryParse(restaurantModel.avgDeliveryTime)!=null?int.tryParse(restaurantModel.avgDeliveryTime)+25:25} mins • ₹${restaurantModel.minimumCostTwo} for two",
+                    "★${restaurantModel.avgRating} • ${int.tryParse(restaurantModel.avgDeliveryTime) != null ? int.tryParse(restaurantModel.avgDeliveryTime) + 25 : 25} mins • ₹${restaurantModel.minimumCostTwo} for two",
                     style: Theme.of(context).textTheme.bodyText1,
                     overflow: TextOverflow.ellipsis,
                   ),

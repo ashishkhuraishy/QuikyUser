@@ -61,13 +61,13 @@ class CartTab extends StatelessWidget {
       isScrollControlled: true,
       builder: (ctx) {
         return BottomSheet(
-          onClosing: (){
+          onClosing: () {
             onClose();
           },
           builder: (ctx) {
             return StatefulBuilder(
               builder: (BuildContext ctxx, StateSetter val) {
-                print(order);
+                // print(order);
                 int payMethod = 0;
                 return SingleChildScrollView(
                   child: Column(
@@ -165,7 +165,7 @@ class CartTab extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      print("asdasd");
+                                      // print("asdasd");
                                       val(() {
                                         payMethod = 1;
                                       });
@@ -199,8 +199,9 @@ class CartTab extends StatelessWidget {
                         width: double.infinity,
                         child: FlatButton(
                           onPressed: () {
-                            print(order.id);
-                            Navigator.of(context).pushNamed('/existingcard',arguments: order);
+                            // print(order.id);
+                            Navigator.of(context)
+                                .pushNamed('/existingcard', arguments: order);
                           },
                           child: Text("Continue Payment"),
                           color: primary,
@@ -247,12 +248,14 @@ class CartTab extends StatelessWidget {
                       final order = await Provider.of<CartProvider>(context,
                               listen: false)
                           .confrimOrder(
-                              userLocation:
-                                  "${currentAddress.lat},${currentAddress.long}",
-                              coupon: null);
+                        userLocation:
+                            "${currentAddress.lat},${currentAddress.long}",
+                        shippingAddress: "${currentAddress.formattedAddress}",
+                        coupon: null,
+                      );
                       if (order.isLeft()) {
                         print("Error Occured");
-                        // print(order);
+                        print(order.fold((l) => l, (r) => r).toString());
                       } else {
                         print("Corder placed");
                         displayConfirmOrderBottomSheet(
@@ -530,6 +533,7 @@ class StoreDetails extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Consumer<CartProvider>(
         builder: (ctx, provider, _) {
+          print("${provider.currentStoreId}");
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,

@@ -7,9 +7,8 @@ abstract class PaymentRepository {
   List<PaymentCard> getCards();
   void addCard(PaymentCard card);
 
-  Future<Either<Failure, bool>> getStatus({
+  Future<Either<Failure, String>> getRazorPayId({
     int orderId,
-    String paymentId,
     PaymentType paymentType,
   });
 }

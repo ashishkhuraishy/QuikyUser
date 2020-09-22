@@ -8,8 +8,10 @@ import 'package:quiky_user/features/home/data/data_source/home_remote_data_sourc
 enum PaymentType { CARD, COD }
 
 abstract class PaymentRemoteDataSource {
-  Future<bool> getPaymentStatus(
-      int orderId, String paymentId, PaymentType paymentType);
+  Future<String> getRazorPayId(
+    int orderId,
+    PaymentType paymentType,
+  );
 }
 
 class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
@@ -18,9 +20,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   PaymentRemoteDataSourceImpl({this.client});
 
   @override
-  Future<bool> getPaymentStatus(
+  Future<String> getRazorPayId(
     int orderId,
-    String paymentId,
     PaymentType paymentType,
   ) async {
     String paymentUrl = BASE_URL + '/payment/?payment_type=';
@@ -37,7 +38,6 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     }
 
     Map<String, dynamic> body = {
-      "payment_id": paymentId,
       "order_id": orderId,
     };
 
@@ -51,7 +51,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
 
     if (response.statusCode == 200) {
       Map respBody = jsonDecode(response.body);
-      return respBody["payment_status"].toString().contains("succeeded");
+      print(respBody.toString());
+      return respBody["razorpay"]["id"];
     }
 
     throw ServerException();

@@ -76,19 +76,28 @@ class AllStore extends StatelessWidget {
                     ),
                   ),
                   SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.all(10),
                     child: Row(
                       children: [
                         FilterItem(
+                          name: "Trending",
                           selected: true,
                         ),
                         FilterItem(
+                          name: "Offers",
                           selected: false,
                         ),
                         FilterItem(
+                          name: "Below 30 Mins",
                           selected: false,
                         ),
                         FilterItem(
+                          name: "New Arrivals",
+                          selected: false,
+                        ),
+                        FilterItem(
+                          name: "Top Rated",
                           selected: false,
                         ),
                       ],
@@ -108,7 +117,25 @@ class AllStore extends StatelessWidget {
                 ],
               ),
             );
-          } else {
+          } else if (stores.hasError) {
+            return Center(
+              child: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("Something went wrong"),
+                    RaisedButton(
+                      onPressed: () {
+                        // ctxz.
+                        rs.getStores();
+                      },
+                      child: Text("Retry"),
+                    )
+                  ],
+                ),
+              ),
+            );
+          } else if(stores.connectionState ==ConnectionState.waiting){
             return Center(child: CircularProgressIndicator());
           }
         },
@@ -121,23 +148,28 @@ class FilterItem extends StatelessWidget {
   const FilterItem({
     Key key,
     this.selected,
+    this.name,
   }) : super(key: key);
 
+  final String name;
   final bool selected;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        color: selected ? primary : Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: primary),
-      ),
-      padding: EdgeInsets.all(5),
-      child: Text(
-        "Trending",
-        style: selected ? white13 : Theme.of(context).textTheme.bodyText2,
+    return InkWell(
+      onTap: (){},
+          child: Container(
+        margin: EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+          color: selected ? primary : Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: primary),
+        ),
+        padding: EdgeInsets.all(5),
+        child: Text(
+          "$name",
+          style: selected ? white13 : Theme.of(context).textTheme.bodyText2,
+        ),
       ),
     );
   }

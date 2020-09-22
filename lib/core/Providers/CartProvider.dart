@@ -48,6 +48,7 @@ class CartProvider extends ChangeNotifier {
   List<CartItem> get currentCartItems => _currentCart.cartItems;
   void get clear {
     _clearCart.call();
+    cartProducts=[];
     notifyListeners();
   }
 
@@ -80,13 +81,18 @@ class CartProvider extends ChangeNotifier {
   ///
   /// on Failure returns [ConnectionFailure] or [ServerFailure]
   /// depending on the error
-  confrimOrder({String userLocation, String coupon}) async {
+  confrimOrder({
+    @required String userLocation,
+    @required String shippingAddress,
+    String coupon,
+  }) async {
     final result = await _confirmOrder(
       userLocation: userLocation,
+      shippingAddress: shippingAddress,
       coupon: coupon,
     );
 
-    // TODO : Change this and PUSH
+    result.fold((l) => print(l.toString()), (r) => print(r.total));
 
     return result;
   }

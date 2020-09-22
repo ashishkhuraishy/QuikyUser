@@ -13,8 +13,11 @@ import '../widgets/ProductCard.dart';
 import '../widgets/RatingStar.dart';
 
 class Store extends StatelessWidget {
+  // final TabController controller;
+
   const Store({
     Key key,
+    // this.controller,
   }) : super(key: key);
 
   Future<List> loadProducts(RestaurantModel restaurant) async {
@@ -30,6 +33,7 @@ class Store extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar: InkWell(
           onTap: () {
+            // controller.animateTo(2);
             Navigator.pushReplacementNamed(context, '/home', arguments: 2);
             // Provider.of<Home>(context,listen: false).navigate();
           },
@@ -151,7 +155,9 @@ class Store extends StatelessWidget {
                           ),
                         ),
                         CustomBorderedButton(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, '/address-book');
+                          },
                           child: Text(
                             "Change",
                             style: Theme.of(context).textTheme.bodyText1,
@@ -213,11 +219,43 @@ class Store extends StatelessWidget {
                       },
                     );
                   } else if (categories.hasError) {
-                    return Text(
-                        "${categories.error} ${categories.connectionState} ");
-                  } else {
+                    return Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Something went wrong"),
+                            RaisedButton(
+                              onPressed: () {
+                                loadProducts(restaurant);
+                              },
+                              child: Text("Retry"),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  } else if (categories.connectionState ==
+                      ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Something went wrong, Try again later"),
+                            // RaisedButton(
+                            //   onPressed: () {
+                            //     loadProducts(restaurant);
+                            //   },
+                            //   child: Text("Retry"),
+                            // )
+                          ],
+                        ),
+                      ),
                     );
                   }
                 },

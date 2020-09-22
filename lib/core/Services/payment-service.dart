@@ -14,7 +14,7 @@ import '../../injection_container.dart';
 
 class StripeService {
   // Initialising UseCases
-  GetPaymentStatus _getPaymentStatus = GetPaymentStatus(repository: sl());
+  GetRazorPayId _getPaymentStatus = GetRazorPayId(repository: sl());
   AddCard _addCard = AddCard(repository: sl());
   GetCards _getCards = GetCards(repository: sl());
 
@@ -39,6 +39,12 @@ class StripeService {
   };
 
   // Public Classes
+  payAsCod(int orderId, String amount) async {
+    final result = await _getPaymentStatus(
+      orderId: orderId,
+      paymentType: PaymentType.COD,
+    );
+  }
 
   // PayWithExisting Card
   Future<StripeTransactionResponse> payViaExistingCard({
@@ -48,11 +54,13 @@ class StripeService {
     PaymentCard card,
   }) async {
     StripeTransactionResponse transactionResponse = StripeTransactionResponse();
-
+    print('Pay with existing card called');
+    int amnt = num.parse(amount).toInt() * 100;
     try {
       var paymentMethod = await StripePayment.createPaymentMethod(
           PaymentMethodRequest(card: card.toCreditCard()));
-      var paymentIntent = await _createPaymentIntent(amount, currency);
+      var paymentIntent = await _createPaymentIntent(amnt.toString(), "INR");
+      print(paymentIntent['id']);
       transactionResponse =
           await _confirmPayment(paymentMethod, paymentIntent, orderId);
     } on PlatformException catch (err) {
@@ -61,10 +69,12 @@ class StripeService {
       transactionResponse = StripeTransactionResponse(
           message: 'Transaction failed: ${err.toString()}', success: false);
     }
+    print(transactionResponse.message);
+    print(transactionResponse.success);
     return transactionResponse;
   }
 
-  // Save and Pay with a new Card
+  /// Pay with a new Card method will open a new rew
   Future<StripeTransactionResponse> payWithNewCard({
     int orderId,
     String amount,
@@ -91,7 +101,6 @@ class StripeService {
   }
 
   // Helper Methods
-
   _getPlatformExceptionErrorResult(err) {
     String message = 'Something went wrong';
     if (err.code == 'cancelled') {
@@ -122,17 +131,26 @@ class StripeService {
       Map<String, dynamic> paymentIntent, int orderId) async {
     StripeTransactionResponse transactionResponse;
 
+    print("Confirming Payment...");
+
     var response = await StripePayment.confirmPaymentIntent(
       PaymentIntent(
         clientSecret: paymentIntent['client_secret'],
         paymentMethodId: paymentMethod.id,
       ),
     );
+
+    print("Confirmed Payment");
+
+    print(paymentIntent['id']);
+    print(paymentMethod.id);
+    print(paymentMethod.customerId);
     final result = await _getPaymentStatus(
       orderId: orderId,
-      paymentId: paymentMethod.id,
       paymentType: PaymentType.CARD,
     );
+
+    print("Result : ${result}");
 
     result.fold((failure) {
       print("Error Occured at $failure");
@@ -151,9 +169,18 @@ class StripeService {
         transactionResponse = StripeTransactionResponse(
             message: 'Transaction successful', success: true);
       }
+      // print("Response Status :  ${response.status}");
       transactionResponse = StripeTransactionResponse(
           message: 'Transaction failed', success: false);
     });
+
+    if (response.status == 'succeeded') {
+      transactionResponse = StripeTransactionResponse(
+          message: 'Transaction successful', success: true);
+    } else {
+      transactionResponse = StripeTransactionResponse(
+          message: 'Transaction failed', success: false);
+    }
 
     return transactionResponse;
   }

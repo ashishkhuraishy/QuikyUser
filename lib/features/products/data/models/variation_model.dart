@@ -52,7 +52,7 @@ class VariationModel extends Variation {
       weight: json['weight'] ?? '',
       size: json['size'] ?? '',
       isStock: json['is_stock'] ?? false,
-      price: json['price'] ?? '0',
+      price: json['price'].toString() ?? '0',
       quantity: "${json['quantity']}" ?? '',
       updated: json['updated'] ?? '',
       active: json['active'] ?? false,

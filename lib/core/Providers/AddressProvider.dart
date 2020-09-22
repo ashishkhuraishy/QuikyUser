@@ -47,6 +47,7 @@ class AddressProvider extends ChangeNotifier {
 
   makeCurrentAddress(Address address) async {
     _addressModel = address;
+    notifyListeners();
   }
 
   _catchError(Failure failure) {
