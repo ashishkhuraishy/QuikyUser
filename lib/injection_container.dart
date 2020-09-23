@@ -19,7 +19,6 @@ import 'features/location_service/data/repository/address_repository_imp.dart';
 import 'features/location_service/domain/repository/address_repo.dart';
 import 'features/location_service/domain/usecase/cache_address.dart';
 import 'features/location_service/domain/usecase/get_address.dart';
-import 'features/payement/data/data_source/payment_local_data_source.dart';
 import 'features/payement/data/data_source/payment_remote_data_source.dart';
 import 'features/payement/data/repository/payment_repository_impl.dart';
 import 'features/payement/domain/repository/payment_repository.dart';
@@ -92,7 +91,6 @@ Future<void> init() async {
   sl.registerLazySingleton<PaymentRepository>(
     () => PaymentRepositoryImpl(
       networkInfo: sl(),
-      localDataSource: sl(),
       remoteDataSource: sl(),
     ),
   );
@@ -155,12 +153,6 @@ Future<void> init() async {
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(
       client: sl(),
-    ),
-  );
-
-  sl.registerLazySingleton<PaymentLocalDataSource>(
-    () => PaymentLocalDataSourceImpl(
-      hive: sl(),
     ),
   );
 
