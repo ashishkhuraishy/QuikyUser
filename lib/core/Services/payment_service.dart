@@ -29,7 +29,8 @@ class PaymentService {
     result.fold(
       (failure) => print(failure.runtimeType),
       (razorpayId) {
-        Map options = {
+        print(razorpayId);
+        var options = {
           'key': '$RAZOR_PAY_KEY',
           'amount': total, //in the smallest currency sub-unit.
           'name': '$storeName',

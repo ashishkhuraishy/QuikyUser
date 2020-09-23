@@ -42,6 +42,9 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
       "order_id": orderId,
     };
 
+    print(paymentUrl);
+    print(body);
+
     Response response = await client.post(
       paymentUrl,
       body: jsonEncode(body),
@@ -51,10 +54,12 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     );
 
     if (response.statusCode == 200) {
-      Map respBody = jsonDecode(response.body);
-      print(respBody.toString());
-      return respBody["razorpay"]["id"];
+      var respBody = jsonDecode(response.body);
+      print(respBody['razorpay']['id']);
+      return respBody["razorpay"]["id"].toString();
     }
+    print(response.statusCode);
+    print(response.body);
 
     throw ServerException();
   }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
 import 'package:quiky_user/Widgets/StoreDetails.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Providers/UserProvider.dart';
 import 'package:quiky_user/core/Services/payment_service.dart';
 import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
+import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
 import 'package:quiky_user/features/user/domain/entity/user.dart';
 
 import '../core/Providers/CartProvider.dart';
@@ -211,10 +214,14 @@ class CartTab extends StatelessWidget {
                             if (payMethod == 1) {
                               await paymentService.startCod(order);
                             } else {
-                              User _user =
-                                  Provider.of<User>(context, listen: false);
-                              Cart _cart =
-                                  Provider.of<Cart>(context, listen: false);
+                              Box _box = Hive.box(CORE_BOX);
+                              User _user = _box.get(USER) as User;
+
+                              Cart _cart = await Provider.of<CartProvider>(
+                                context,
+                                listen: false,
+                              ).getCart;
+
                               await paymentService.startOnlinePayment(
                                 order: order,
                                 user: _user,

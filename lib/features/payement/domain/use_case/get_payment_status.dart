@@ -16,6 +16,7 @@ class GetRazorPayId {
   }) {
     return repository.getRazorPayId(
       orderId: orderId,
+      paymentType: paymentType,
     );
   }
 }
