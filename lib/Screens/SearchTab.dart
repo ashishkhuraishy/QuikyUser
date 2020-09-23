@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Widgets/OptionCard.dart';
-import 'package:quiky_user/Widgets/StoreCard.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/Providers/HomeProvider.dart';
-import 'package:quiky_user/core/Services/search_service.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
-import 'package:quiky_user/features/location_service/domain/entity/address.dart';
+
+import '../Constants/Apikeys.dart';
+import '../Widgets/OptionCard.dart';
+import '../Widgets/StoreCard.dart';
+import '../core/Providers/AddressProvider.dart';
+import '../core/Providers/HomeProvider.dart';
+import '../core/Services/search_service.dart';
+import '../features/home/domain/entity/restaurents.dart';
+import '../features/location_service/domain/entity/address.dart';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({Key key}) : super(key: key);

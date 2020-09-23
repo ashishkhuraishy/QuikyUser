@@ -135,9 +135,10 @@ class AllStore extends StatelessWidget {
                 ),
               ),
             );
-          } else if(stores.connectionState ==ConnectionState.waiting){
+          } else if (stores.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
+          return Container();
         },
       ),
     );
@@ -157,8 +158,8 @@ class FilterItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
-          child: Container(
+      onTap: () {},
+      child: Container(
         margin: EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
           color: selected ? primary : Theme.of(context).scaffoldBackgroundColor,

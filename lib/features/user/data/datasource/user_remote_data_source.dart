@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
-import 'package:quiky_user/core/error/exception.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/features/user/data/model/order_details_model.dart';
-import 'package:quiky_user/features/user/data/model/user_model.dart';
-import 'package:quiky_user/features/user/domain/entity/order_details.dart';
+
+import '../../../../Constants/Apikeys.dart';
+import '../../../../core/error/exception.dart';
+import '../../domain/entity/order_details.dart';
+import '../model/order_details_model.dart';
+import '../model/user_model.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserModel> login({

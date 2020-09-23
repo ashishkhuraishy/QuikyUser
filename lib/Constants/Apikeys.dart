@@ -8,3 +8,5 @@ const String STRIPE_SEC_KEY = "sk_test_fl8PJgOFELcMXaLYRUpk2ubt00SHJ6HN19";
 
 const String STRIPE_BASE = 'https://api.stripe.com/v1';
 const RAZOR_PAY_KEY = "rzp_test_0maP81kx4pBrUD";
+
+const BASE_URL = 'http://3.7.254.207';

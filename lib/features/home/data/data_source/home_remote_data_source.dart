@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:quiky_user/Constants/Apikeys.dart';
 import 'package:quiky_user/core/error/exception.dart';
 import 'package:quiky_user/features/home/data/model/recipie_model.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
 import 'package:quiky_user/features/home/domain/entity/recipie.dart';
-
-const BASE_URL = 'http://3.7.65.63';
 
 enum StoreType {
   inTheSpotlight,

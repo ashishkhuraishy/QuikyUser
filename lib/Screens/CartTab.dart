@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/Widgets/StoreDetails.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Services/payment_service.dart';
+import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
+import 'package:quiky_user/features/user/domain/entity/user.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
@@ -184,10 +188,11 @@ class CartTab extends StatelessWidget {
                                       });
                                     },
                                     child: PaymentMethodItem(
-                                        title: "CARD",
-                                        img: "assets/img/card.png",
-                                        selected: payMethod,
-                                        value: 2),
+                                      title: "CARD",
+                                      img: "assets/img/card.png",
+                                      selected: payMethod,
+                                      value: 2,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -198,10 +203,29 @@ class CartTab extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         child: FlatButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // print(order.id);
-                            Navigator.of(context)
-                                .pushNamed('/existingcard', arguments: order);
+
+                            // TODO : call this in init state
+                            PaymentService paymentService = PaymentService();
+                            if (payMethod == 1) {
+                              await paymentService.startCod(order);
+                            } else {
+                              User _user =
+                                  Provider.of<User>(context, listen: false);
+                              Cart _cart =
+                                  Provider.of<Cart>(context, listen: false);
+                              await paymentService.startOnlinePayment(
+                                order: order,
+                                user: _user,
+                                storeName: _cart.storeName,
+                              );
+                            }
+
+                            // TODO : call this in dispose
+                            paymentService.clearinstance();
+                            // Navigator.of(context)
+                            //     .pushNamed('/existingcard', arguments: order);
                           },
                           child: Text("Continue Payment"),
                           color: primary,
@@ -257,7 +281,7 @@ class CartTab extends StatelessWidget {
                         print("Error Occured");
                         print(order.fold((l) => l, (r) => r).toString());
                       } else {
-                        print("Corder placed");
+                        print("Order placed");
                         displayConfirmOrderBottomSheet(
                             context, order.fold((l) => l, (r) => r), () {
                           builder(() {
@@ -513,54 +537,6 @@ class NoContactDeliveryCard extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1,
           )
         ],
-      ),
-    );
-  }
-}
-
-class StoreDetails extends StatelessWidget {
-  const StoreDetails({
-    Key key,
-    @required this.scWidth,
-  }) : super(key: key);
-
-  final double scWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: scWidth,
-      padding: EdgeInsets.all(20),
-      child: Consumer<CartProvider>(
-        builder: (ctx, provider, _) {
-          print("${provider.currentStoreId}");
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Image.asset(
-                "assets/img/Burger.jpeg",
-                width: 50,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 10.0),
-                width: scWidth - 90,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("${provider.currentTitle}",
-                        style: Theme.of(context).textTheme.headline6),
-                    Text(
-                      "${provider.currentStoreAddress.trim()}",
-                      style: Theme.of(context).textTheme.subtitle1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
-        },
       ),
     );
   }

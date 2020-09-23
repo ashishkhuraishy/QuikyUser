@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Screens/AddressBook.dart';
-import 'package:quiky_user/Screens/AllStore.dart';
-import 'package:quiky_user/Screens/ExistingCards.dart';
-import 'package:quiky_user/features/payement/domain/Entity/payment_card.dart';
 
+import 'Screens/AddressBook.dart';
+import 'Screens/AllStore.dart';
+import 'Screens/ExistingCards.dart';
 import 'Screens/Login.dart';
 import 'Screens/Signup.dart';
 import 'Screens/Store.dart';
@@ -22,6 +21,7 @@ import 'features/home/domain/entity/offer.dart';
 import 'features/location_service/data/data_source/address_local_data_sourc.dart';
 import 'features/location_service/domain/entity/address.dart';
 import 'features/payement/data/data_source/payment_local_data_source.dart';
+import 'features/payement/domain/Entity/payment_card.dart';
 import 'features/user/data/datasource/user_local_data_source.dart';
 import 'features/user/domain/entity/user.dart';
 import 'injection_container.dart' as container;
@@ -190,7 +190,7 @@ class MyApp extends StatelessWidget {
           '/existing-cards': (context) => ExistingCardsPage(),
           '/address-book': (context) => AddressBook(),
           '/allstore': (context) => AllStore(),
-          '/existingcard':(context)=>ExistingCardsPage(),
+          '/existingcard': (context) => ExistingCardsPage(),
         },
         home: Wrapper(),
       ),

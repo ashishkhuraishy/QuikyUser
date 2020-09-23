@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 
 import '../core/Providers/UserProvider.dart';
 import '../theme/themedata.dart';
@@ -8,8 +9,6 @@ import 'HomeTab.dart';
 import 'ProfileTab.dart';
 import 'SearchTab.dart';
 
-GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -17,12 +16,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // Address currentAddress;
+  GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
     controller = TabController(length: 4, vsync: this);
     controller.addListener(tabListener);
+    PushNotificationService().init(context);
     super.initState();
   }
 
