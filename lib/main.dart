@@ -75,38 +75,44 @@ class MyApp extends StatelessWidget {
             headline5: TextStyle(
               //darkbold16
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 16,//16
               color: dark,
+              fontFamily: 'Roboto'
             ),
             headline6: TextStyle(
               //darkbold14
               fontWeight: FontWeight.bold,
-              fontSize: 14,
+              fontSize: 13,//14
               color: dark,
+              fontFamily: 'Roboto'
             ),
             bodyText1: TextStyle(
               //dark14
               fontWeight: FontWeight.normal,
-              fontSize: 13,
+              fontSize: 12,//13
               color: dark,
+              fontFamily: 'Roboto'
             ),
             subtitle1: TextStyle(
               //grey14
               fontWeight: FontWeight.normal,
-              fontSize: 13,
+              fontSize: 12,//13
               color: grey,
+              fontFamily: 'Roboto'
             ),
             subtitle2: new TextStyle(
               //grey11
               fontWeight: FontWeight.bold,
-              fontSize: 11,
+              fontSize: 10,//11
               color: grey,
+              fontFamily: 'Roboto'
             ),
             headline4: new TextStyle(
               //white11
               fontWeight: FontWeight.bold,
-              fontSize: 11,
+              fontSize: 10,//11
               color: dark,
+              fontFamily: 'Roboto'
             ),
           ),
           primaryColorLight: Colors.white,
@@ -145,38 +151,44 @@ class MyApp extends StatelessWidget {
             headline5: TextStyle(
               //darkbold16
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 16,//16
+              fontFamily: 'Roboto'
               // color: dark,
             ),
             headline6: TextStyle(
               //darkbold14
               fontWeight: FontWeight.bold,
-              fontSize: 14,
+              fontSize: 13,//14
+              fontFamily: 'Roboto'
               // color: dark,
             ),
             bodyText1: TextStyle(
               //dark14
               fontWeight: FontWeight.normal,
-              fontSize: 13,
+              fontSize: 12,//13
+              fontFamily: 'Roboto'
               // color: dark,
             ),
             subtitle1: TextStyle(
               //grey14
               fontWeight: FontWeight.normal,
-              fontSize: 13,
+              fontSize: 12,//13
               color: Colors.grey,
+              fontFamily: 'Roboto'
             ),
             subtitle2: new TextStyle(
               //grey11
               fontWeight: FontWeight.bold,
-              fontSize: 11,
+              fontSize: 10,//11
               color: Colors.grey,
+              fontFamily: 'Roboto'
             ),
             headline4: new TextStyle(
               //white11
               fontWeight: FontWeight.bold,
-              fontSize: 11,
+              fontSize: 10,//11
               color: Colors.white,
+              fontFamily: 'Roboto'
             ),
           ),
         ),

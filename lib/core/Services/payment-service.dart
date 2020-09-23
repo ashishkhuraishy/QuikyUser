@@ -15,7 +15,7 @@ import '../../injection_container.dart';
 class StripeService {
   // Initialising UseCases
   GetPaymentStatus _getPaymentStatus = GetPaymentStatus(repository: sl());
-  AddCard _addCard = AddCard(repository: sl());
+  AddCard addCard = AddCard(repository: sl());
   GetCards _getCards = GetCards(repository: sl());
 
   // Getter method to get all cards
@@ -46,6 +46,7 @@ class StripeService {
       paymentId: '',
       paymentType: PaymentType.COD,
     );
+    result.fold((l) => print(l), (r) => print(r));
   }
 
   // PayWithExisting Card
@@ -88,7 +89,7 @@ class StripeService {
       var paymentMethod = await StripePayment.paymentRequestWithCardForm(
         CardFormPaymentRequest(),
       );
-      _addCard(card: PaymentCard.fromCreditCard(paymentMethod.card));
+      addCard(card: PaymentCard.fromCreditCard(paymentMethod.card));
       var paymentIntent = await _createPaymentIntent(amount, currency);
       transactionResponse =
           await _confirmPayment(paymentMethod, paymentIntent, orderId);

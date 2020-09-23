@@ -56,7 +56,7 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
 
     url += "?user_location=$userLocation";
     if (coupon != null) url += "&coupon=$coupon";
-
+    // print("$url $coupon");
     Response response = await client.post(
       url,
       headers: {

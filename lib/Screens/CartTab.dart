@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
+import 'package:quiky_user/core/Services/payment-service.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
+import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
-  const CartTab({Key key}) : super(key: key);
+  CartTab({Key key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void displayOfferBottomSheet(
-    BuildContext context,
-  ) {
+      BuildContext context, Function onSelect, Offer selectedOffer) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -27,13 +29,65 @@ class CartTab extends StatelessWidget {
                   builder: (ctx, provider, _) {
                     if (provider.currentOffers.length > 0 &&
                         provider.currentOffers != null) {
-                      return ListView.builder(
-                        padding: EdgeInsets.only(top: 10),
-                        itemCount: provider.currentOffers.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (ctx, index) {
-                          return Text("adasd");
+                      return StatefulBuilder(
+                        builder: (ctxxx, builder) {
+                          return ListView.builder(
+                            padding: EdgeInsets.only(top: 10),
+                            itemCount: provider.currentOffers.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (ctx, index) {
+                              print(provider.currentOffers[index]);
+                              bool isSelected = selectedOffer != null &&
+                                      selectedOffer.offerId ==
+                                          provider.currentOffers[index].offerId
+                                  ? true
+                                  : false;
+                              return InkWell(
+                                onTap: () {
+                                  scaffoldKey.currentState.setState(() {
+                                    builder(() {
+                                      isSelected = true;
+                                      onSelect(provider.currentOffers[index]);
+                                      selectedOffer =
+                                          provider.currentOffers[index];
+                                    });
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              "${provider.currentOffers[index].title} "),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 3,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Text(
+                                                "%${provider.currentOffers[index].percentage} OFF"),
+                                          ),
+                                        ],
+                                      ),
+                                      isSelected ? Text("Applied") : Container()
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
                         },
                       );
                     } else {
@@ -59,159 +113,180 @@ class CartTab extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (ctx) {
         return BottomSheet(
+          backgroundColor: Colors.transparent,
           onClosing: () {
             onClose();
           },
           builder: (ctx) {
-            return StatefulBuilder(
-              builder: (BuildContext ctxx, StateSetter val) {
-                // print(order);
-                int payMethod = 0;
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: order.items.length,
-                              itemBuilder: (ctx, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
+            int payMethod = 0;
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 15),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: order.items.length,
+                            itemBuilder: (ctx, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: Text(
                                         "${order.items[index].name}",
                                         textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text(
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
                                         "₹${order.items[index].inlineTotal}",
                                         style: primaryBold14,
                                         textAlign: TextAlign.right,
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                            order.coupon != 'nill'
-                                ? PaymentRow(
-                                    title: "Offer Applied",
-                                    price: "${order.coupon}",
-                                    style:
-                                        Theme.of(context).textTheme.subtitle1)
-                                : Container(),
-                            PaymentRow(
-                                title: "Sub Total",
-                                price: "₹${order.subTotal}",
-                                style: Theme.of(context).textTheme.subtitle1),
-                            PaymentRow(
-                                title: "Tax Total",
-                                price: "₹${order.taxtotal}",
-                                style: Theme.of(context).textTheme.subtitle1),
-                            PaymentRow(
-                                title: "Delivery Charges",
-                                price: "₹${order.delCharges}",
-                                style: Theme.of(context).textTheme.subtitle1),
-                            order.coupon != 'nill'
-                                ? PaymentRow(
-                                    title: "Discount Amount",
-                                    price: "₹${order.discountAmount}",
-                                    style: primary13)
-                                : Container(),
-                            PaymentRow(
-                                title: "Total",
-                                price: "₹${order.total}",
-                                style: Theme.of(context).textTheme.headline5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 15, bottom: 10),
-                                  child: Text(
-                                    "Payment",
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                    textAlign: TextAlign.left,
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            SingleChildScrollView(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      val(() {
-                                        payMethod = 1;
-                                      });
-                                    },
-                                    child: PaymentMethodItem(
-                                      title: "COD",
-                                      img: "assets/img/cod.png",
-                                      selected: payMethod,
-                                      value: 0,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      // print("asdasd");
-                                      val(() {
-                                        payMethod = 1;
-                                      });
-                                    },
-                                    child: PaymentMethodItem(
-                                      title: "$payMethod",
-                                      img: "assets/img/gpay.png",
-                                      selected: payMethod,
-                                      value: 1,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      val(() {
-                                        payMethod = 1;
-                                      });
-                                    },
-                                    child: PaymentMethodItem(
+                              );
+                            },
+                          ),
+                          order.coupon != 'nill'
+                              ? PaymentRow(
+                                  title: "Offer Applied",
+                                  price: "${order.coupon}",
+                                  style: Theme.of(context).textTheme.subtitle1)
+                              : Container(),
+                          PaymentRow(
+                              title: "Sub Total",
+                              price: "₹${order.subTotal}",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          PaymentRow(
+                              title: "Tax Total",
+                              price: "₹${order.taxtotal}",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          PaymentRow(
+                              title: "Delivery Charges",
+                              price: "₹${order.delCharges}",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          order.coupon != 'nill'
+                              ? PaymentRow(
+                                  title: "Discount Amount",
+                                  price: "₹${order.discountAmount}",
+                                  style: primary13)
+                              : Container(),
+                          PaymentRow(
+                              title: "Total",
+                              price: "₹${order.total}",
+                              style: Theme.of(context).textTheme.headline5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 15, bottom: 10),
+                                child: Text(
+                                  "Payment",
+                                  style: Theme.of(context).textTheme.headline6,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                          StatefulBuilder(
+                            builder: (contex2, state) {
+                              return SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                  children: [
+                                    PaymentMethodItem(
+                                        title: "COD",
+                                        img: "assets/img/cod.png",
+                                        selected: payMethod,
+                                        value: 0,
+                                        onTap: () {
+                                          scaffoldKey.currentState.setState(() {
+                                            state(() {
+                                              payMethod = 0;
+                                            });
+                                          });
+                                        }),
+                                    // PaymentMethodItem(
+                                    //     title: "G PAY",
+                                    //     img: "assets/img/gpay.png",
+                                    //     selected: payMethod,
+                                    //     value: 1,
+                                    //     onTap: () {
+                                    //       scaffoldKey.currentState.setState(() {
+                                    //         state(() {
+                                    //           payMethod = 1;
+                                    //         });
+                                    //       });
+                                    //     }),
+                                    PaymentMethodItem(
                                         title: "CARD",
                                         img: "assets/img/card.png",
                                         selected: payMethod,
-                                        value: 2),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                        value: 2,
+                                        onTap: () {
+                                          scaffoldKey.currentState.setState(() {
+                                            state(() {
+                                              payMethod = 2;
+                                            });
+                                          });
+                                        }),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        ],
                       ),
-                      Container(
-                        width: double.infinity,
-                        child: FlatButton(
-                          onPressed: () {
-                            // print(order.id);
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: FlatButton(
+                        onPressed: () {
+                          // print(order.id);
+                          if (payMethod == 0) {
+                            //COD
+                            print(order.id);
+                            // StripeService sp = new StripeService();
+                            // sp.payAsCod(order.id, order.total);
+                          } else if (payMethod == 2) {
+                            //CARD
                             Navigator.of(context)
                                 .pushNamed('/existingcard', arguments: order);
-                          },
-                          child: Text("Continue Payment"),
-                          color: primary,
-                          padding: EdgeInsets.all(15),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
+                          }
+                        },
+                        child: Text("Continue Payment"),
+                        color: primary,
+                        padding: EdgeInsets.all(15),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             );
           },
         );
@@ -225,7 +300,11 @@ class CartTab extends StatelessWidget {
 
     Provider.of<CartProvider>(context, listen: false).getProductsFromCart();
     double scWidth = MediaQuery.of(context).size.width;
+
+    Offer coupon;
+
     return Scaffold(
+      key: scaffoldKey,
       bottomSheet: Provider.of<CartProvider>(context, listen: false)
                   .cartProducts
                   .length >
@@ -251,7 +330,7 @@ class CartTab extends StatelessWidget {
                         userLocation:
                             "${currentAddress.lat},${currentAddress.long}",
                         shippingAddress: "${currentAddress.formattedAddress}",
-                        coupon: null,
+                        coupon: coupon != null ? coupon.code : null,
                       );
                       if (order.isLeft()) {
                         print("Error Occured");
@@ -377,18 +456,44 @@ class CartTab extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,
-                      child: FlatButton(
-                        color: primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        onPressed: () {
-                          displayOfferBottomSheet(context);
+                      child: StatefulBuilder(
+                        builder: (context1, state) {
+                          return FlatButton(
+                            color: primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            onPressed: () {
+                              displayOfferBottomSheet(context, (offer) {
+                                state(() {
+                                  coupon = offer;
+                                });
+                              }, coupon);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Apply Coupon",
+                                  style: whiteBold13,
+                                ),
+                                coupon != null
+                                    ? Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        color: Colors.black12,
+                                        child: Text(
+                                          "${coupon.title} %${coupon.percentage}OFF",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                        ),
+                                      )
+                                    : Text("►")
+                              ],
+                            ),
+                          );
                         },
-                        child: Text(
-                          "Apply Coupon",
-                          style: whiteBold13,
-                        ),
                       ),
                     ),
                     NoContactDeliveryCard(),
@@ -410,9 +515,11 @@ class PaymentMethodItem extends StatefulWidget {
     this.title,
     this.selected,
     this.value,
+    this.onTap,
   }) : super(key: key);
 
   final int selected, value;
+  final void Function() onTap;
 
   final String img, title;
 
@@ -425,6 +532,7 @@ class _PaymentMethodItemState extends State<PaymentMethodItem> {
   Widget build(BuildContext context) {
     // int selected = widget.selected;
     return Container(
+      margin: EdgeInsets.only(right:10),
       width: MediaQuery.of(context).size.width / 3 - 20,
       padding: EdgeInsets.all(5),
       // margin: EdgeInsets.only(right:10),
@@ -432,18 +540,23 @@ class _PaymentMethodItemState extends State<PaymentMethodItem> {
           color:
               widget.selected == widget.value ? Colors.orange : Colors.black12,
           borderRadius: BorderRadius.circular(5)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            '${widget.img}',
-            width: 24,
-            height: 24,
-          ),
-          Text(
-            "${widget.title}",
-          )
-        ],
+      child: InkWell(
+        onTap: () {
+          widget.onTap();
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              '${widget.img}',
+              width: 24,
+              height: 24,
+            ),
+            Text(
+              "${widget.title}",
+            )
+          ],
+        ),
       ),
     );
   }

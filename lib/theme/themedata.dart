@@ -21,22 +21,23 @@ Map<int, Color> whiteMaterial = {
 };
 
 TextStyle whiteBold16 = new TextStyle(
-  color: Colors.white,
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-);
+    color: Colors.white,
+    fontSize: 16,//13
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Roboto');
 TextStyle whiteBold13 = new TextStyle(
-  color: Colors.white,
-  fontSize: 13,
-  fontWeight: FontWeight.bold,
-);
+    color: Colors.white,
+    fontSize: 12,//13
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Roboto');
 TextStyle white14 = new TextStyle(
   color: Colors.white,
-  fontSize: 14,
+  fontSize: 13,//14
+  fontFamily: 'Roboto',
 );
 TextStyle white13 = new TextStyle(
-  color: Colors.white,
-  fontSize: 13,
+  color: Colors.white, fontSize: 12, //13
+  fontFamily: 'Roboto',
 );
 // TextStyle darkBold16 = new TextStyle(
 //   fontWeight: FontWeight.bold,
@@ -49,10 +50,10 @@ TextStyle white13 = new TextStyle(
 //   // color: dark,
 // );
 TextStyle primaryBold14 = new TextStyle(
-  fontWeight: FontWeight.bold,
-  color: primary,
-  fontSize: 13,
-);
+    fontWeight: FontWeight.bold,
+    color: primary,
+    fontSize: 12, //13
+    fontFamily: 'Roboto');
 // TextStyle dark14 = new TextStyle(
 //   fontWeight: FontWeight.normal,
 //   fontSize: 13,
@@ -69,16 +70,19 @@ TextStyle primaryBold14 = new TextStyle(
 // );
 TextStyle primary13 = new TextStyle(
   color: primary,
-  fontSize: 13,
+  fontSize: 12, //13
+  fontFamily: 'Roboto',
 );
 TextStyle success13 = new TextStyle(
   color: success,
-  fontSize: 13,
+  fontSize: 12, //13
+  fontFamily: 'Roboto',
 );
 
 TextStyle textBold11 = new TextStyle(
   fontWeight: FontWeight.bold,
-  fontSize: 11,
+  fontSize: 10, //12
+  fontFamily: 'Roboto',
 );
 
 Image mapPionter = Image.asset('assets/img/map-pointer.png');
@@ -109,13 +113,14 @@ InputDecoration underlined({String hint}) => new InputDecoration(
     );
 
 class CustomBorderedButton extends StatelessWidget {
-  const CustomBorderedButton({
-    Key key,
-    this.onTap,
-    this.child,
-  }) : super(key: key);
+  const CustomBorderedButton(
+      {Key key, this.onTap, this.child, this.width, this.color, this.padding})
+      : super(key: key);
   final Function() onTap;
   final Widget child;
+  final double width;
+  final Color color;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +131,8 @@ class CustomBorderedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         side: BorderSide(color: primary),
       ),
-      padding: EdgeInsets.all(0),
+      color: color != null ? color : Theme.of(context).scaffoldBackgroundColor,
+      padding: padding != null ? padding : EdgeInsets.all(10),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }
