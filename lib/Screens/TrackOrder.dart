@@ -78,10 +78,10 @@ class _TrackOrderWState extends State<TrackOrderW> {
       ),
       body: Column(
         children: [
-          loading
-              ? Container(
-                  height: scHeight / 3 * 2,
-                  child: GoogleMap(
+          Container(
+            height: scHeight / 3 * 2,
+            child: loading
+                ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                       bearing: 0,
@@ -94,10 +94,11 @@ class _TrackOrderWState extends State<TrackOrderW> {
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
-                  ),
-                )
-              : CircularProgressIndicator(),
+                  )
+                : Container(child: Center(child: CircularProgressIndicator())),
+          ),
           Container(
+            width: double.infinity,
             height: scHeight / 3 - 108,
             margin: EdgeInsets.all(10),
             decoration:
