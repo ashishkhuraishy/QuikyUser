@@ -44,7 +44,7 @@ class HomeProvider extends ChangeNotifier {
   ///
   /// Only call this after making sure Lat & Long are non - null
   getData(double lat, double long) async {
-    setLoading(true);
+    // setLoading(true);
     await _getFeaturedData(lat, long);
     await _getTrendingRestaurantData(lat, long);
     await _getTrendingGeroceryData(lat, long);

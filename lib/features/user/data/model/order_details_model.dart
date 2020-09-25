@@ -1,4 +1,3 @@
-import 'package:quiky_user/features/cart/data/model/cart_model.dart';
 import 'package:quiky_user/features/cart/data/model/order_model.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/user/domain/entity/order_details.dart';

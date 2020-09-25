@@ -173,7 +173,7 @@ class CartTab extends StatelessWidget {
                               );
                             },
                           ),
-                          order.coupon != 'nill'
+                          order.coupon != 'nill'&& order.coupon !=null && order.coupon != 'Null'
                               ? PaymentRow(
                                   title: "Offer Applied",
                                   price: "${order.coupon}",
@@ -283,7 +283,6 @@ class CartTab extends StatelessWidget {
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {
                             //Online Payment
-                            Navigator.pop(context);
                             final user = Provider.of<UserProvider>(context,
                                     listen: false)
                                 .getUser;
@@ -305,6 +304,7 @@ class CartTab extends StatelessWidget {
                               user: user,
                               storeName: "Store",
                             );
+                            Navigator.pop(context);
                             // paymentService.clearinstance();
                           }
                         },

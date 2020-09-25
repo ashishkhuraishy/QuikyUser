@@ -32,7 +32,7 @@ class TrackOrder {
     OrderDetails orderDetails = OrderDetails(
       order: Order(
         id: null,
-        items: null,
+        items: [],
         total: null,
         subTotal: null,
         delCharges: null,
