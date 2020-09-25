@@ -2,14 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:quiky_user/core/error/exception.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
+
+import '../../../../Constants/Apikeys.dart';
+import '../../../../core/error/exception.dart';
 
 enum PaymentType { CARD, COD }
 
 abstract class PaymentRemoteDataSource {
-  Future<bool> getPaymentStatus(
-      int orderId, String paymentId, PaymentType paymentType);
+  Future<String> getRazorPayId(
+    int orderId,
+    PaymentType paymentType,
+  );
 }
 
 class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
@@ -18,9 +21,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
   PaymentRemoteDataSourceImpl({this.client});
 
   @override
-  Future<bool> getPaymentStatus(
+  Future<String> getRazorPayId(
     int orderId,
-    String paymentId,
     PaymentType paymentType,
   ) async {
     String paymentUrl = BASE_URL + '/payment/?payment_type=';
@@ -37,9 +39,11 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     }
 
     Map<String, dynamic> body = {
-      "payment_id": paymentId,
       "order_id": orderId,
     };
+
+    print(paymentUrl);
+    print(body);
 
     Response response = await client.post(
       paymentUrl,
@@ -50,10 +54,12 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource {
     );
 
     if (response.statusCode == 200) {
-      List respBody = jsonDecode(response.body);
-      print(respBody.toString());
-      return respBody[0]["payment_status"].toString().contains("succeeded");
+      var respBody = jsonDecode(response.body);
+      print(respBody['razorpay']['id']);
+      return respBody["razorpay"]["id"].toString();
     }
+    print(response.statusCode);
+    print(response.body);
 
     // print("${response.body}");
     throw ServerException();

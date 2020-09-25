@@ -242,7 +242,10 @@ class _AllStoreState extends State<AllStore> {
                 ),
               ),
             );
+          } else if (stores.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
           }
+          return Container();
         },
       ),
     );

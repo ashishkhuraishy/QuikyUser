@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
+import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 
 import '../core/Providers/UserProvider.dart';
 import '../theme/themedata.dart';
@@ -16,11 +17,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // Address currentAddress;
+  GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
     controller = TabController(length: 4, vsync: this);
     controller.addListener(tabListener);
+    PushNotificationService().init(context);
     super.initState();
   }
 
@@ -43,6 +47,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: homeKey,
       body: TabBarView(
         children: <Widget>[
           HomeTab(scWidth: scWidth),

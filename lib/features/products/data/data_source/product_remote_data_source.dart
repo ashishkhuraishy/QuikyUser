@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:quiky_user/core/error/exception.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/features/products/data/models/category_model.dart';
-import 'package:quiky_user/features/products/data/models/store_product_models.dart';
-import 'package:quiky_user/features/products/domain/entity/category.dart';
-import 'package:quiky_user/features/products/domain/entity/store_products.dart';
+
+import '../../../../Constants/Apikeys.dart';
+import '../../../../core/error/exception.dart';
+import '../../domain/entity/category.dart';
+import '../../domain/entity/store_products.dart';
+import '../models/category_model.dart';
+import '../models/store_product_models.dart';
 
 abstract class ProductsRemoteDataSource {
   /// Get all the categories associated with a Store

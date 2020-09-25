@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Widgets/ProductCard.dart';
+import 'package:quiky_user/Widgets/StoreDetails.dart';
 import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/Services/payment-service.dart';
+import 'package:quiky_user/core/Providers/UserProvider.dart';
+import 'package:quiky_user/core/Services/payment_service.dart';
+import 'package:quiky_user/features/cart/domain/entity/cart.dart';
 import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/home/domain/entity/offer.dart';
 import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
+import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
+import 'package:quiky_user/features/user/domain/entity/user.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../core/Providers/CartProvider.dart';
 import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
+  PaymentService paymentService = new PaymentService();
   CartTab({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -216,8 +224,7 @@ class CartTab extends StatelessWidget {
                               return SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     PaymentMethodItem(
                                         title: "COD",
@@ -266,17 +273,38 @@ class CartTab extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       child: FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // print(order.id);
                           if (payMethod == 0) {
                             //COD
                             print(order.id);
+                            paymentService.startCod(order);
                             // StripeService sp = new StripeService();
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {
-                            //CARD
-                            Navigator.of(context)
-                                .pushNamed('/existingcard', arguments: order);
+                            //Online Payment
+                            final user = Provider.of<UserProvider>(context,
+                                    listen: false)
+                                .getUser;
+                            paymentService.onSuccess = () {
+                              print("payment success");
+                              paymentService.clearinstance();
+                              scaffoldKey.currentState.setState(() {
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .clear;
+                              });
+                            };
+                            paymentService.onFailure = () {
+                              print("payment failure");
+                              paymentService.clearinstance();
+                            };
+                            await paymentService.startOnlinePayment(
+                              order: order,
+                              user: user,
+                              storeName: "Store",
+                            );
+                            // paymentService.clearinstance();
                           }
                         },
                         child: Text("Continue Payment"),
@@ -305,204 +333,221 @@ class CartTab extends StatelessWidget {
 
     return Scaffold(
       key: scaffoldKey,
-      bottomSheet: Provider.of<CartProvider>(context, listen: false)
-                  .cartProducts
-                  .length >
-              0
-          ? Container(
-              width: double.infinity,
-              child: StatefulBuilder(
-                builder: (ctx, builder) {
-                  return FlatButton(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    padding: EdgeInsets.all(15),
-                    color: primary,
-                    onPressed: () async {
-                      builder(() {
-                        isLoading = !isLoading;
-                      });
-                      final currentAddress =
-                          Provider.of<AddressProvider>(context, listen: false)
+      bottomSheet: Consumer<CartProvider>(
+        builder: (ctx, provider, _) {
+          return provider.cartProducts.length > 0
+              ? Container(
+                  width: double.infinity,
+                  child: StatefulBuilder(
+                    builder: (ctx, builder) {
+                      return FlatButton(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        padding: EdgeInsets.all(15),
+                        color: primary,
+                        onPressed: () async {
+                          builder(() {
+                            isLoading = !isLoading;
+                          });
+                          final currentAddress = Provider.of<AddressProvider>(
+                                  context,
+                                  listen: false)
                               .currentAddress;
-                      final order = await Provider.of<CartProvider>(context,
-                              listen: false)
-                          .confrimOrder(
-                        userLocation:
-                            "${currentAddress.lat},${currentAddress.long}",
-                        shippingAddress: "${currentAddress.formattedAddress}",
-                        coupon: coupon != null ? coupon.code : null,
-                      );
-                      if (order.isLeft()) {
-                        print("Error Occured");
-                        print(order.fold((l) => l, (r) => r).toString());
-                      } else {
-                        print("Corder placed");
-                        displayConfirmOrderBottomSheet(
-                            context, order.fold((l) => l, (r) => r), () {
+                          final order = await Provider.of<CartProvider>(context,
+                                  listen: false)
+                              .confrimOrder(
+                            userLocation:
+                                "${currentAddress.lat},${currentAddress.long}",
+                            shippingAddress:
+                                "${currentAddress.formattedAddress}",
+                            coupon: coupon != null ? coupon.code : null,
+                          );
+                          print("Error Occured");
+                          if (Provider.of<UserProvider>(context, listen: false)
+                                  .getUser ==
+                              null) {
+                            Navigator.of(context).pushNamed('/signup');
+                          } else if (order.isLeft()) {
+                            print("Error Occured");
+                            print(order.fold((l) => l, (r) => r).toString());
+                            SnackBar s = new SnackBar(
+                                content: Text(
+                                    "${order.fold((l) => l, (r) => r).toString()}"));
+                            scaffoldKey.currentState.showSnackBar(s);
+                          } else {
+                            print("Order placed");
+                            displayConfirmOrderBottomSheet(
+                                context, order.fold((l) => l, (r) => r), () {
+                              builder(() {
+                                isLoading = false;
+                              });
+                            });
+                          }
+
                           builder(() {
                             isLoading = false;
                           });
-                        });
-                      }
-
-                      builder(() {
-                        isLoading = false;
-                      });
+                        },
+                        child: isLoading
+                            ? CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                              )
+                            : Text("Continue Checkout"),
+                      );
                     },
-                    child: isLoading
-                        ? CircularProgressIndicator(
-                            backgroundColor: Colors.white,
-                          )
-                        : Text("Continue Checkout"),
-                  );
-                },
-              ),
-            )
-          : Container(
-              height: 0,
-            ),
+                  ),
+                )
+              : Container(
+                  height: 0,
+                );
+        },
+      ),
       body: SafeArea(
-        child: Provider.of<CartProvider>(context, listen: false)
-                    .cartProducts
-                    .length >
-                0
-            ? SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    StoreDetails(scWidth: scWidth),
-                    Consumer<CartProvider>(
-                      builder: (ctx, provider, _) {
-                        return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: provider.currentProducts.length,
-                          itemBuilder: (ctxx, index) {
-                            return ProductCard(
-                              scWidth: scWidth,
-                              dataVariation: provider.currentProducts[index],
-                              store: Restaurant(
-                                  id: provider.currentStoreId,
-                                  offers: provider.currentOffers,
-                                  employeeId: null,
-                                  title: provider.currentTitle,
-                                  mobile: null,
-                                  gst: null,
-                                  tinTan: null,
-                                  typeGoods: null,
-                                  delivery: null,
-                                  vendor: null,
-                                  customer: null,
-                                  popularBrand: null,
-                                  brandLogo: null,
-                                  profilePicture: null,
-                                  fssai: null,
-                                  storeSubType: null,
-                                  status: null,
-                                  option: null,
-                                  totalReviews: null,
-                                  avgRating: null,
-                                  coordinate: null,
-                                  address: provider.currentStoreAddress,
-                                  recommendationCount: null,
-                                  minimumCostTwo: null,
-                                  avgDeliveryTime: null,
-                                  active: null,
-                                  inOrder: null,
-                                  bulkOrder: null,
-                                  opening: null,
-                                  closing: null,
-                                  highlightStatus: null,
-                                  featuredBrand: null,
-                                  commisionPercentage: null,
-                                  user: null,
-                                  city: null,
-                                  zone: null,
-                                  vendorLocation: null),
+        child: Consumer<CartProvider>(
+          builder: (ctx, provider, _) {
+            return provider.cartProducts.length > 0
+                ? SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        StoreDetails(scWidth: scWidth),
+                        Consumer<CartProvider>(
+                          builder: (ctx, provider, _) {
+                            return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: provider.currentProducts.length,
+                              itemBuilder: (ctxx, index) {
+                                return ProductCard(
+                                  scWidth: scWidth,
+                                  dataVariation:
+                                      provider.currentProducts[index],
+                                  store: Restaurant(
+                                      id: provider.currentStoreId,
+                                      offers: provider.currentOffers,
+                                      employeeId: null,
+                                      title: provider.currentTitle,
+                                      mobile: null,
+                                      gst: null,
+                                      tinTan: null,
+                                      typeGoods: null,
+                                      delivery: null,
+                                      vendor: null,
+                                      customer: null,
+                                      popularBrand: null,
+                                      brandLogo: null,
+                                      profilePicture: null,
+                                      fssai: null,
+                                      storeSubType: null,
+                                      status: null,
+                                      option: null,
+                                      totalReviews: null,
+                                      avgRating: null,
+                                      coordinate: null,
+                                      address: provider.currentStoreAddress,
+                                      recommendationCount: null,
+                                      minimumCostTwo: null,
+                                      avgDeliveryTime: null,
+                                      active: null,
+                                      inOrder: null,
+                                      bulkOrder: null,
+                                      opening: null,
+                                      closing: null,
+                                      highlightStatus: null,
+                                      featuredBrand: null,
+                                      commisionPercentage: null,
+                                      user: null,
+                                      city: null,
+                                      zone: null,
+                                      vendorLocation: null),
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: Consumer<CartProvider>(
-                        builder: (ctx, provider, _) {
-                          return Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          width: double.infinity,
+                          child: Consumer<CartProvider>(
+                            builder: (ctx, provider, _) {
+                              return Column(
                                 children: [
-                                  Text(
-                                    "Total Price",
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  ),
-                                  Text(
-                                    "₹${provider.totalPrice}",
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Total Price",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                      Text(
+                                        "₹${provider.totalPrice}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: StatefulBuilder(
-                        builder: (context1, state) {
-                          return FlatButton(
-                            color: primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            onPressed: () {
-                              displayOfferBottomSheet(context, (offer) {
-                                state(() {
-                                  coupon = offer;
-                                });
-                              }, coupon);
+                              );
                             },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Apply Coupon",
-                                  style: whiteBold13,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          width: double.infinity,
+                          child: StatefulBuilder(
+                            builder: (context1, state) {
+                              return FlatButton(
+                                color: primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                coupon != null
-                                    ? Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        color: Colors.black12,
-                                        child: Text(
-                                          "${coupon.title} %${coupon.percentage}OFF",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2,
-                                        ),
-                                      )
-                                    : Text("►")
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                                onPressed: () {
+                                  displayOfferBottomSheet(context, (offer) {
+                                    state(() {
+                                      coupon = offer;
+                                    });
+                                  }, coupon);
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Apply Coupon",
+                                      style: whiteBold13,
+                                    ),
+                                    coupon != null
+                                        ? Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            color: Colors.black12,
+                                            child: Text(
+                                              "${coupon.title} %${coupon.percentage}OFF",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
+                                          )
+                                        : Text("►")
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        NoContactDeliveryCard(),
+                      ],
                     ),
-                    NoContactDeliveryCard(),
-                  ],
-                ),
-              )
-            : Center(
-                child: Text("Empty Cart"),
-              ),
+                  )
+                : Center(
+                    child: Text("Empty Cart"),
+                  );
+          },
+        ),
       ),
     );
   }
@@ -532,7 +577,7 @@ class _PaymentMethodItemState extends State<PaymentMethodItem> {
   Widget build(BuildContext context) {
     // int selected = widget.selected;
     return Container(
-      margin: EdgeInsets.only(right:10),
+      margin: EdgeInsets.only(right: 10),
       width: MediaQuery.of(context).size.width / 3 - 20,
       padding: EdgeInsets.all(5),
       // margin: EdgeInsets.only(right:10),
@@ -626,54 +671,6 @@ class NoContactDeliveryCard extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1,
           )
         ],
-      ),
-    );
-  }
-}
-
-class StoreDetails extends StatelessWidget {
-  const StoreDetails({
-    Key key,
-    @required this.scWidth,
-  }) : super(key: key);
-
-  final double scWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: scWidth,
-      padding: EdgeInsets.all(20),
-      child: Consumer<CartProvider>(
-        builder: (ctx, provider, _) {
-          print("${provider.currentStoreId}");
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Image.asset(
-                "assets/img/Burger.jpeg",
-                width: 50,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 10.0),
-                width: scWidth - 90,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("${provider.currentTitle}",
-                        style: Theme.of(context).textTheme.headline6),
-                    Text(
-                      "${provider.currentStoreAddress.trim()}",
-                      style: Theme.of(context).textTheme.subtitle1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
-        },
       ),
     );
   }

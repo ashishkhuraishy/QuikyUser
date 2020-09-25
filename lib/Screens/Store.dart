@@ -13,8 +13,11 @@ import '../widgets/ProductCard.dart';
 import '../widgets/RatingStar.dart';
 
 class Store extends StatelessWidget {
+  // final TabController controller;
+
   const Store({
     Key key,
+    // this.controller,
   }) : super(key: key);
 
   Future<List> loadProducts(RestaurantModel restaurant) async {
@@ -30,6 +33,7 @@ class Store extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar: InkWell(
           onTap: () {
+            // controller.animateTo(2);
             Navigator.pushReplacementNamed(context, '/home', arguments: 2);
             // Provider.of<Home>(context,listen: false).navigate();
           },

@@ -41,11 +41,11 @@ class OrderModel extends Order {
       items: orderList
           .map<CartItemModel>((e) => CartItemModel.fromJson(e))
           .toList(),
-      total: "${json['cart']['total'] }"?? "0.0",
-      subTotal: "${json['cart']['sub_total'] }"?? "0.0",
-      delCharges: "${json['cart']['delivery_charges']}" ?? "0.0",
-      taxtotal: "${json['cart']['tax_total']}" ?? "0.0",
-      discountAmount: "${json['cart']['discount_total'] }"?? "0.0",
+      total: json['cart']['total'].toString() ?? "0.0",
+      subTotal: json['cart']['sub_total'].toString() ?? "0.0",
+      delCharges: json['cart']['delivery_charges'].toString() ?? "0.0",
+      taxtotal: json['cart']['tax_total'].toString() ?? "0.0",
+      discountAmount: json['cart']['discount_total'].toString() ?? "0.0",
       coupon: json['cart']['coupon'] ?? "",
     );
   }
