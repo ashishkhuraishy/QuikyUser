@@ -24,34 +24,24 @@ class _AllStoreState extends State<AllStore> {
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   int counter = 0;
 
-  void getData(StoreType storeType) async {
+  Future<void> getData(StoreType storeType) async {
     setState(() {
       loading = true;
     });
     final currentAddress =
         Provider.of<AddressProvider>(context, listen: false).currentAddress;
-    //TODO: Change Hardcoded lat and long
     rs =
         new RestaurantService(storeType: storeType, lat: 10.0261, lng: 76.3125);
     currentFilteredStores = await rs.getStores();
     setState(() {
-      loading=false;
+      loading = false;
     });
   }
 
-  void addToAnimatedList() {
-    for (int i = 0; i < currentFilteredStores.length; i++) {
-    print("future builder calleddfgdfgdfg");
-
-      listKey.currentState
-          .insertItem(i, duration: const Duration(milliseconds: 500));
-    }
-    animatedlistitems = []..addAll(currentFilteredStores);
-  }
 
   Future<List<Restaurant>> getFutureData() async {
-    //TODO: Clear print
-    print("future builder called");
+    // await getData(storeType);
+    
     // addToAnimatedList();
     return currentFilteredStores;
   }
@@ -60,6 +50,8 @@ class _AllStoreState extends State<AllStore> {
     setState(() {
       filter = filtert;
     });
+    print("filter change called $filter");
+
     switch (filter) {
       case 'All':
         currentFilteredStores = await rs.getStores();
@@ -81,9 +73,9 @@ class _AllStoreState extends State<AllStore> {
         break;
       default:
     }
-    listKey.currentState
-        .insertItem(0, duration: const Duration(milliseconds: 500));
-    animatedlistitems = []..addAll(currentFilteredStores);
+    setState(() {
+      currentFilteredStores=currentFilteredStores;
+    });
   }
 
   @override
@@ -100,12 +92,7 @@ class _AllStoreState extends State<AllStore> {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: () {
-            // final address = Provider.of<AddressProvider>(context, listen: false)
-            //     .currentAddress;
-            // print(address);
-            // Navigator.of(context).popAndPushNamed('/selectlocation');
-          },
+          onTap: () {},
           child: Row(
             children: <Widget>[
               Padding(
@@ -197,29 +184,23 @@ class _AllStoreState extends State<AllStore> {
                         ],
                       ),
                     ),
-                    AnimatedList(
+                    ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      initialItemCount: animatedlistitems.length,
+                      itemCount: currentFilteredStores.length,
                       key: listKey,
-                      itemBuilder: (ctx, index, animation) {
-                        return SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(-1, 0),
-                            end: Offset(0, 0),
-                          ).animate(animation),
-                          child: StoreCard(
-                              scWidth: scWidth,
-                              restaurantModel: animatedlistitems[index]),
-                        );
+                      itemBuilder: (ctx, index) {
+                        return StoreCard(
+                            scWidth: scWidth,
+                            restaurantModel: currentFilteredStores[index]);
                       },
                     ),
                   ],
                 ),
               );
             } else if (loading) {
-            print("loading one occured");
+              print("loading one occured");
 
               return Center(child: CircularProgressIndicator());
             }
@@ -250,8 +231,8 @@ class _AllStoreState extends State<AllStore> {
       ),
     );
   }
-}
 
+}
 class FilterItem extends StatelessWidget {
   const FilterItem({
     Key key,
