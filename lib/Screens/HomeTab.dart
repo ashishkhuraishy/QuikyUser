@@ -27,37 +27,20 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  // }
 
   @override
   void initState() {
     super.initState();
-    // final currentAddress =
-    //     Provider.of<AddressProvider>(context, listen: false).currentAddress;
-
-    // print("asdasdasd ${currentAddress.shortAddress}");
-
-    // // final getData = Provider.of<HomeProvider>(context, listen: false)
-    // //     .getData(currentAddress.lat, currentAddress.long);
-
-    // final getData = Provider.of<HomeProvider>(context, listen: false)
-    //     .getData(10.0261, 76.3125);
-    // // .getData(currentAddress.lat, currentAddress.long);
-    // print(getData);
   }
 
   void fetchData(Address currectAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);
 
-      Provider.of<HomeProvider>(context, listen: false)
-          .getData(currectAddress.lat, currectAddress.long);
-          // .getData(10.0260688, 76.3124753);
+    Provider.of<HomeProvider>(context, listen: false)
+        .getData(currectAddress.lat, currectAddress.long);
+    // .getData(10.0260688, 76.3124753);
     Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
@@ -78,9 +61,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           child: Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.location_on,color: primary,)
-              ),
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.location_on,
+                    color: primary,
+                  )),
               Consumer<AddressProvider>(
                 builder: (ctx, val, widget) {
                   if (val.currentAddress.lat > 0) fetchData(val.currentAddress);
