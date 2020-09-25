@@ -11,9 +11,9 @@ import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
 class TrackOrderW extends StatefulWidget {
-  final OrderDetails order;
+  final OrderDetails orderdetails;
 
-  TrackOrderW({this.order, Key key}) : super(key: key);
+  TrackOrderW({this.orderdetails, Key key}) : super(key: key);
 
   @override
   _TrackOrderWState createState() => _TrackOrderWState();
@@ -35,16 +35,16 @@ class _TrackOrderWState extends State<TrackOrderW> {
     super.initState();
 
     List<double> source = [
-      double.tryParse(widget.order.vendorLocation.split(",")[0]),
-      double.tryParse(widget.order.vendorLocation.split(",")[1])
+      double.tryParse(widget.orderdetails.storeLocation.split(",")[0]),
+      double.tryParse(widget.orderdetails.storeLocation.split(",")[1])
     ];
     List<double> dest = [
-      double.tryParse(widget.order.userLocation.split(",")[0]),
-      double.tryParse(widget.order.userLocation.split(",")[1]),
+      double.tryParse(widget.orderdetails.userLocation.split(",")[0]),
+      double.tryParse(widget.orderdetails.userLocation.split(",")[1]),
     ];
 
     trackOrder = TrackOrder(
-      id: widget.order.orderId,
+      id: widget.orderdetails.order.id,
       start: source,
       end: dest,
     );
@@ -75,7 +75,7 @@ class _TrackOrderWState extends State<TrackOrderW> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Order id: ${widget.order.orderId}",
+        title: Text("Order id: ${widget.orderdetails.order.id}",
             style: Theme.of(context).textTheme.headline5),
       ),
       body: Column(
@@ -121,7 +121,7 @@ class _TrackOrderWState extends State<TrackOrderW> {
                 } else if (snapshot.hasData) {
                   return Center(
                     child: Text(
-                      "${snapshot.data.status}",
+                      "${snapshot.data.order.status}",
                       style: primaryBold14,
                       textAlign: TextAlign.center,
                     ),

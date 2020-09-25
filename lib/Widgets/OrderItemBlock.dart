@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:quiky_user/Screens/CartTab.dart';
-import 'package:quiky_user/Widgets/FoodSafetyDot.dart';
-import 'package:quiky_user/Widgets/ProductCard.dart';
-import 'package:quiky_user/features/cart/domain/entity/order.dart';
-import 'package:quiky_user/features/user/domain/entity/order_details.dart';
-import 'package:quiky_user/theme/themedata.dart';
+
+import '../Screens/CartTab.dart';
+import '../features/user/domain/entity/order_details.dart';
+import '../theme/themedata.dart';
+import 'FoodSafetyDot.dart';
 
 class OrderItemBlock extends StatelessWidget {
   const OrderItemBlock({
     Key key,
     @required this.scWidth,
-    @required this.orders,
+    @required this.orderdetails,
   }) : super(key: key);
 
-  final OrderDetails orders;
+  final OrderDetails orderdetails;
   final double scWidth;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            // color: Theme.of(context).
-            border: Border.all(color: primary)),
+          borderRadius: BorderRadius.circular(10),
+          // color: Theme.of(context).
+          border: Border.all(color: primary),
+        ),
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.only(
-                top: orders.status != "delivered" && orders.status != "abonded" ?0:13,
+                top: orderdetails.order.status != "delivered" &&
+                        orderdetails.order.status != "abonded"
+                    ? 0
+                    : 13,
                 left: 10,
                 right: 10,
-                bottom:  orders.status != "delivered" && orders.status != "abonded" ?0:10,
+                bottom: orderdetails.order.status != "delivered" &&
+                        orderdetails.order.status != "abonded"
+                    ? 0
+                    : 10,
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -44,15 +50,20 @@ class OrderItemBlock extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Order Id: ${orders.orderId}",
+                    "Order Id: ${orderdetails.order.id}",
                   ),
-                  orders.status != "delivered" && orders.status != "abonded"
+                  orderdetails.order.status != "delivered" &&
+                          orderdetails.order.status != "abonded"
                       ? ButtonTheme(
                           minWidth: 10,
                           height: 12,
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/trackOrder',arguments: orders);
+                              Navigator.pushNamed(
+                                context,
+                                '/trackOrder',
+                                arguments: orderdetails,
+                              );
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -78,7 +89,7 @@ class OrderItemBlock extends StatelessWidget {
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: orders.cart.cartItems.length,
+                    itemCount: orderdetails.order.items.length,
                     itemBuilder: (ctx1, index1) {
                       return Container(
                         child: Column(
@@ -93,12 +104,12 @@ class OrderItemBlock extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${orders.cart.cartItems[index1].name}",
+                                      "${orderdetails.order.items[index1].name}",
                                       style:
                                           Theme.of(context).textTheme.headline5,
                                     ),
                                     Text(
-                                      "₹${orders.cart.cartItems[index1].price}",
+                                      "₹${orderdetails.order.items[index1].price}",
                                       style: primaryBold14,
                                     ),
                                   ],
@@ -114,33 +125,33 @@ class OrderItemBlock extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Text(
-                      'Store: ${orders.storeName}',
+                      'Store: ${orderdetails.storeName}',
                     ),
                   ),
                   PaymentRow(
                       title: "Status",
-                      price: "${orders.status}",
+                      price: "${orderdetails.order.status}",
                       style: Theme.of(context).textTheme.subtitle1),
                   PaymentRow(
                       title: "Payment Method",
                       price:
-                          "${orders.paymentType != 'nill' ? orders.paymentType : 'POD'}",
+                          "${orderdetails.order.paymentType != 'nill' ? orderdetails.order.paymentType : 'POD'}",
                       style: Theme.of(context).textTheme.subtitle1),
                   PaymentRow(
                       title: "Sub Total",
-                      price: "₹${orders.subTotal}",
+                      price: "₹${orderdetails.order.subTotal}",
                       style: Theme.of(context).textTheme.subtitle1),
                   PaymentRow(
                       title: "Delivery & other Fee",
-                      price: "₹${orders.deliveryIncentative}",
+                      price: "₹${orderdetails.order.delCharges}",
                       style: Theme.of(context).textTheme.subtitle1),
                   PaymentRow(
                       title: "Tax",
-                      price: "₹${orders.taxTotal}",
+                      price: "₹${orderdetails.order.taxtotal}",
                       style: Theme.of(context).textTheme.subtitle1),
                   PaymentRow(
                       title: "Total",
-                      price: "₹${orders.total}",
+                      price: "₹${orderdetails.order.total}",
                       style: Theme.of(context).textTheme.headline5)
                 ],
               ),

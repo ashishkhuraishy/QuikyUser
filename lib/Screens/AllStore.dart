@@ -38,10 +38,9 @@ class _AllStoreState extends State<AllStore> {
     });
   }
 
-
   Future<List<Restaurant>> getFutureData() async {
     // await getData(storeType);
-    
+
     // addToAnimatedList();
     return currentFilteredStores;
   }
@@ -74,13 +73,12 @@ class _AllStoreState extends State<AllStore> {
       default:
     }
     setState(() {
-      currentFilteredStores=currentFilteredStores;
+      currentFilteredStores = currentFilteredStores;
     });
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     storeType = ModalRoute.of(context).settings.arguments;
     getData(storeType);
@@ -231,8 +229,8 @@ class _AllStoreState extends State<AllStore> {
       ),
     );
   }
-
 }
+
 class FilterItem extends StatelessWidget {
   const FilterItem({
     Key key,

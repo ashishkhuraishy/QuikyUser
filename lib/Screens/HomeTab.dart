@@ -29,11 +29,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void fetchData(Address currectAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);

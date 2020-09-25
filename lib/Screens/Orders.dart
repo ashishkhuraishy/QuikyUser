@@ -24,15 +24,18 @@ class Orders extends StatelessWidget {
           } else if (orders.hasError) {
             print(orders.error.toString());
             return Text("error");
-          } else if(orders.hasData){
+          } else if (orders.hasData) {
             List<OrderDetails> ordersR = orders.data.reversed.toList();
             return ListView.builder(
               itemCount: ordersR.length,
               itemBuilder: (ctxx, index) {
-                return OrderItemBlock(scWidth: MediaQuery.of(context).size.width, orders: ordersR[index]);
+                return OrderItemBlock(
+                  scWidth: MediaQuery.of(context).size.width,
+                  orderdetails: ordersR[index],
+                );
               },
             );
-          }else{
+          } else {
             print(orders.error.toString());
             return Text("No data");
           }

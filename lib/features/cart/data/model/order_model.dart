@@ -12,6 +12,14 @@ class OrderModel extends Order {
   final String taxtotal;
   final String discountAmount;
   final String coupon;
+  final String status;
+  final String paymentType;
+  final String deliveryStaus;
+  final String vendorStaus;
+  final DateTime timeStamp;
+  final String otp;
+  final String razorPayId;
+  final String paymentStatus;
 
   OrderModel({
     @required this.id,
@@ -22,6 +30,14 @@ class OrderModel extends Order {
     @required this.taxtotal,
     @required this.discountAmount,
     @required this.coupon,
+    @required this.status,
+    @required this.paymentType,
+    @required this.deliveryStaus,
+    @required this.otp,
+    @required this.paymentStatus,
+    @required this.razorPayId,
+    @required this.timeStamp,
+    @required this.vendorStaus,
   }) : super(
           id: id,
           items: items,
@@ -31,13 +47,21 @@ class OrderModel extends Order {
           taxtotal: taxtotal,
           discountAmount: discountAmount,
           coupon: coupon,
+          status: status,
+          paymentType: paymentType,
+          deliveryStaus: deliveryStaus,
+          otp: otp,
+          paymentStatus: paymentStatus,
+          razorPayId: razorPayId,
+          timeStamp: timeStamp,
+          vendorStaus: vendorStaus,
         );
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     final orderList = json['cart']['cartitem'] ?? [];
 
     return OrderModel(
-      id: json['orderid'] ?? -1,
+      id: json['id'] ?? -1,
       items: orderList
           .map<CartItemModel>((e) => CartItemModel.fromJson(e))
           .toList(),
@@ -47,6 +71,14 @@ class OrderModel extends Order {
       taxtotal: json['cart']['tax_total'].toString() ?? "0.0",
       discountAmount: json['cart']['discount_total'].toString() ?? "0.0",
       coupon: json['cart']['coupon'] ?? "",
+      status: json['status'] ?? '',
+      paymentType: json['payment_type'] ?? '',
+      deliveryStaus: json['delivery_status'] ?? '',
+      otp: json['otp'] ?? '',
+      paymentStatus: json['payment_status'] ?? '',
+      razorPayId: json['razorpay_order_id'] ?? '',
+      timeStamp: DateTime.tryParse(json['timestamp']) ?? DateTime.now(),
+      vendorStaus: json['vendor_status'],
     );
   }
 }
