@@ -4,9 +4,9 @@ import 'package:quiky_user/theme/themedata.dart';
 
 class FoodSafetyDot extends StatelessWidget {
   const FoodSafetyDot({
-    Key key,
+    Key key, this.color,
   }) : super(key: key);
-
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +19,7 @@ class FoodSafetyDot extends StatelessWidget {
       width: 20,
       height: 20,
       child: CircleAvatar(
-        backgroundColor: success,
+        backgroundColor: color!=null?color: success,
       ),
     );
   }

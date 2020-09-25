@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiky_user/core/Providers/CartProvider.dart';
 import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 
 import '../core/Providers/UserProvider.dart';
@@ -56,75 +57,89 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
         controller: controller,
       ),
-      bottomNavigationBar: TabBar(
-        controller: controller,
-        labelPadding: EdgeInsets.all(0),
-        indicatorPadding: EdgeInsets.all(0),
-        labelColor: primary,
-        unselectedLabelColor: Colors.grey,
-        indicatorColor: primary,
-        tabs: <Widget>[
-          Tab(
-            icon: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Icon(Icons.home),
-                Text("QUIKY", style: textBold11)
-              ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Theme.of(context).dividerColor,
+              offset: Offset(0, -2),
+              blurRadius: 0.0,
+              spreadRadius: 0)
+        ], color: Theme.of(context).scaffoldBackgroundColor),
+        child: TabBar(
+          controller: controller,
+          labelPadding: EdgeInsets.all(0),
+          indicatorPadding: EdgeInsets.all(0),
+          labelColor: primary,
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: primary,
+          tabs: <Widget>[
+            Tab(
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Icon(Icons.home),
+                  Text("QUIKY", style: textBold11)
+                ],
+              ),
             ),
-          ),
-          Tab(
-            icon: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Icon(Icons.search),
-                Text(
-                  "SEARCH",
-                  style: textBold11,
-                )
-              ],
+            Tab(
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Icon(Icons.search),
+                  Text(
+                    "SEARCH",
+                    style: textBold11,
+                  )
+                ],
+              ),
             ),
-          ),
-          Tab(
-            icon: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.shopping_cart),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Text(
-                        "1",
-                        style: whiteBold13,
-                      ),
-                    )
-                  ],
-                ),
-                Text(
-                  "MY CART",
-                  style: textBold11,
-                )
-              ],
+            Tab(
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.shopping_cart),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Consumer<CartProvider>(
+                          builder: (ctx, provider, _) {
+                            return Text(
+                              "${provider.currentProducts.length}",
+                              style: whiteBold13,
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  Text(
+                    "MY CART",
+                    style: textBold11,
+                  )
+                ],
+              ),
             ),
-          ),
-          Tab(
-            icon: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Icon(Icons.account_circle),
-                Text(
-                  "PROFILE",
-                  style: textBold11,
-                )
-              ],
+            Tab(
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Icon(Icons.account_circle),
+                  Text(
+                    "PROFILE",
+                    style: textBold11,
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

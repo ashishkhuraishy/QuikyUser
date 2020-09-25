@@ -43,53 +43,53 @@ class ProfileTab extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
-            thickness: 8,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              constraints: BoxConstraints(
-                minWidth: scWidth,
-              ),
-              height: 87,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  OptionCard(
-                    title: "Track Order",
-                    icon: Icon(
-                      Icons.local_shipping,
-                      size: 40,
-                    ),
-                  ),
-                  OptionCard(
-                    title: "Notification",
-                    icon: Icon(
-                      Icons.notifications,
-                      size: 40,
-                    ),
-                  ),
-                  OptionCard(
-                    title: "Help",
-                    icon: Icon(
-                      Icons.help_outline,
-                      size: 40,
-                    ),
-                  ),
-                  OptionCard(
-                    title: "Payments",
-                    icon: Icon(
-                      Icons.payment,
-                      size: 40,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Divider(
+          //   thickness: 8,
+          // ),
+          // SingleChildScrollView(
+          //   scrollDirection: Axis.horizontal,
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 10),
+          //     constraints: BoxConstraints(
+          //       minWidth: scWidth,
+          //     ),
+          //     height: 87,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       mainAxisSize: MainAxisSize.max,
+          //       children: <Widget>[
+          //         OptionCard(
+          //           title: "Track Order",
+          //           icon: Icon(
+          //             Icons.local_shipping,
+          //             size: 40,
+          //           ),
+          //         ),
+          //         OptionCard(
+          //           title: "Notification",
+          //           icon: Icon(
+          //             Icons.notifications,
+          //             size: 40,
+          //           ),
+          //         ),
+          //         OptionCard(
+          //           title: "Help",
+          //           icon: Icon(
+          //             Icons.help_outline,
+          //             size: 40,
+          //           ),
+          //         ),
+          //         OptionCard(
+          //           title: "Payments",
+          //           icon: Icon(
+          //             Icons.payment,
+          //             size: 40,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Divider(
             thickness: 8,
           ),
@@ -98,15 +98,17 @@ class ProfileTab extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CustomRowButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/currentOrder');
+                  },
                   icon: Icon(Icons.shopping_basket),
-                  title: "Past Orders",
+                  title: "My Order",
                 ),
-                CustomRowButton(
-                  onTap: () {},
-                  icon: Icon(Icons.favorite_border),
-                  title: "Favorite Orders",
-                ),
+                // CustomRowButton(
+                //   onTap: () {},
+                //   icon: Icon(Icons.favorite_border),
+                //   title: "Past Orders",
+                // ),
                 CustomRowButton(
                   onTap: () {
                     Navigator.of(context).pushNamed('/address-book');

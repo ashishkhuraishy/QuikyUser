@@ -227,6 +227,7 @@ class Store extends StatelessWidget {
                             Text("Something went wrong"),
                             RaisedButton(
                               onPressed: () {
+                                print(categories.error.toString());
                                 loadProducts(restaurant);
                               },
                               child: Text("Retry"),

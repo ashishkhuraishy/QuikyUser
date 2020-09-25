@@ -10,15 +10,19 @@ import '../../injection_container.dart';
 class PaymentService {
   Razorpay _razorpay;
   GetRazorPayId _getRazorPayId = GetRazorPayId(repository: sl());
-
+  Function onSuccess;
+  Function onFailure;
   PaymentService() {
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-
-  Future startOnlinePayment({Order order, User user, String storeName}) async {
+  Future startOnlinePayment({
+    Order order,
+    User user,
+    String storeName,
+  }) async {
     final result = await _getRazorPayId.call(
       orderId: order.id,
       paymentType: PaymentType.CARD,
@@ -36,7 +40,7 @@ class PaymentService {
           'name': '$storeName',
           'order_id': '$razorpayId', // Generate order_id using Orders API
           // 'description': '${}',
-          'timeout': 60, // in seconds
+          'timeout': 180, // in seconds
           'prefill': {
             'contact': '${user.mobile}',
           },
@@ -64,10 +68,12 @@ class PaymentService {
   // helper Methods
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print("Sucess ${response.orderId}");
+    onSuccess();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print("Failed : ${response.message}");
+    onFailure();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {

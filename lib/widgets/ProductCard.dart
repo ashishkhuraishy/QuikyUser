@@ -218,6 +218,7 @@ class ProductCard extends StatelessWidget {
                             return Align(
                               alignment: Alignment.bottomRight,
                               child: CustomBorderedButton(
+                                padding: EdgeInsets.all(0),
                                 onTap: () {
                                   print("$addedToCart in add box");
                                   Provider.of<CartProvider>(context,
@@ -243,6 +244,7 @@ class ProductCard extends StatelessWidget {
                     : Align(
                         alignment: Alignment.bottomRight,
                         child: CustomBorderedButton(
+                          padding: EdgeInsets.all(0),
                           onTap: () {
                             displayBottomSheet(context, data);
                           },

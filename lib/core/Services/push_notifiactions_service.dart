@@ -57,6 +57,7 @@ class PushNotificationService {
       'Order status channel',
       'Channel to revcive notifications for order status',
       channelShowBadge: true,
+      priority: Priority.Max
     );
 
     var iOSChannelSpecifics = IOSNotificationDetails();

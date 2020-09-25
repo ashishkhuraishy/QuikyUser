@@ -84,7 +84,9 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   @override
   Future<List<OrderDetails>> pastOrders({int userId, String token}) async {
-    final String url = BASE_URL + '/order_list/?filter=past&user_id=$userId';
+    // final String url = BASE_URL + '/order_list/?filter=past&user_id=$userId';
+    // print("$userId $token");
+    final String url = BASE_URL + '/order_list/?user_id=$userId';
     Response response = await client.get(
       url,
       headers: {

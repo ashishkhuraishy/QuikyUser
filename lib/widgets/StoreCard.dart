@@ -77,25 +77,30 @@ class StoreCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${restaurantModel.title} ",
+                        style: Theme.of(context).textTheme.headline5,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
                   Text(
-                    "${restaurantModel.title} ",
-                    style: Theme.of(context).textTheme.headline5,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  // Spacer(flex:1),
-                  Text(
-                    "${restaurantModel.storeSubType}",
+                    "${restaurantModel.storeSubType!='nill'?restaurantModel.storeSubType:''}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "${restaurantModel.address.split(' ')[0]}",
+                    "${restaurantModel.address.split(',')[0]!='nill'?restaurantModel.address.split(',')[0]:''}",
                     // "${restaurantModel.address}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
+                  ),
+                    ],
                   ),
                   // Spacer(flex:8),
                   Text(
