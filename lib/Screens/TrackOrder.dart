@@ -106,7 +106,7 @@ class _TrackOrderWState extends State<TrackOrderW> {
           ),
           Container(
             width: double.infinity,
-            height: scHeight / 3 - 108,
+            height: scHeight / 3 - 110,
             margin: EdgeInsets.all(10),
             decoration:
                 BoxDecoration(border: Border.all(color: primary, width: 3)),
