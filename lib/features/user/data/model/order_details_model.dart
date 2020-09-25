@@ -117,7 +117,8 @@ class OrderDetailsModel extends OrderDetails {
       deliveryStatus: json['delivery_status'],
       vendorStatus: json['vendor_status'],
       statusNotes: json['status_notes'],
-      timestamp: json['timestamp'],
+      timestamp: json['timestamp'] ??
+          DateTime.now().toIso8601String(), // TODO : Edit this
       otp: json['otp'],
       updated: json['updated'],
       bulkOrder: json['bulk_order'],

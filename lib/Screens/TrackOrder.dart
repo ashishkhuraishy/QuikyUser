@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -80,7 +82,7 @@ class _TrackOrderWState extends State<TrackOrderW> {
         children: [
           Container(
             height: scHeight / 3 * 2,
-            child: loading
+            child: !loading
                 ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
@@ -90,6 +92,11 @@ class _TrackOrderWState extends State<TrackOrderW> {
                       zoom: 12,
                     ),
                     markers: markers,
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                      Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      ),
+                    ].toSet(),
                     polylines: polylines,
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
