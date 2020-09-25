@@ -110,7 +110,7 @@ class OrderDetailsModel extends OrderDetails {
           "${json['tax_total'] != null ? json['tax_total'].toStringAsFixed(2) : 0}",
       coupon: json['coupon'],
       discountTotal: "${json['discount_total']}",
-      finalTotal: "${json['final_total']}",
+      finalTotal: "${json['final_total']!=null? json['final_total'].toStringAsFixed(2): '0'}",
       delivereyCharges: json['deliverey_charges'],
       status: json['status'],
       paymentType: json['payment_type'],

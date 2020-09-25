@@ -32,7 +32,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.didChangeDependencies();
     
     final int argIndex =ModalRoute.of(context).settings.arguments;
-    if(argIndex!=null){
+    if(argIndex==2){
       controller.index=argIndex;
     }
   }
