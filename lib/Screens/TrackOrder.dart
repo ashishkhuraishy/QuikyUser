@@ -3,77 +3,100 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:quiky_user/core/Services/MapService.dart';
 import 'package:quiky_user/core/Services/track_order_service.dart';
 import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/theme/themedata.dart';
 
-class TrackOrderW extends StatelessWidget {
-  TrackOrderW({Key key}) : super(key: key);
+class TrackOrderW extends StatefulWidget {
+  final OrderDetails order;
 
-  Completer<GoogleMapController> _controller = Completer();
+  TrackOrderW({this.order, Key key}) : super(key: key);
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  @override
+  _TrackOrderWState createState() => _TrackOrderWState();
+}
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+class _TrackOrderWState extends State<TrackOrderW> {
+  final Completer<GoogleMapController> _controller = Completer();
+  MapService mapService;
+  bool loading = true;
+
+  TrackOrder trackOrder;
+
+  LatLng center = LatLng(0, 0);
+  Set<Polyline> polylines = Set();
+  Set<Marker> markers = Set();
+
+  @override
+  void initState() {
+    super.initState();
+
+    List<double> source = [
+      double.tryParse(widget.order.vendorLocation.split(",")[0]),
+      double.tryParse(widget.order.vendorLocation.split(",")[1])
+    ];
+    List<double> dest = [
+      double.tryParse(widget.order.userLocation.split(",")[0]),
+      double.tryParse(widget.order.userLocation.split(",")[1]),
+    ];
+
+    trackOrder = TrackOrder(
+      id: widget.order.orderId,
+      start: source,
+      end: dest,
+    );
+
+    initAll(source, dest);
+  }
+
+  initAll(List<double> ss, List<double> des) async {
+    mapService = MapService(
+      sourceLat: ss[0],
+      sourceLong: ss[1],
+      destLat: des[0],
+      destLong: des[1],
+    );
+
+    center = mapService.center;
+    polylines = await mapService.polylines;
+    markers = mapService.markers;
+
+    setState(() {
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double scHeight = MediaQuery.of(context).size.height;
-    final OrderDetails order = ModalRoute.of(context).settings.arguments;
-    TrackOrder trackOrder = new TrackOrder(id: order.orderId, start: [
-      double.tryParse(order.vendorLocation.split(",")[0]),
-      double.tryParse(order.vendorLocation.split(",")[1])
-    ], end: [
-      double.tryParse(order.userLocation.split(",")[0]),
-      double.tryParse(order.userLocation.split(",")[1]),
-    ]);
 
-    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Order id: ${order.orderId}",
+        title: Text("Order id: ${widget.order.orderId}",
             style: Theme.of(context).textTheme.headline5),
       ),
       body: Column(
         children: [
-          Container(
-            height: scHeight / 3 * 2,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                bearing: 0,
-                target: LatLng(
-                    double.tryParse(order.userLocation.split(",")[0]),
-                    double.tryParse(order.userLocation.split(",")[1])),
-                tilt: 0,
-                zoom: 12,
-              ),
-              markers: [
-                Marker(
-                  markerId: MarkerId('1'),
-                  position: LatLng(
-                      double.tryParse(order.userLocation.split(",")[0]),
-                      double.tryParse(order.userLocation.split(",")[1])),
-                ),
-                Marker(
-                  markerId: MarkerId('1'),
-                  position: LatLng(
-                      double.tryParse(order.vendorLocation.split(",")[0]),
-                      double.tryParse(order.vendorLocation.split(",")[1])),
-                ),
-              ].toSet(),
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-            ),
-          ),
+          loading
+              ? Container(
+                  height: scHeight / 3 * 2,
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      bearing: 0,
+                      target: center,
+                      tilt: 0,
+                      zoom: 12,
+                    ),
+                    markers: markers,
+                    polylines: polylines,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                  ),
+                )
+              : CircularProgressIndicator(),
           Container(
             height: scHeight / 3 - 108,
             margin: EdgeInsets.all(10),
@@ -81,24 +104,25 @@ class TrackOrderW extends StatelessWidget {
                 BoxDecoration(border: Border.all(color: primary, width: 3)),
             padding: EdgeInsets.all(30),
             child: StreamBuilder<OrderDetails>(
-                stream: trackOrder.timedCounter(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Loading");
-                  } else if (snapshot.hasError) {
-                    return Text("Error ${snapshot.error}");
-                  } else if (snapshot.hasData) {
-                    return Center(
-                      child: Text(
-                        "${snapshot.data.status}",
-                        style: primaryBold14,
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  } else {
-                    return Text("Something went wrong");
-                  }
-                }),
+              stream: trackOrder.timedCounter(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading");
+                } else if (snapshot.hasError) {
+                  return Text("Error ${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  return Center(
+                    child: Text(
+                      "${snapshot.data.status}",
+                      style: primaryBold14,
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                } else {
+                  return Text("Something went wrong");
+                }
+              },
+            ),
           )
         ],
       ),

@@ -70,47 +70,41 @@ class MyApp extends StatelessWidget {
           primaryColorDark: dark,
           textTheme: TextTheme(
             headline5: TextStyle(
-              //darkbold16
-              fontWeight: FontWeight.bold,
-              fontSize: 16,//16
-              color: dark,
-              fontFamily: 'Roboto'
-            ),
+                //darkbold16
+                fontWeight: FontWeight.bold,
+                fontSize: 16, //16
+                color: dark,
+                fontFamily: 'Roboto'),
             headline6: TextStyle(
-              //darkbold14
-              fontWeight: FontWeight.bold,
-              fontSize: 13,//14
-              color: dark,
-              fontFamily: 'Roboto'
-            ),
+                //darkbold14
+                fontWeight: FontWeight.bold,
+                fontSize: 13, //14
+                color: dark,
+                fontFamily: 'Roboto'),
             bodyText1: TextStyle(
-              //dark14
-              fontWeight: FontWeight.normal,
-              fontSize: 12,//13
-              color: dark,
-              fontFamily: 'Roboto'
-            ),
+                //dark14
+                fontWeight: FontWeight.normal,
+                fontSize: 12, //13
+                color: dark,
+                fontFamily: 'Roboto'),
             subtitle1: TextStyle(
-              //grey14
-              fontWeight: FontWeight.normal,
-              fontSize: 12,//13
-              color: grey,
-              fontFamily: 'Roboto'
-            ),
+                //grey14
+                fontWeight: FontWeight.normal,
+                fontSize: 12, //13
+                color: grey,
+                fontFamily: 'Roboto'),
             subtitle2: new TextStyle(
-              //grey11
-              fontWeight: FontWeight.bold,
-              fontSize: 10,//11
-              color: grey,
-              fontFamily: 'Roboto'
-            ),
+                //grey11
+                fontWeight: FontWeight.bold,
+                fontSize: 10, //11
+                color: grey,
+                fontFamily: 'Roboto'),
             headline4: new TextStyle(
-              //white11
-              fontWeight: FontWeight.bold,
-              fontSize: 10,//11
-              color: dark,
-              fontFamily: 'Roboto'
-            ),
+                //white11
+                fontWeight: FontWeight.bold,
+                fontSize: 10, //11
+                color: dark,
+                fontFamily: 'Roboto'),
           ),
           primaryColorLight: Colors.white,
           // secondaryHeaderColor: bgSecondary,
@@ -146,47 +140,44 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color.fromRGBO(39, 39, 39, 1),
           textTheme: TextTheme(
             headline5: TextStyle(
-              //darkbold16
-              fontWeight: FontWeight.bold,
-              fontSize: 16,//16
-              fontFamily: 'Roboto'
-              // color: dark,
-            ),
+                //darkbold16
+                fontWeight: FontWeight.bold,
+                fontSize: 16, //16
+                fontFamily: 'Roboto'
+                // color: dark,
+                ),
             headline6: TextStyle(
-              //darkbold14
-              fontWeight: FontWeight.bold,
-              fontSize: 13,//14
-              fontFamily: 'Roboto'
-              // color: dark,
-            ),
+                //darkbold14
+                fontWeight: FontWeight.bold,
+                fontSize: 13, //14
+                fontFamily: 'Roboto'
+                // color: dark,
+                ),
             bodyText1: TextStyle(
-              //dark14
-              fontWeight: FontWeight.normal,
-              fontSize: 12,//13
-              fontFamily: 'Roboto'
-              // color: dark,
-            ),
+                //dark14
+                fontWeight: FontWeight.normal,
+                fontSize: 12, //13
+                fontFamily: 'Roboto'
+                // color: dark,
+                ),
             subtitle1: TextStyle(
-              //grey14
-              fontWeight: FontWeight.normal,
-              fontSize: 12,//13
-              color: Colors.grey,
-              fontFamily: 'Roboto'
-            ),
+                //grey14
+                fontWeight: FontWeight.normal,
+                fontSize: 12, //13
+                color: Colors.grey,
+                fontFamily: 'Roboto'),
             subtitle2: new TextStyle(
-              //grey11
-              fontWeight: FontWeight.bold,
-              fontSize: 10,//11
-              color: Colors.grey,
-              fontFamily: 'Roboto'
-            ),
+                //grey11
+                fontWeight: FontWeight.bold,
+                fontSize: 10, //11
+                color: Colors.grey,
+                fontFamily: 'Roboto'),
             headline4: new TextStyle(
-              //white11
-              fontWeight: FontWeight.bold,
-              fontSize: 10,//11
-              color: Colors.white,
-              fontFamily: 'Roboto'
-            ),
+                //white11
+                fontWeight: FontWeight.bold,
+                fontSize: 10, //11
+                color: Colors.white,
+                fontFamily: 'Roboto'),
           ),
         ),
         themeMode: ThemeMode.system,
@@ -198,8 +189,15 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           '/address-book': (context) => AddressBook(),
           '/allstore': (context) => AllStore(),
-          '/currentOrder':(context) => Orders(),
-          '/trackOrder':(context) => TrackOrderW(),
+          '/currentOrder': (context) => Orders(),
+        },
+        onGenerateRoute: (settings) {
+          var routes = <String, WidgetBuilder>{
+            "/trackOrder": (ctx) => TrackOrderW(order: settings.arguments),
+          };
+
+          WidgetBuilder builder = routes[settings.name];
+          return MaterialPageRoute(builder: (ctx) => builder(ctx));
         },
         home: Wrapper(),
       ),
