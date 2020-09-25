@@ -27,6 +27,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     PushNotificationService().init(context);
     super.initState();
   }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    final int argIndex =ModalRoute.of(context).settings.arguments;
+    if(argIndex!=null){
+      controller.index=argIndex;
+    }
+  }
 
   TabController controller;
 

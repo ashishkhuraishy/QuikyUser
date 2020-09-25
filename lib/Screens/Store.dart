@@ -34,6 +34,8 @@ class Store extends StatelessWidget {
         bottomNavigationBar: InkWell(
           onTap: () {
             // controller.animateTo(2);
+
+            Navigator.pop(context);
             Navigator.pushReplacementNamed(context, '/home', arguments: 2);
             // Provider.of<Home>(context,listen: false).navigate();
           },

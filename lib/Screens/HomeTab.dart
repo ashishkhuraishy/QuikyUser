@@ -56,8 +56,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);
 
       Provider.of<HomeProvider>(context, listen: false)
-          // .getData(currectAddress.lat, currectAddress.long);
-          .getData(10.0260688, 76.3124753);
+          .getData(currectAddress.lat, currectAddress.long);
+          // .getData(10.0260688, 76.3124753);
     Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 

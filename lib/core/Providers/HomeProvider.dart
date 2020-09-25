@@ -33,7 +33,7 @@ class HomeProvider extends ChangeNotifier {
 
   // /loading
 
-  bool loading=false;
+  bool loading=true;
 
   setLoading(bool state){
     loading=state;
