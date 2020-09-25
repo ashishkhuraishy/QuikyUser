@@ -31,15 +31,26 @@ class HomeProvider extends ChangeNotifier {
   int _error;
   int get error => _error;
 
+  // /loading
+
+  bool loading=false;
+
+  setLoading(bool state){
+    loading=state;
+    notifyListeners();
+  }
+
   /// Call this fn when the location is changed
   ///
   /// Only call this after making sure Lat & Long are non - null
   getData(double lat, double long) async {
+    setLoading(true);
     await _getFeaturedData(lat, long);
-    await _getPopularData(lat, long);
-    await _getRecipiesData();
     await _getTrendingRestaurantData(lat, long);
     await _getTrendingGeroceryData(lat, long);
+    setLoading(false);
+    await _getPopularData(lat, long);
+    await _getRecipiesData();
   }
 
   /// Local Helper Methods

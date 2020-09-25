@@ -279,10 +279,17 @@ class CartTab extends StatelessWidget {
                             //COD
                             print(order.id);
                             paymentService.startCod(order);
+                            Navigator.pop(context);
+                              scaffoldKey.currentState.setState(() {
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .clear;
+                              });
                             // StripeService sp = new StripeService();
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {
                             //Online Payment
+                            Navigator.pop(context);
                             final user = Provider.of<UserProvider>(context,
                                     listen: false)
                                 .getUser;

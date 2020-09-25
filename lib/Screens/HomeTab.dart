@@ -25,7 +25,10 @@ class HomeTab extends StatefulWidget {
   _HomeTabState createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
@@ -51,8 +54,10 @@ class _HomeTabState extends State<HomeTab> {
   void fetchData(Address currectAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);
-    Provider.of<HomeProvider>(context, listen: false)
-        .getData(10.0260688, 76.3124753);
+
+      Provider.of<HomeProvider>(context, listen: false)
+          // .getData(currectAddress.lat, currectAddress.long);
+          .getData(10.0260688, 76.3124753);
     Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
@@ -74,7 +79,7 @@ class _HomeTabState extends State<HomeTab> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: mapPionter,
+                child: Icon(Icons.location_on,color: primary,)
               ),
               Consumer<AddressProvider>(
                 builder: (ctx, val, widget) {
@@ -97,9 +102,13 @@ class _HomeTabState extends State<HomeTab> {
           // print(provider.popularBrands.length);
           // print(provider.restaurantsNearBy.length);
           // print(provider.storesNearBy.length);
-          if (provider.popularBrands.length > -1 &&
-              provider.restaurantsNearBy.length > -1 &&
-              provider.storesNearBy.length > -1) {
+          if (provider.loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (provider.popularBrands.length > 0 ||
+              provider.restaurantsNearBy.length > 0 ||
+              provider.storesNearBy.length > 0) {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -373,6 +382,12 @@ class _HomeTabState extends State<HomeTab> {
                                 itemCount: provider.popularBrands.length,
                                 itemBuilder: (ctxx, index) {
                                   return OptionCard(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed('/store',
+                                          arguments:
+                                              provider.popularBrands[index]);
+                                      print("asdasd");
+                                    },
                                     title:
                                         "${provider.popularBrands[index].title}",
                                     networkImage:
