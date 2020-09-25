@@ -67,32 +67,36 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            final address = Provider.of<AddressProvider>(context, listen: false)
-                .currentAddress;
-            print(address.lat);
-            print(address.long);
-            // Navigator.of(context).popAndPushNamed('/selectlocation');
-          },
-          child: Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.location_on,color: primary,)
-              ),
-              Consumer<AddressProvider>(
-                builder: (ctx, val, widget) {
-                  if (val.currentAddress.lat > 0) fetchData(val.currentAddress);
-                  return Text(
-                    "${val.currentAddress.shortAddress}",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline5,
-                    overflow: TextOverflow.ellipsis,
-                  );
-                },
-              )
-            ],
+        title: Container(
+          // height: double.infinity,
+          width: double.infinity,
+          child: GestureDetector(
+            onTap: () {
+              final address = Provider.of<AddressProvider>(context, listen: false)
+                  .currentAddress;
+              print(address.lat);
+              print(address.long);
+              Navigator.of(context).pushNamed('/address-book');
+            },
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.location_on,color: primary,)
+                ),
+                Consumer<AddressProvider>(
+                  builder: (ctx, val, widget) {
+                    if (val.currentAddress.lat > 0) fetchData(val.currentAddress);
+                    return Text(
+                      "${val.currentAddress.shortAddress}",
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.headline5,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
         elevation: 0.0,
