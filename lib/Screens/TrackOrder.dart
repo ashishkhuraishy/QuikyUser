@@ -82,7 +82,7 @@ class _TrackOrderWState extends State<TrackOrderW> {
         children: [
           Container(
             height: scHeight / 3 * 2,
-            child: loading
+            child: !loading
                 ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
