@@ -39,8 +39,9 @@ class CartModel extends Cart {
       storeAddress: json['store_address'] ?? '',
       storeImage: json['store_image'] ?? '',
       offers: json['offers'] ?? [],
-      cartItems:
-          json['cartitem'].map((e) => CartItemModel.fromJson(e)).toList(),
+      cartItems: json['cartitem']
+          .map<CartItem>((e) => CartItemModel.fromJson(e))
+          .toList(),
       storeLogo: json['store_logo'] ?? '',
     );
   }
