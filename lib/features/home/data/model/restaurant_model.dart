@@ -22,6 +22,7 @@ class RestaurantModel extends Restaurant {
   final String storeSubType;
   final String status;
   final String option;
+  final String location;
   final String totalReviews;
   final String avgRating;
   final String coordinate;
@@ -65,6 +66,7 @@ class RestaurantModel extends Restaurant {
     @required this.avgRating,
     @required this.coordinate,
     @required this.address,
+    @required this.location,
     @required this.recommendationCount,
     @required this.minimumCostTwo,
     @required this.avgDeliveryTime,
@@ -105,6 +107,7 @@ class RestaurantModel extends Restaurant {
           recommendationCount: recommendationCount,
           minimumCostTwo: minimumCostTwo,
           avgDeliveryTime: avgDeliveryTime,
+          location: location,
           active: active,
           inOrder: inOrder,
           bulkOrder: bulkOrder,
@@ -151,6 +154,7 @@ class RestaurantModel extends Restaurant {
       active: json['active'] ?? false,
       inOrder: json['in_order'] ?? false,
       bulkOrder: json['bulk_order'] ?? false,
+      location: json['location'] ?? '',
       opening: json['opening'] ?? '',
       closing: json['closing'] ?? '',
       highlightStatus: json['highlight_status'] ?? false,

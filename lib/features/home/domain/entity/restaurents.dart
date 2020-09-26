@@ -28,6 +28,7 @@ class Restaurant extends Equatable {
   final String recommendationCount;
   final String minimumCostTwo;
   final String avgDeliveryTime;
+  final String location;
   final bool active;
   final bool inOrder;
   final bool bulkOrder;
@@ -57,6 +58,7 @@ class Restaurant extends Equatable {
     @required this.brandLogo,
     @required this.profilePicture,
     @required this.fssai,
+    @required this.location,
     @required this.storeSubType,
     @required this.status,
     @required this.option,
@@ -108,6 +110,7 @@ class Restaurant extends Equatable {
         minimumCostTwo,
         avgDeliveryTime,
         active,
+        location,
         inOrder,
         bulkOrder,
         opening,
