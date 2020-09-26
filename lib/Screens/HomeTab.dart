@@ -196,6 +196,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                   ),
                   Consumer<HomeProvider>(
                     builder: (ctx, provider, _) {
+                      print("in the spot light ${provider.inTheSpotLight.length}");
+                      print(provider.inTheSpotLight);
                       if (provider.inTheSpotLight != null &&
                           provider.inTheSpotLight.length > 0) {
                         return Column(
@@ -236,7 +238,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                   ),
                                   Container(
                                     height: provider.inTheSpotLight != null
-                                        ? provider.inTheSpotLight.length > 1
+                                        ? provider.inTheSpotLight.length > 0
                                             ? 260
                                             : 130
                                         : 200,
@@ -247,7 +249,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                             physics: PageScrollPhysics(),
                                             itemCount: provider
                                                         .inTheSpotLight.length >
-                                                    1
+                                                    0
                                                 ? provider.inTheSpotLight
                                                         .length ~/
                                                     2
@@ -377,7 +379,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                     title:
                                         "${provider.popularBrands[index].title}",
                                     networkImage:
-                                        "$BASE_URL${provider.popularBrands[index].profilePicture}",
+                                        "$BASE_URL${provider.popularBrands[index].brandLogo}",
                                     secondTitle:
                                         "${provider.popularBrands[index].avgDeliveryTime} mins",
                                   );
@@ -505,9 +507,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                 color: primary,
                               ),
                             ),
-                            Divider(
-                              thickness: 2,
-                            )
+                            // Divider(
+                            //   thickness: 2,
+                            // )
                           ],
                         );
                       } else {

@@ -44,7 +44,7 @@ class StoreCard extends StatelessWidget {
                   child: Image.network(
                     "$api${restaurantModel.profilePicture}",
                     width: 90,
-                    height: 110,
+                    height: 90,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -73,7 +73,7 @@ class StoreCard extends StatelessWidget {
             Container(
               constraints: BoxConstraints(
                   maxWidth: scWidth - 130, minWidth: scWidth - 130),
-              height: 110,
+              height: 90,
               padding: const EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class StoreCard extends StatelessWidget {
                   ),
                   // Spacer(flex:8),
                   Text(
-                    "★${restaurantModel.avgRating} • ${int.tryParse(restaurantModel.avgDeliveryTime) != null ? int.tryParse(restaurantModel.avgDeliveryTime) + 25 : 25} mins • ₹${restaurantModel.minimumCostTwo} for two",
+                    "★ ${restaurantModel.avgRating!='nill'?restaurantModel.avgRating:0} • ${int.tryParse(restaurantModel.avgDeliveryTime) != null ? int.tryParse(restaurantModel.avgDeliveryTime) + 25 : 25} mins • ₹${restaurantModel.minimumCostTwo} for two",
                     style: Theme.of(context).textTheme.bodyText1,
                     overflow: TextOverflow.ellipsis,
                   ),

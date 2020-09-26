@@ -77,7 +77,7 @@ class OrderModel extends Order {
       otp: json['otp'] ?? '',
       paymentStatus: json['payment_status'] ?? '',
       razorPayId: json['razorpay_order_id'] ?? '',
-      timeStamp: DateTime.tryParse(json['timestamp']) ?? DateTime.now(),
+      timeStamp: json['timestamp']!=null?DateTime.tryParse(json['timestamp']) : DateTime.now(),
       vendorStaus: json['vendor_status'],
     );
   }

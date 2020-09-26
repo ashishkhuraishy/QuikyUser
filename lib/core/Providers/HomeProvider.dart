@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
@@ -72,7 +74,6 @@ class HomeProvider extends ChangeNotifier {
     }, (restaurants) {
       // print('Featured ${restaurants[0].title}');
       _featuredList = restaurants;
-      // print(restaurants);
       notifyListeners();
     });
   }
