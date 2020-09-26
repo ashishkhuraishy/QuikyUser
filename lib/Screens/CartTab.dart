@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/Widgets/ProductCard.dart';
-import 'package:quiky_user/Widgets/StoreDetails.dart';
-import 'package:quiky_user/core/Providers/AddressProvider.dart';
-import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/core/Services/payment_service.dart';
-import 'package:quiky_user/features/cart/domain/entity/cart.dart';
-import 'package:quiky_user/features/cart/domain/entity/order.dart';
-import 'package:quiky_user/features/home/domain/entity/offer.dart';
-import 'package:quiky_user/features/home/domain/entity/restaurents.dart';
-import 'package:quiky_user/features/user/data/datasource/user_local_data_source.dart';
-import 'package:quiky_user/features/user/domain/entity/user.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../Widgets/ProductCard.dart';
+import '../Widgets/StoreDetails.dart';
+import '../core/Providers/AddressProvider.dart';
 import '../core/Providers/CartProvider.dart';
+import '../core/Providers/UserProvider.dart';
+import '../core/Services/payment_service.dart';
+import '../features/cart/domain/entity/order.dart';
+import '../features/home/domain/entity/offer.dart';
+import '../features/home/domain/entity/restaurents.dart';
 import '../theme/themedata.dart';
 
 class CartTab extends StatelessWidget {
-  PaymentService paymentService = new PaymentService();
+  final PaymentService paymentService = new PaymentService();
   CartTab({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -280,11 +275,10 @@ class CartTab extends StatelessWidget {
                             print(order.id);
                             paymentService.startCod(order);
                             Navigator.pop(context);
-                              scaffoldKey.currentState.setState(() {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .clear;
-                              });
+                            scaffoldKey.currentState.setState(() {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .clear;
+                            });
                             // StripeService sp = new StripeService();
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {

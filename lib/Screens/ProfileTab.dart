@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/UserProvider.dart';
-import 'package:quiky_user/widgets/OptionCard.dart';
+
+import '../core/Providers/UserProvider.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double scWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Consumer<UserProvider>(
         builder: (ctx, provider, _) {
           if (provider.getUser == null) {
             return Center(
-              child: RaisedButton(child: Text("Login"),onPressed: (){
-                
-      Navigator.of(context).pushNamed('/signup');
-              },),
+              child: RaisedButton(
+                child: Text("Login"),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/signup');
+                },
+              ),
             );
-          } else if (provider.getUser != null) {
+          } else {
             return SafeArea(
                 child: SingleChildScrollView(
                     child: Column(
@@ -30,16 +31,16 @@ class ProfileTab extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("${provider.getUser.name}",
-                                  style: Theme.of(context).textTheme.headline5),
-                              // Text("${provider.getUser.email}",
-                              //     style: Theme.of(context).textTheme.bodyText1),
-                              Text("${provider.getUser.mobile}",
-                                  style: Theme.of(context).textTheme.bodyText1),
-                            ],
-                          ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("${provider.getUser.name}",
+                              style: Theme.of(context).textTheme.headline5),
+                          // Text("${provider.getUser.email}",
+                          //     style: Theme.of(context).textTheme.bodyText1),
+                          Text("${provider.getUser.mobile}",
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ],
+                      ),
                       Container(
                         child: Icon(
                           Icons.account_circle,

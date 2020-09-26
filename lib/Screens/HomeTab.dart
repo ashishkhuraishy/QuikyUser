@@ -27,37 +27,15 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    // final currentAddress =
-    //     Provider.of<AddressProvider>(context, listen: false).currentAddress;
-
-    // print("asdasdasd ${currentAddress.shortAddress}");
-
-    // // final getData = Provider.of<HomeProvider>(context, listen: false)
-    // //     .getData(currentAddress.lat, currentAddress.long);
-
-    // final getData = Provider.of<HomeProvider>(context, listen: false)
-    //     .getData(10.0261, 76.3125);
-    // // .getData(currentAddress.lat, currentAddress.long);
-    // print(getData);
-  }
 
   void fetchData(Address currectAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);
 
-      Provider.of<HomeProvider>(context, listen: false)
-          .getData(currectAddress.lat, currectAddress.long);
-          // .getData(10.0260688, 76.3124753);
+    Provider.of<HomeProvider>(context, listen: false)
+        .getData(currectAddress.lat, currectAddress.long);
+    // .getData(10.0260688, 76.3124753);
     Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
@@ -72,8 +50,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           width: double.infinity,
           child: GestureDetector(
             onTap: () {
-              final address = Provider.of<AddressProvider>(context, listen: false)
-                  .currentAddress;
+              final address =
+                  Provider.of<AddressProvider>(context, listen: false)
+                      .currentAddress;
               print(address.lat);
               print(address.long);
               Navigator.of(context).pushNamed('/address-book');
@@ -81,12 +60,15 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
             child: Row(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.location_on,color: primary,)
-                ),
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      Icons.location_on,
+                      color: primary,
+                    )),
                 Consumer<AddressProvider>(
                   builder: (ctx, val, widget) {
-                    if (val.currentAddress.lat > 0) fetchData(val.currentAddress);
+                    if (val.currentAddress.lat > 0)
+                      fetchData(val.currentAddress);
                     return Text(
                       "${val.currentAddress.shortAddress}",
                       textAlign: TextAlign.left,
@@ -214,6 +196,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                   ),
                   Consumer<HomeProvider>(
                     builder: (ctx, provider, _) {
+                      print("in the spot light ${provider.inTheSpotLight.length}");
+                      print(provider.inTheSpotLight);
                       if (provider.inTheSpotLight != null &&
                           provider.inTheSpotLight.length > 0) {
                         return Column(
@@ -254,7 +238,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                   ),
                                   Container(
                                     height: provider.inTheSpotLight != null
-                                        ? provider.inTheSpotLight.length > 1
+                                        ? provider.inTheSpotLight.length > 0
                                             ? 260
                                             : 130
                                         : 200,
@@ -265,7 +249,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                             physics: PageScrollPhysics(),
                                             itemCount: provider
                                                         .inTheSpotLight.length >
-                                                    1
+                                                    0
                                                 ? provider.inTheSpotLight
                                                         .length ~/
                                                     2
@@ -395,7 +379,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                     title:
                                         "${provider.popularBrands[index].title}",
                                     networkImage:
-                                        "$BASE_URL${provider.popularBrands[index].profilePicture}",
+                                        "$BASE_URL${provider.popularBrands[index].brandLogo}",
                                     secondTitle:
                                         "${provider.popularBrands[index].avgDeliveryTime} mins",
                                   );
@@ -523,9 +507,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                 color: primary,
                               ),
                             ),
-                            Divider(
-                              thickness: 2,
-                            )
+                            // Divider(
+                            //   thickness: 2,
+                            // )
                           ],
                         );
                       } else {

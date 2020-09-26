@@ -11,6 +11,14 @@ class Order extends Equatable {
   final String taxtotal;
   final String discountAmount;
   final String coupon;
+  final String status;
+  final String paymentType;
+  final String deliveryStaus;
+  final String vendorStaus;
+  final DateTime timeStamp;
+  final String otp;
+  final String razorPayId;
+  final String paymentStatus;
 
   Order({
     @required this.id,
@@ -21,6 +29,14 @@ class Order extends Equatable {
     @required this.taxtotal,
     @required this.discountAmount,
     @required this.coupon,
+    @required this.status,
+    @required this.paymentType,
+    @required this.deliveryStaus,
+    @required this.otp,
+    @required this.paymentStatus,
+    @required this.razorPayId,
+    @required this.timeStamp,
+    @required this.vendorStaus,
   });
 
   @override
@@ -33,5 +49,13 @@ class Order extends Equatable {
         taxtotal,
         discountAmount,
         coupon,
+        status,
+        paymentType,
+        deliveryStaus,
+        otp,
+        paymentStatus,
+        razorPayId,
+        timeStamp,
+        vendorStaus,
       ];
 }

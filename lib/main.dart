@@ -193,7 +193,8 @@ class MyApp extends StatelessWidget {
         },
         onGenerateRoute: (settings) {
           var routes = <String, WidgetBuilder>{
-            "/trackOrder": (ctx) => TrackOrderW(order: settings.arguments),
+            "/trackOrder": (ctx) =>
+                TrackOrderW(orderdetails: settings.arguments),
           };
 
           WidgetBuilder builder = routes[settings.name];

@@ -48,7 +48,7 @@ class CartProvider extends ChangeNotifier {
   List<CartItem> get currentCartItems => _currentCart.cartItems;
   void get clear {
     _clearCart.call();
-    cartProducts=[];
+    cartProducts = [];
     notifyListeners();
   }
 
@@ -61,10 +61,6 @@ class CartProvider extends ChangeNotifier {
     Variation variation,
     int quantity,
     Restaurant restaurant,
-
-    // TODO : Remove this two lines
-    List<Offer> offers,
-    int storeId,
   }) async {
     _addItem.call(
       quantity: quantity,

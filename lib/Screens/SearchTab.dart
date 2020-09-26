@@ -26,12 +26,10 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     currentaddress =
         Provider.of<AddressProvider>(context, listen: false).currentAddress;
     search = new SearchService(currentAddress: currentaddress);
-    // searchController.addListener(searchListener);
   }
 
   void searchHandler(data) async {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:quiky_user/Constants/Apikeys.dart';
+import 'package:quiky_user/features/cart/domain/entity/order.dart';
 import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 import 'package:quiky_user/features/user/domain/usecase/order_status.dart';
 
@@ -11,7 +12,7 @@ class TrackOrder {
   OrderStatus orderStatus = OrderStatus(sl());
   final int id;
 
-  TrackOrder({this.id,this.start,this.end});
+  TrackOrder({this.id, this.start, this.end});
 
   PolylinePoints polylinePoints = PolylinePoints();
   List<double> start, end;
@@ -29,23 +30,31 @@ class TrackOrder {
 
   Stream<OrderDetails> timedCounter() async* {
     OrderDetails orderDetails = OrderDetails(
-      orderId: null,
+      order: Order(
+        id: null,
+        items: [],
+        total: null,
+        subTotal: null,
+        delCharges: null,
+        taxtotal: null,
+        discountAmount: null,
+        coupon: null,
+        status: null,
+        paymentType: null,
+        deliveryStaus: null,
+        otp: null,
+        paymentStatus: null,
+        razorPayId: null,
+        timeStamp: null,
+        vendorStaus: null,
+      ),
+      storeAddress: null,
+      storeLocation: null,
       storeName: null,
-      total: null,
-      cart: null,
-      dateTime: null,
+      userAddress: null,
       userLocation: null,
-      deliveryDate: null,
-      deliveryIncentative: null,
-      deliveryStatus: null,
-      paymentAmount: null,
-      paymentType: null,
-      shippingAddress: null,
-      status: null,
-      subTotal: null,
-      taxTotal: null,
-      vendorLocation: null,
-      vendorStatus: null,
+      userMobile: null,
+      userName: null,
     );
 
     while (true) {
@@ -53,7 +62,10 @@ class TrackOrder {
       final result = await orderStatus(id);
       result.fold(
         (failure) => print(failure),
-        (orderStatus) => orderDetails = orderStatus,
+        (orderDtils) {
+          print(orderDetails.order.id);
+          orderDetails = orderDtils;
+        },
       );
       yield orderDetails;
     }
