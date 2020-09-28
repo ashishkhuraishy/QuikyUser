@@ -23,7 +23,7 @@ class Orders extends StatelessWidget {
             );
           } else if (orders.hasError) {
             print(orders.error.toString());
-            return Text("error");
+            return Center(child: Text("Internal Error"));
           } else if (orders.hasData) {
             List<OrderDetails> ordersR = orders.data.reversed.toList();
             return ListView.builder(
@@ -37,7 +37,7 @@ class Orders extends StatelessWidget {
             );
           } else {
             print(orders.error.toString());
-            return Text("No data");
+            return Center(child: Text("No data"));
           }
         },
       ),

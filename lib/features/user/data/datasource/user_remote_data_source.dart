@@ -88,6 +88,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     // print("$userId $token");
     final String url = BASE_URL + '/order_list/?user_id=$userId';
     print(url);
+    print(token);
     Response response = await client.get(
       url,
       headers: {
@@ -96,11 +97,11 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     );
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
-      try{
+      // try{
       return data.map((e) => OrderDetailsModel.fromJson(e)).toList();
-      }catch(e){
-        print("error 1 ${e}");
-      }
+      // }catch(e){
+      //   print("error 1 ${e}");
+      // }
     }
     print(response.statusCode);
     print(response);
