@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -283,6 +285,8 @@ class CartTab extends StatelessWidget {
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {
                             //Online Payment
+                            
+                            print("${order.id}");
                             final user = Provider.of<UserProvider>(context,
                                     listen: false)
                                 .getUser;
@@ -304,7 +308,7 @@ class CartTab extends StatelessWidget {
                               user: user,
                               storeName: "Store",
                             );
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
                             // paymentService.clearinstance();
                           }
                         },
@@ -362,7 +366,7 @@ class CartTab extends StatelessWidget {
                                 "${currentAddress.formattedAddress}",
                             coupon: coupon != null ? coupon.code : null,
                           );
-                          print("Error Occured");
+                          print("Order fetched");
                           if (Provider.of<UserProvider>(context, listen: false)
                                   .getUser ==
                               null) {
@@ -376,8 +380,10 @@ class CartTab extends StatelessWidget {
                             scaffoldKey.currentState.showSnackBar(s);
                           } else {
                             print("Order placed");
+                            // Order odr = order.fold((l)=>l, (r) => r);
+                            // print("iiiiiiiiii ${odr.id}");
                             displayConfirmOrderBottomSheet(
-                                context, order.fold((l) => l, (r) => r), () {
+                                context, order.fold((l)=>l, (r) => r), () {
                               builder(() {
                                 isLoading = false;
                               });

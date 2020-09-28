@@ -23,7 +23,9 @@ class _SignupState extends State<Signup> {
 
       if (Provider.of<UserProvider>(context, listen: false).getUser != null) {
         Provider.of<UserProvider>(context, listen: false).setError();
-        Navigator.of(context).popAndPushNamed("/home");
+        // Navigator.of(context).popAndPushNamed("/home");
+        Navigator.of(context).pop();
+
       }
     }
   }

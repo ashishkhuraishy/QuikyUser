@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Constants/Apikeys.dart';
 import 'package:quiky_user/Widgets/OptionCard2.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
+import 'package:quiky_user/core/error/failure.dart';
+import 'package:quiky_user/core/platform/network_info.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
 import '../core/Providers/AddressProvider.dart';
@@ -28,6 +30,8 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  NetworkInfo networkInfo;
 
   void fetchData(Address currectAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
@@ -92,6 +96,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
             return Center(
               child: CircularProgressIndicator(),
             );
+          } else if(provider.error == 1){
+            return Center(child:Text("No network"));
+          } else if(provider.error == 1){
+            return Center(child:Text("No network"));
           } else if (provider.popularBrands.length > 0 ||
               provider.restaurantsNearBy.length > 0 ||
               provider.storesNearBy.length > 0) {
@@ -267,9 +275,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                                   children: <Widget>[
                                                     StoreCard(
                                                       scWidth: widget.scWidth,
-                                                      restaurantModel: provider
-                                                              .inTheSpotLight[
-                                                          index],
+                                                      restaurantModel: provider.inTheSpotLight[index],
                                                     ),
                                                     provider.inTheSpotLight
                                                                 .length >

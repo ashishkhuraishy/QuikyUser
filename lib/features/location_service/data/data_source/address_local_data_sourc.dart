@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:quiky_user/core/error/exception.dart';
+import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/features/location_service/data/model/address_model.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
@@ -49,7 +50,11 @@ class AddresLocalDataSourceImpl extends AddressLocalDataSource {
     if (!hive.isBoxOpen(ADDRESS_BOX)) hive.openBox(ADDRESS_BOX);
     Box addressBox = hive.box(ADDRESS_BOX);
     if (addressBox.isNotEmpty) {
+      try {
       return Future.value(addressBox.getAt(0));
+      } catch (e) {
+        throw CacheException();
+      }
     } else
       throw CacheException();
   }

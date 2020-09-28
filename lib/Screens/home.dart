@@ -18,7 +18,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // Address currentAddress;
   GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
-
   int index=0;
 
   @override

@@ -17,12 +17,18 @@ class AddressProvider extends ChangeNotifier {
 
   Address get currentAddress => _addressModel;
 
+  Failure _failure;
+  get error => _failure;
+
   getCurrentAddress() async {
     print('Get Address Called');
     final resultEither = await getAddress.execute();
 
     resultEither.fold(
-      (failure) => _catchError(failure),
+      (failure) {
+        _catchError(failure);
+        // throw ConnectionFailure();
+      },
       (address) {
         _addressModel = address;
         print(_addressModel.shortAddress);
@@ -54,17 +60,21 @@ class AddressProvider extends ChangeNotifier {
     print('Error Occured at AddressProvider : ${failure.runtimeType}');
     switch (failure.runtimeType) {
       case ConnectionFailure:
+        _failure = ConnectionFailure as Failure;
         // TODO : Do Something when Connection Fails
         break;
       case CacheFailure:
+        _failure = CacheFailure as Failure;
 
         /// TODO : Do Something when getting data
         /// from localStorage  Fails
         break;
       case LocationFailure:
+        _failure = LocationFailure as Failure;
         // TODO : Do Something when getting Location Fails
         break;
       case ServerFailure:
+        _failure = ServerFailure as Failure;
         // TODO : Do Something when Api response has errors Fails
         break;
       default:
