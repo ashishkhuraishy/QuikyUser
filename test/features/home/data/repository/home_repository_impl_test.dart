@@ -62,6 +62,7 @@ main() {
     vendor: true,
     customer: false,
     popularBrand: true,
+    location: "Edapally",
     brandLogo: "/media/images.png",
     profilePicture: "/media/8.png",
     fssai: "11319007002211",

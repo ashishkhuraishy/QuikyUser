@@ -55,6 +55,7 @@ main() {
     storeSubType: "Indian, Chinese",
     status: "opened",
     option: "trending",
+    location: "Edapally",
     totalReviews: "0",
     avgRating: '0',
     coordinate: "10.0142468,76.2775775",
