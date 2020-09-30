@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -287,7 +285,7 @@ class CartTab extends StatelessWidget {
                             // sp.payAsCod(order.id, order.total);
                           } else if (payMethod == 2) {
                             //Online Payment
-                            
+
                             print("${order.id}");
                             final user = Provider.of<UserProvider>(context,
                                     listen: false)
@@ -385,7 +383,7 @@ class CartTab extends StatelessWidget {
                             // Order odr = order.fold((l)=>l, (r) => r);
                             // print("iiiiiiiiii ${odr.id}");
                             displayConfirmOrderBottomSheet(
-                                context, order.fold((l)=>l, (r) => r), () {
+                                context, order.fold((l) => l, (r) => r), () {
                               builder(() {
                                 isLoading = false;
                               });

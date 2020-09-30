@@ -95,6 +95,10 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
         HttpHeaders.authorizationHeader: "Token $token",
       },
     );
+    print(token);
+    print(userId);
+    print(response.statusCode);
+    print(response);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
       // try{
@@ -103,8 +107,6 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       //   print("error 1 ${e}");
       // }
     }
-    print(response.statusCode);
-    print(response);
     throw ServerException();
   }
 

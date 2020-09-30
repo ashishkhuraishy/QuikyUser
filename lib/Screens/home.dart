@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 
+import '../core/Providers/CartProvider.dart';
 import '../core/Providers/UserProvider.dart';
 import '../theme/themedata.dart';
 import 'CartTab.dart';
@@ -18,23 +17,23 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // Address currentAddress;
   GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
-  int index=0;
+  int index = 0;
 
   @override
   void initState() {
     // final currentAddress = Provider.of<AddressProvider>(context,listen: false).currentAddress;
     controller = TabController(length: 4, vsync: this);
     controller.addListener(tabListener);
-    PushNotificationService().init(context);
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
-    final int argIndex =ModalRoute.of(context).settings.arguments;
-    if(argIndex==2){
-      controller.index=argIndex;
+
+    final int argIndex = ModalRoute.of(context).settings.arguments;
+    if (argIndex == 2) {
+      controller.index = argIndex;
     }
   }
 
@@ -48,7 +47,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Navigator.of(context).pushNamed('/signup');
     }
     setState(() {
-      index= controller.index;
+      index = controller.index;
     });
   }
 
@@ -90,7 +89,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               icon: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  TabBarImageIcon(index: index,image:'assets/img/home.png',image_dark:'assets/img/home_dark.png',value:0),
+                  TabBarImageIcon(
+                      index: index,
+                      image: 'assets/img/home.png',
+                      image_dark: 'assets/img/home_dark.png',
+                      value: 0),
                   Text("QUIKY", style: textBold11)
                 ],
               ),
@@ -99,7 +102,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               icon: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  TabBarImageIcon(index: index,image:'assets/img/Search.png',image_dark:'assets/img/Search_dark.png',value:1),
+                  TabBarImageIcon(
+                      index: index,
+                      image: 'assets/img/Search.png',
+                      image_dark: 'assets/img/Search_dark.png',
+                      value: 1),
                   Text(
                     "SEARCH",
                     style: textBold11,
@@ -114,7 +121,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                  TabBarImageIcon(index: index,image:'assets/img/cart.png',image_dark:'assets/img/cart_dark.png',value:2),
+                      TabBarImageIcon(
+                          index: index,
+                          image: 'assets/img/cart.png',
+                          image_dark: 'assets/img/cart_dark.png',
+                          value: 2),
                       Container(
                         padding:
                             EdgeInsets.symmetric(vertical: 2, horizontal: 5),
@@ -143,7 +154,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               icon: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  TabBarImageIcon(index: index,image:'assets/img/profile.png',image_dark:'assets/img/profile_dark.png',value:3),
+                  TabBarImageIcon(
+                      index: index,
+                      image: 'assets/img/profile.png',
+                      image_dark: 'assets/img/profile_dark.png',
+                      value: 3),
                   Text(
                     "PROFILE",
                     style: textBold11,
@@ -161,16 +176,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 class TabBarImageIcon extends StatelessWidget {
   const TabBarImageIcon({
     Key key,
-    @required this.index, this.image,this.image_dark,this.value,
+    @required this.index,
+    this.image,
+    this.image_dark,
+    this.value,
   }) : super(key: key);
 
-  final int index,value;
-  final String image,image_dark;
+  final int index, value;
+  final String image, image_dark;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: index==value?Image.asset(image,width: 24,):Image.asset(image_dark,width: 24,),
+      child: index == value
+          ? Image.asset(
+              image,
+              width: 24,
+            )
+          : Image.asset(
+              image_dark,
+              width: 24,
+            ),
     );
   }
 }

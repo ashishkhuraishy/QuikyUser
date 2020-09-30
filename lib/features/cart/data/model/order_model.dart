@@ -61,7 +61,7 @@ class OrderModel extends Order {
     final orderList = json['cart']['cartitem'] ?? [];
 
     return OrderModel(
-      id: json['orderid'] ?? -1,
+      id: json['id'] ?? -1,
       items: orderList
           .map<CartItemModel>((e) => CartItemModel.fromJson(e))
           .toList(),
@@ -69,7 +69,8 @@ class OrderModel extends Order {
       subTotal: json['cart']['sub_total'].toStringAsFixed(2) ?? "0.0",
       delCharges: json['cart']['delivery_charges'].toStringAsFixed(2) ?? "0.0",
       taxtotal: json['cart']['tax_total'].toStringAsFixed(2) ?? "0.0",
-      discountAmount: json['cart']['discount_total'].toStringAsFixed(2) ?? "0.0",
+      discountAmount:
+          json['cart']['discount_total'].toStringAsFixed(2) ?? "0.0",
       coupon: json['cart']['coupon'] ?? "",
       status: json['status'] ?? '',
       paymentType: json['payment_type'] ?? '',
@@ -77,7 +78,9 @@ class OrderModel extends Order {
       otp: json['otp'] ?? '',
       paymentStatus: json['payment_status'] ?? '',
       razorPayId: json['razorpay_order_id'] ?? '',
-      timeStamp: json['timestamp']!=null?DateTime.tryParse(json['timestamp']) : DateTime.now(),
+      timeStamp: json['timestamp'] != null
+          ? DateTime.tryParse(json['timestamp'])
+          : DateTime.now(),
       vendorStaus: json['vendor_status'],
     );
   }

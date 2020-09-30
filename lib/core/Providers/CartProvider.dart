@@ -96,7 +96,6 @@ class CartProvider extends ChangeNotifier {
   /// Function to check if a given variation Id is already inside
   /// the [CART] if there is an element it will return [CARTITEM.QUANTITY]
   /// else will return -1
-
   int getQuantity(int id) {
     final cartItem = currentCartItems.firstWhere(
       (element) => element.id == id,
@@ -117,7 +116,6 @@ class CartProvider extends ChangeNotifier {
 
   /// Helper Function to convert all cart Items Into [PRODUCT]
   /// for hellping out the front end reusability
-
   Future<List<Variation>> getProductsFromCart() async {
     final res = await _getCart.call();
     List<Variation> products = List<Variation>();

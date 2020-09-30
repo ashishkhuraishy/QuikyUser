@@ -52,10 +52,12 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       "shipping_address": shippingAddress,
       "bulk_order": "false",
       "milk_order": "false",
-      "date_time": "${dateTime ?? DateTime.now().toLocal()}",
+      // "date_time": "${dateTime ?? DateTime.now().toLocal()}",
     };
 
     url += "?user_location=$userLocation";
+    print(url);
+    print(body);
     if (coupon != null) url += "&coupon=$coupon";
     // print("$url $coupon");
     Response response = await client.post(
@@ -69,7 +71,7 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> reponseBody = jsonDecode(response.body);
-    // print("body ----------------- ${response.body}");
+      // print("body ----------------- ${response.body}");
       return OrderModel.fromJson(reponseBody);
     }
     print(response.statusCode);

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:quiky_user/Constants/Apikeys.dart';
 import 'package:quiky_user/Widgets/OptionCard2.dart';
 import 'package:quiky_user/core/Providers/CartProvider.dart';
-import 'package:quiky_user/core/error/failure.dart';
 import 'package:quiky_user/core/platform/network_info.dart';
 import 'package:quiky_user/features/location_service/domain/entity/address.dart';
 
@@ -31,19 +30,24 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
+  Address tempAddress;
   NetworkInfo networkInfo;
 
-  void fetchData(Address currectAddress) {
+  void fetchData(Address currentAddress) {
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
     // Provider.of<HomeProvider>(context, listen: false).getData(currectAddress.lat,currectAddress.long);
+    if (tempAddress != currentAddress) {
+      tempAddress = currentAddress;
+      Provider.of<HomeProvider>(context, listen: false)
+          .getData(currentAddress.lat, currentAddress.long);
+    }
 
-    Provider.of<HomeProvider>(context, listen: false)
-        .getData(currectAddress.lat, currectAddress.long);
     // .getData(10.0260688, 76.3124753);
     Provider.of<CartProvider>(context, listen: false).loadCart();
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     // final currentAddress =  Provider.of<AddressProvider>(context,listen: false).currentAddress;
     // final getData = Provider.of<HomeProvider>(context,listen:false).getData(currentAddress.lat, currentAddress.long);
@@ -96,10 +100,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if(provider.error == 1){
-            return Center(child:Text("No network"));
-          } else if(provider.error == 1){
-            return Center(child:Text("No network"));
+          } else if (provider.error == 1) {
+            return Center(child: Text("No network"));
+          } else if (provider.error == 1) {
+            return Center(child: Text("No network"));
           } else if (provider.popularBrands.length > 0 ||
               provider.restaurantsNearBy.length > 0 ||
               provider.storesNearBy.length > 0) {
@@ -204,7 +208,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                   ),
                   Consumer<HomeProvider>(
                     builder: (ctx, provider, _) {
-                      print("in the spot light ${provider.inTheSpotLight.length}");
+                      print(
+                          "in the spot light ${provider.inTheSpotLight.length}");
                       print(provider.inTheSpotLight);
                       if (provider.inTheSpotLight != null &&
                           provider.inTheSpotLight.length > 0) {
@@ -275,7 +280,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                                   children: <Widget>[
                                                     StoreCard(
                                                       scWidth: widget.scWidth,
-                                                      restaurantModel: provider.inTheSpotLight[index],
+                                                      restaurantModel: provider
+                                                              .inTheSpotLight[
+                                                          index],
                                                     ),
                                                     provider.inTheSpotLight
                                                                 .length >

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'Screens/home.dart';
 import 'Screens/selectlocation.dart';
 import 'core/Providers/AddressProvider.dart';
+import 'core/Services/push_notifiactions_service.dart';
 import 'features/location_service/data/data_source/address_local_data_sourc.dart';
 
 class Wrapper extends StatefulWidget {
@@ -15,10 +16,11 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
+    PushNotificationService().init(context);
     Box addressBox = Hive.box(ADDRESS_BOX);
     if (addressBox.isEmpty)
       return SelectLocation();
-     else {
+    else {
       Provider.of<AddressProvider>(context, listen: false).getCurrentAddress();
       return Home();
     }
