@@ -5,11 +5,15 @@ import 'package:quiky_user/core/Providers/UserProvider.dart';
 import 'package:quiky_user/features/user/domain/entity/order_details.dart';
 
 class Orders extends StatelessWidget {
-  const Orders({Key key}) : super(key: key);
+   Orders({Key key}) : super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Orders", style: Theme.of(context).textTheme.headline5),
       ),
@@ -23,7 +27,17 @@ class Orders extends StatelessWidget {
             );
           } else if (orders.hasError) {
             print(orders.error.toString());
-            return Center(child: Text("Internal Error"));
+            return Center(
+                child: Column(
+              children: [
+                Text("Internal Error"),
+                RaisedButton(
+                  onPressed: () {
+                  },
+                  child: Text("Retry"),
+                )
+              ],
+            ));
           } else if (orders.hasData) {
             List<OrderDetails> ordersR = orders.data.reversed.toList();
             return ListView.builder(

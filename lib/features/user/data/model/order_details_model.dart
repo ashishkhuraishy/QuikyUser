@@ -35,13 +35,13 @@ class OrderDetailsModel extends OrderDetails {
   factory OrderDetailsModel.fromJson(Map<String, dynamic> json) {
     return OrderDetailsModel(
       order: OrderModel.fromJson(json['order']),
-      storeAddress: json['vendor']['address'],
-      storeLocation: json['vendor']['location'],
-      storeName: json['vendor']['title'],
-      userAddress: json['user']['shipping_address'],
-      userLocation: json['user']['location'],
-      userMobile: json['user']['mobile'],
-      userName: json['user']['name'],
+      storeAddress: "${json['vendor']['address']}",
+      storeLocation: "${json['vendor']['location']}",
+      storeName: "${json['vendor']['title']}",
+      userAddress: "${json['user']['shipping_address']}",
+      userLocation: "${json['user']['location']}",
+      userMobile: "${json['user']['mobile']}",
+      userName: "${json['user']['name']}",
     );
   }
 }

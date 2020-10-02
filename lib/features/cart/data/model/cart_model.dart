@@ -34,15 +34,15 @@ class CartModel extends Cart {
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
-      storeId: int.tryParse(json['store_id']),
-      storeName: json['store_name'] ?? '',
-      storeAddress: json['store_address'] ?? '',
-      storeImage: json['store_image'] ?? '',
-      offers: json['offers'] ?? [],
+      storeId: int.tryParse("${json['store_id']}"),
+      storeName: "${json['store_name']}" ?? '',
+      storeAddress: "${json['store_address']}" ?? '',
+      storeImage: "${json['store_image']}" ?? '',
+      offers: "${json['offers']}" ?? [],
       cartItems: json['cartitem']
           .map<CartItem>((e) => CartItemModel.fromJson(e))
           .toList(),
-      storeLogo: json['store_logo'] ?? '',
+      storeLogo: "${json['store_logo']}" ?? '',
     );
   }
 }

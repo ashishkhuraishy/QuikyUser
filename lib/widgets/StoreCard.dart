@@ -95,7 +95,7 @@ class StoreCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "${restaurantModel.address.split(',')[0]!='nill'?restaurantModel.address.split(',')[0]:''}",
+                    "${restaurantModel.location}",
                     // "${restaurantModel.address}",
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
