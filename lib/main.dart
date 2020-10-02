@@ -1,10 +1,14 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:quiky_user/Screens/NoNetwork.dart';
+import 'package:quiky_user/Screens/OrderPlaced.dart';
 import 'package:quiky_user/Screens/Orders.dart';
 import 'package:quiky_user/Screens/TrackOrder.dart';
+import 'package:quiky_user/core/Services/push_notifiactions_service.dart';
 
 import 'Screens/AddressBook.dart';
 import 'Screens/AllStore.dart';
@@ -45,8 +49,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final PushNotificationService pushNotificationService =
+      PushNotificationService();
+  final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
   @override
   Widget build(BuildContext context) {
+    pushNotificationService.init(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -65,6 +73,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Quiky',
         debugShowCheckedModeBanner: false,
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(
+            analytics: firebaseAnalytics,
+          ),
+        ],
         theme: ThemeData(
           primarySwatch: Colors.orange,
           brightness: Brightness.light,
@@ -162,23 +175,26 @@ class MyApp extends StatelessWidget {
                 // color: dark,
                 ),
             subtitle1: TextStyle(
-                //grey14
-                fontWeight: FontWeight.normal,
-                fontSize: 12, //13
-                color: Colors.grey,
-                fontFamily: 'Roboto'),
+              //grey14
+              fontWeight: FontWeight.normal,
+              fontSize: 12, //13
+              color: Colors.grey,
+              fontFamily: 'Roboto',
+            ),
             subtitle2: new TextStyle(
-                //grey11
-                fontWeight: FontWeight.bold,
-                fontSize: 10, //11
-                color: Colors.grey,
-                fontFamily: 'Roboto'),
+              //grey11
+              fontWeight: FontWeight.bold,
+              fontSize: 10, //11
+              color: Colors.grey,
+              fontFamily: 'Roboto',
+            ),
             headline4: new TextStyle(
-                //white11
-                fontWeight: FontWeight.bold,
-                fontSize: 10, //11
-                color: Colors.white,
-                fontFamily: 'Roboto'),
+              //white11
+              fontWeight: FontWeight.bold,
+              fontSize: 10, //11
+              color: Colors.white,
+              fontFamily: 'Roboto',
+            ),
           ),
         ),
         themeMode: ThemeMode.system,
@@ -192,6 +208,7 @@ class MyApp extends StatelessWidget {
           '/allstore': (context) => AllStore(),
           '/currentOrder': (context) => Orders(),
           '/nonetwork': (context) => NoNetWork(),
+          '/orderplaced': (context) => OrderPlaced(),
         },
         onGenerateRoute: (settings) {
           var routes = <String, WidgetBuilder>{

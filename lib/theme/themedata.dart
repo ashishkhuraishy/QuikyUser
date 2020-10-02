@@ -30,6 +30,11 @@ TextStyle whiteBold13 = new TextStyle(
     fontSize: 12,//13
     fontWeight: FontWeight.bold,
     fontFamily: 'Roboto');
+TextStyle whiteBold14 = new TextStyle(
+    color: Colors.white,
+    fontSize: 14,//13
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Roboto');
 TextStyle white14 = new TextStyle(
   color: Colors.white,
   fontSize: 13,//14
@@ -37,6 +42,10 @@ TextStyle white14 = new TextStyle(
 );
 TextStyle white13 = new TextStyle(
   color: Colors.white, fontSize: 12, //13
+  fontFamily: 'Roboto',
+);
+TextStyle white10 = new TextStyle(
+  color: Colors.white, fontSize: 10, //13
   fontFamily: 'Roboto',
 );
 // TextStyle darkBold16 = new TextStyle(

@@ -38,7 +38,7 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
       if (key.currentState.validate()) {
         key.currentState.save();
         finalAddress =
-            '$finalAddress, House / Flat No: $flatno, LandMark: $landMark ';
+            '${widget.selectedPlace.formattedAddress}, House / Flat No: $flatno, LandMark: $landMark ';
         Address addressModel = Address(
           formattedAddress: finalAddress,
           shortAddress: widget.selectedPlace.addressComponents[0].shortName,
@@ -83,52 +83,107 @@ class _SetAddressFloatingButtonState extends State<SetAddressFloatingButton> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: confirmLocation
-                      ? Form(
-                          key: key,
-                          child: Column(
+                      ? Column(
+                        children: [
+                          Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top:15,right: 15,bottom: 15),
+                            child: Text("Enter address details",style: Theme.of(context).textTheme.headline5,),
+                          ),
+                          Text("Your Location",style: Theme.of(context).textTheme.subtitle1,),
+                          Row(
                             children: [
-                              TextFormField(
-                                onChanged: (value) => finalAddress = value,
-                                onSaved: (newValue) => finalAddress = newValue,
-                                textAlign: TextAlign.left,
-                                maxLines: 3,
-                                initialValue:
+                              Icon(Icons.location_on,color: primary,),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical:5),
+                                constraints: BoxConstraints(
+                                  maxWidth: MediaQuery.of(context).size.width-100
+                                ),
+                                child: Text(
                                     widget.selectedPlace.formattedAddress ?? '',
-                                validator: (value) => value.isEmpty
-                                    ? 'Address Cannot be empty'
-                                    : null,
-                                style: Theme.of(context).textTheme.bodyText2,
-                                decoration: underlined(hint: "Address:"),
+                                    style: Theme.of(context).textTheme.headline6,
+                                    maxLines: 5,
+                                  ),
                               ),
-                              TextFormField(
-                                  onChanged: (value) => flatno = value,
-                                  onSaved: (newValue) => flatno = newValue,
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  decoration:
-                                      underlined(hint: "House / Flat No:")),
-                              TextFormField(
-                                  onChanged: (value) => landMark = value,
-                                  onSaved: (newValue) => landMark = newValue,
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  decoration: underlined(hint: "Land Mark:")),
                             ],
                           ),
-                        )
-                      : Text(
-                          widget.selectedPlace.formattedAddress ?? '',
-                        ),
+                        ],
+                      ),
+                          Form(
+                              key: key,
+                              child: Column(
+                                children: [
+                                  // TextFormField(
+                                  //   onChanged: (value) => finalAddress = value,
+                                  //   onSaved: (newValue) => finalAddress = newValue,
+                                  //   textAlign: TextAlign.left,
+                                  //   maxLines: 3,
+                                  //   initialValue:
+                                  //       widget.selectedPlace.formattedAddress ?? '',
+                                  //   validator: (value) => value.isEmpty
+                                  //       ? 'Address Cannot be empty'
+                                  //       : null,
+                                  //   style: Theme.of(context).textTheme.bodyText2,
+                                  //   decoration: underlined(hint: "Address:"),
+                                  // ),
+                                  TextFormField(
+                                      onChanged: (value) => flatno = value,
+                                      onSaved: (newValue) => flatno = newValue,
+                                      maxLines: 1,
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                      decoration:
+                                          underlined(hint: "House / Flat No:")),
+                                  TextFormField(
+                                      onChanged: (value) => landMark = value,
+                                      onSaved: (newValue) => landMark = newValue,
+                                      maxLines: 1,
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                      decoration: underlined(hint: "Land Mark:")),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )
+                      : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top:15,right: 15,bottom: 15),
+                            child: Text("Select Delivery Location",style: Theme.of(context).textTheme.headline5,),
+                          ),
+                          Text("Your Location",style: Theme.of(context).textTheme.subtitle1,),
+                          Row(
+                            children: [
+                              Icon(Icons.location_on,color: primary,),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical:5),
+                                constraints: BoxConstraints(
+                                  maxWidth: MediaQuery.of(context).size.width-100
+                                ),
+                                child: Text(
+                                    widget.selectedPlace.formattedAddress ?? '',
+                                    style: Theme.of(context).textTheme.headline6,
+                                    maxLines: 5,
+                                  ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                 ),
                 Container(
-                  height: 50,
+                  padding: EdgeInsets.all(10),
                   child: FlatButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     colorBrightness: Brightness.dark,
                     color: primary,
                     child: Text(
-                      confirmLocation ? "Confirm" : "Continue",
-                      style: TextStyle(color: Colors.white),
+                      confirmLocation ? "SAVE ADDRESS" : "Confirm Location & Proceed",
+                      style: whiteBold14,
                     ),
+                    padding: EdgeInsets.all(15),
                     onPressed: () => onbuttonClick(addressProvider),
                   ),
                 ),

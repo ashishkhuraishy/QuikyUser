@@ -78,61 +78,58 @@ class _TrackOrderWState extends State<TrackOrderW> {
         title: Text("Order id: ${widget.orderdetails.order.id}",
             style: Theme.of(context).textTheme.headline5),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: scHeight / 3 * 2,
-            child: !loading
-                ? GoogleMap(
-                    mapType: MapType.normal,
-                    initialCameraPosition: CameraPosition(
-                      bearing: 0,
-                      target: center,
-                      tilt: 0,
-                      zoom: 12,
-                    ),
-                    markers: markers,
-                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-                      Factory<OneSequenceGestureRecognizer>(
-                        () => EagerGestureRecognizer(),
-                      ),
-                    ].toSet(),
-                    polylines: polylines,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
-                  )
-                : Container(child: Center(child: CircularProgressIndicator())),
-          ),
-          Container(
-            width: double.infinity,
-            height: scHeight / 3 - 110,
-            margin: EdgeInsets.all(10),
-            decoration:
-                BoxDecoration(border: Border.all(color: primary, width: 3)),
-            padding: EdgeInsets.all(30),
-            child: StreamBuilder<OrderDetails>(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: primary,
+          borderRadius: BorderRadius.circular(30)
+        ),
+        padding: EdgeInsets.symmetric(vertical:10,horizontal: 20),
+        height: 55,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Order Live Status",style: white10,),
+            StreamBuilder<OrderDetails>(
               stream: trackOrder.timedCounter(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading");
+                  return Text("Loading live location.....",style: Theme.of(context).textTheme.headline5);
                 } else if (snapshot.hasError) {
-                  return Text("Error ${snapshot.error}");
+                  return Text("Error ${snapshot.error}",style: Theme.of(context).textTheme.headline5);
                 } else if (snapshot.hasData) {
-                  return Center(
-                    child: Text(
-                      "${snapshot.data.order.status}",
-                      style: primaryBold14,
-                      textAlign: TextAlign.center,
-                    ),
-                  );
+                  String data=snapshot.data.order.status[0].toUpperCase()+snapshot.data.order.status.substring(1);
+                  return Text("${data} your order",style: Theme.of(context).textTheme.headline5);
                 } else {
-                  return Text("Something went wrong");
+                  return Text("Something went wrong",style: Theme.of(context).textTheme.headline5);
                 }
               },
-            ),
-          )
-        ],
+            )
+          ],
+        ),
+      ),
+      body: Container(
+        child: !loading
+            ? GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: CameraPosition(
+                  bearing: 0,
+                  target: center,
+                  tilt: 0,
+                  zoom: 12,
+                ),
+                markers: markers,
+                gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                  Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                ].toSet(),
+                polylines: polylines,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              )
+            : Container(child: Center(child: CircularProgressIndicator())),
       ),
     );
   }

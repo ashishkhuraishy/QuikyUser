@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../core/Providers/UserProvider.dart';
 
@@ -13,11 +14,19 @@ class ProfileTab extends StatelessWidget {
         builder: (ctx, provider, _) {
           if (provider.getUser == null) {
             return Center(
-              child: RaisedButton(
-                child: Text("Login"),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/signup');
-                },
+              child: Column(
+                children: [
+                  Image.asset("assets/img/please_login.png"),
+                  RaisedButton(
+                    child: Text(
+                      "Login",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/signup');
+                    },
+                  ),
+                ],
               ),
             );
           } else {
@@ -124,19 +133,47 @@ class ProfileTab extends StatelessWidget {
                         title: "Address Book",
                       ),
                       CustomRowButton(
-                        onTap: () {},
+                        onTap: () async {
+                          const url = 'https://quiky.in';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         title: "About",
                       ),
                       CustomRowButton(
-                        onTap: () {},
+                        onTap: () async {
+                          const url = 'https://quiky.in';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         title: "Terms And Condition",
                       ),
                       CustomRowButton(
-                        onTap: () {},
+                        onTap: () async {
+                          const url = 'https://play.google.com/store/apps/details?id=com.abi.grocyapp';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         title: "Rate Us on PlayStore",
                       ),
                       CustomRowButton(
-                        onTap: () {},
+                        onTap: () async {
+                          const url = 'https://quiky.in';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         title: "Contact Us",
                       ),
                       CustomRowButton(

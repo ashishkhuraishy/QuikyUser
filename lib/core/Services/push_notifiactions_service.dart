@@ -29,7 +29,7 @@ class PushNotificationService {
     // Configuring Firebase callbacks
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        showNotification(
+        await showNotification(
           message['notification']['title'],
           message['notification']['body'],
         );
@@ -46,7 +46,7 @@ class PushNotificationService {
     );
   }
 
-  void showNotification(String title, String body) async {
+  Future showNotification(String title, String body) async {
     print("Showing Notification...");
     await _orderStatusNotification(title, body);
   }
@@ -57,7 +57,6 @@ class PushNotificationService {
       'Order status channel',
       'Channel to revcive notifications for order status',
       channelShowBadge: true,
-      priority: Priority.Max
     );
 
     var iOSChannelSpecifics = IOSNotificationDetails();

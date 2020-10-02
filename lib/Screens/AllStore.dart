@@ -127,17 +127,17 @@ class _AllStoreState extends State<AllStore> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.go,
-                        style: Theme.of(context).textTheme.bodyText1,
-                        decoration: InputDecoration(
-                            hintText: "Search...",
-                            prefixIcon: Icon(Icons.search)),
-                      ),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.all(10),
+                    //   child: TextFormField(
+                    //     keyboardType: TextInputType.text,
+                    //     textInputAction: TextInputAction.go,
+                    //     style: Theme.of(context).textTheme.bodyText1,
+                    //     decoration: InputDecoration(
+                    //         hintText: "Search...",
+                    //         prefixIcon: Icon(Icons.search)),
+                    //   ),
+                    // ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.all(10),

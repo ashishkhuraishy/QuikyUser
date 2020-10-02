@@ -8,6 +8,64 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:386599800958:android:8825cff236eb2031cf882f",
+        "android_client_info": {
+          "package_name": "com.abi.cippyvendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386599800958-ful21smup2qge40b8v9ul3k3ckm153ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqIuurmvDsUJOg5oXx8beAE4fl29WB1GI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386599800958-ful21smup2qge40b8v9ul3k3ckm153ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386599800958:android:6e26b5ed80777779cf882f",
+        "android_client_info": {
+          "package_name": "com.abi.grocyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386599800958-ful21smup2qge40b8v9ul3k3ckm153ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqIuurmvDsUJOg5oXx8beAE4fl29WB1GI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386599800958-ful21smup2qge40b8v9ul3k3ckm153ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:386599800958:android:c071bd3efbcea7d5cf882f",
         "android_client_info": {
           "package_name": "com.ashishkhuraishy.fcm_demo"

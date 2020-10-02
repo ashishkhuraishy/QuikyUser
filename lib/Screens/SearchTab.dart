@@ -132,7 +132,12 @@ class _SearchTabState extends State<SearchTab> {
                               scrollDirection: Axis.horizontal,
                               itemCount: provider.popularBrands.length,
                               itemBuilder: (ctxx, index) {
-                                return OptionCard(
+                                return OptionCard(onTap: () {
+                                      Navigator.of(context).pushNamed('/store',
+                                          arguments:
+                                              provider.popularBrands[index]);
+                                      print("asdasd");
+                                    },
                                   title:
                                       "${provider.popularBrands[index].title}",
                                   networkImage:

@@ -145,7 +145,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 // Spacer(flex:1),
                 Text(
-                  data != null ? "${data.description}" : "",
+                  data != null && data.description!='nill' ? "${data.description}" : "",
                   style: Theme.of(context).textTheme.subtitle1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -156,7 +156,7 @@ class ProductCard extends StatelessWidget {
                   style: primaryBold14,
                   overflow: TextOverflow.ellipsis,
                 ),
-                dataVariation != null
+                data.active?dataVariation != null
                     ? Consumer<CartProvider>(
                         builder: (ctx, provider, _) {
                           int addedToCart =
@@ -258,7 +258,17 @@ class ProductCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
+                      ):Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(5)
+                          ),
+                          padding: EdgeInsets.all(5),
+                          child: Text("Shop Closed"),
+                        ),
+                      )
               ],
             ),
           )

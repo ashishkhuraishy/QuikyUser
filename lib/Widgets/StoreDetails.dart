@@ -22,10 +22,10 @@ class StoreDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Image.asset(
-                "assets/img/Burger.jpeg",
-                width: 50,
-              ),
+              // Image.asset(
+              //   provider.cu,
+              //   width: 50,
+              // ),
               Container(
                 padding: const EdgeInsets.only(left: 10.0),
                 width: scWidth - 90,

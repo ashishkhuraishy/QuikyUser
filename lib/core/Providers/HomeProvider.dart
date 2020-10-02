@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:quiky_user/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:quiky_user/features/home/data/model/restaurant_model.dart';
-import 'package:quiky_user/features/home/domain/usecase/get_stores.dart';
 
+import '../../features/home/data/data_source/home_remote_data_source.dart';
 import '../../features/home/data/model/recipie_model.dart';
+import '../../features/home/data/model/restaurant_model.dart';
 import '../../features/home/domain/usecase/get_recipies.dart';
+import '../../features/home/domain/usecase/get_stores.dart';
 import '../../injection_container.dart';
 import '../error/failure.dart';
 
@@ -35,10 +33,10 @@ class HomeProvider extends ChangeNotifier {
 
   // /loading
 
-  bool loading=true;
+  bool loading = true;
 
-  setLoading(bool state){
-    loading=state;
+  setLoading(bool state) {
+    loading = state;
     notifyListeners();
   }
 
@@ -46,7 +44,9 @@ class HomeProvider extends ChangeNotifier {
   ///
   /// Only call this after making sure Lat & Long are non - null
   getData(double lat, double long) async {
-    // setLoading(true);
+    if(!loading){
+      setLoading(true);
+    }
     await _getFeaturedData(lat, long);
     await _getTrendingRestaurantData(lat, long);
     await _getTrendingGeroceryData(lat, long);

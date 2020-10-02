@@ -18,7 +18,7 @@ class _WrapperState extends State<Wrapper> {
     Box addressBox = Hive.box(ADDRESS_BOX);
     if (addressBox.isEmpty)
       return SelectLocation();
-     else {
+    else {
       Provider.of<AddressProvider>(context, listen: false).getCurrentAddress();
       return Home();
     }
