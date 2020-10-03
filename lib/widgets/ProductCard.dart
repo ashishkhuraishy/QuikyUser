@@ -156,7 +156,7 @@ class ProductCard extends StatelessWidget {
                   style: primaryBold14,
                   overflow: TextOverflow.ellipsis,
                 ),
-                data.active?dataVariation != null
+                data==null || data.active ?dataVariation != null
                     ? Consumer<CartProvider>(
                         builder: (ctx, provider, _) {
                           int addedToCart =
