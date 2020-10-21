@@ -52,7 +52,7 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       "shipping_address": shippingAddress,
       "bulk_order": "false",
       "milk_order": "false",
-      // "date_time": "${dateTime ?? DateTime.now().toLocal()}",
+      "date_time": "${dateTime ?? DateTime.now().toLocal()}",
     };
 
     url += "?user_location=$userLocation";

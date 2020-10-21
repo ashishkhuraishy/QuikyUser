@@ -78,9 +78,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                     if (val.currentAddress.lat > 0)
                       fetchData(val.currentAddress);
                     return Container(
-                      width: MediaQuery.of(context).size.width-100,
+                      width: MediaQuery.of(context).size.width - 100,
                       child: Text(
-                        "${val.currentAddress.formattedAddress}",
+                        "${val.currentAddress.shortAddress}",
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.headline5,
                         overflow: TextOverflow.ellipsis,
@@ -540,8 +540,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/img/no_service.png',height: 200,),
-                SizedBox(height:20),
+                Image.asset(
+                  'assets/img/no_service.png',
+                  height: 200,
+                ),
+                SizedBox(height: 20),
                 Text("We don't have any service near you.")
               ],
             ));
