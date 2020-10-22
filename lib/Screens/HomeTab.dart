@@ -458,7 +458,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                   Navigator.pushNamed(context, '/allstore',
                                       arguments: StoreType.restaurants);
                                 },
-                                child: Text("Seel All Restaurants"),
+                                child: Text("See All Restaurants"),
                                 color: primary,
                               ),
                             ),
@@ -518,7 +518,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                                   Navigator.pushNamed(context, '/allstore',
                                       arguments: StoreType.groceries);
                                 },
-                                child: Text("Seel All Stores"),
+                                child: Text("See All Stores"),
                                 color: primary,
                               ),
                             ),

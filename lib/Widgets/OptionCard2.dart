@@ -37,7 +37,7 @@ class OptionCard2 extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(35),
                   gradient: LinearGradient(
-                    colors: [
+                     colors : [
                       Color.fromRGBO(244, 161, 30, 0.3),
                       Color.fromRGBO(237, 104, 59, 0.3)
                     ],
